@@ -21,6 +21,11 @@
 		1D94A90B260CFD32000117A1 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A90A260CFD32000117A1 /* HomeCoordinator.swift */; };
 		1D94A911260D00A8000117A1 /* ProductDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A910260D00A8000117A1 /* ProductDetailsViewController.swift */; };
 		1D94A919260D00B7000117A1 /* ProductDetailsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A918260D00B7000117A1 /* ProductDetailsFactory.swift */; };
+		1D94A921260D4675000117A1 /* HomeCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A920260D4675000117A1 /* HomeCoordinatorTests.swift */; };
+		1D94A92A260D4D88000117A1 /* NavigationControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A929260D4D88000117A1 /* NavigationControllerSpy.swift */; };
+		1D94A932260D4DBD000117A1 /* ViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A931260D4DBD000117A1 /* ViewControllerSpy.swift */; };
+		1D94A93A260D4E7B000117A1 /* HomeInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A939260D4E7B000117A1 /* HomeInteractorTests.swift */; };
+		1D94A93F260D525A000117A1 /* HomePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A93E260D525A000117A1 /* HomePresenterTests.swift */; };
 		41782603240A2EC2CA5560CC /* Pods_LittleSearch_LittleSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48D3D2C50BA585976A9F084 /* Pods_LittleSearch_LittleSearchUITests.framework */; };
 		526550BA1127DB00706F82E6 /* Pods_LittleSearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6E1E002E8A3477430752DB3 /* Pods_LittleSearchTests.framework */; };
 		D2C2990B136626F7280A93A0 /* Pods_LittleSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 004032ECBDCD9D793914E04F /* Pods_LittleSearch.framework */; };
@@ -65,6 +70,11 @@
 		1D94A90A260CFD32000117A1 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		1D94A910260D00A8000117A1 /* ProductDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsViewController.swift; sourceTree = "<group>"; };
 		1D94A918260D00B7000117A1 /* ProductDetailsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsFactory.swift; sourceTree = "<group>"; };
+		1D94A920260D4675000117A1 /* HomeCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinatorTests.swift; sourceTree = "<group>"; };
+		1D94A929260D4D88000117A1 /* NavigationControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationControllerSpy.swift; sourceTree = "<group>"; };
+		1D94A931260D4DBD000117A1 /* ViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerSpy.swift; sourceTree = "<group>"; };
+		1D94A939260D4E7B000117A1 /* HomeInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractorTests.swift; sourceTree = "<group>"; };
+		1D94A93E260D525A000117A1 /* HomePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenterTests.swift; sourceTree = "<group>"; };
 		35A488F11404F1021FA730E0 /* Pods-LittleSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LittleSearch.release.xcconfig"; path = "Target Support Files/Pods-LittleSearch/Pods-LittleSearch.release.xcconfig"; sourceTree = "<group>"; };
 		4A767F791CBF9D9291B28B41 /* Pods-LittleSearchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LittleSearchTests.debug.xcconfig"; path = "Target Support Files/Pods-LittleSearchTests/Pods-LittleSearchTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6C22D6AE522E44FD738AFA9E /* Pods-LittleSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LittleSearch.debug.xcconfig"; path = "Target Support Files/Pods-LittleSearch/Pods-LittleSearch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -153,6 +163,8 @@
 		1D2F9AC7260CB0F300F62E0F /* LittleSearchTests */ = {
 			isa = PBXGroup;
 			children = (
+				1D94A928260D4D72000117A1 /* Spies */,
+				1D94A91D260D461B000117A1 /* Scenes */,
 				1D2F9AC8260CB0F300F62E0F /* LittleSearchTests.swift */,
 				1D2F9ACA260CB0F300F62E0F /* Info.plist */,
 			);
@@ -206,6 +218,41 @@
 				1D94A918260D00B7000117A1 /* ProductDetailsFactory.swift */,
 			);
 			path = ProductDetails;
+			sourceTree = "<group>";
+		};
+		1D94A91D260D461B000117A1 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				1D94A91F260D4638000117A1 /* Home */,
+				1D94A91E260D4629000117A1 /* ProductDetails */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1D94A91E260D4629000117A1 /* ProductDetails */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ProductDetails;
+			sourceTree = "<group>";
+		};
+		1D94A91F260D4638000117A1 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				1D94A920260D4675000117A1 /* HomeCoordinatorTests.swift */,
+				1D94A939260D4E7B000117A1 /* HomeInteractorTests.swift */,
+				1D94A93E260D525A000117A1 /* HomePresenterTests.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		1D94A928260D4D72000117A1 /* Spies */ = {
+			isa = PBXGroup;
+			children = (
+				1D94A929260D4D88000117A1 /* NavigationControllerSpy.swift */,
+				1D94A931260D4DBD000117A1 /* ViewControllerSpy.swift */,
+			);
+			path = Spies;
 			sourceTree = "<group>";
 		};
 		5AC3A1B882C6AB77DD69796A /* Frameworks */ = {
@@ -472,7 +519,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D94A92A260D4D88000117A1 /* NavigationControllerSpy.swift in Sources */,
+				1D94A93A260D4E7B000117A1 /* HomeInteractorTests.swift in Sources */,
+				1D94A932260D4DBD000117A1 /* ViewControllerSpy.swift in Sources */,
 				1D2F9AC9260CB0F300F62E0F /* LittleSearchTests.swift in Sources */,
+				1D94A921260D4675000117A1 /* HomeCoordinatorTests.swift in Sources */,
+				1D94A93F260D525A000117A1 /* HomePresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
