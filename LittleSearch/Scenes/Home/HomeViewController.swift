@@ -9,7 +9,8 @@ import SnapKit
 import UIKit
 
 protocol HomeDisplaying: AnyObject {
-    
+    func startLoading()
+    func stopLoading()
 }
 
 final class HomeViewController: UIViewController {
@@ -18,7 +19,26 @@ final class HomeViewController: UIViewController {
             static let layoutSpacing: CGFloat = 16
             static let layoutMargins = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
         }
+        
+        enum ButtonNext {
+            static let title = "Próxima Tela"
+            static let height: CGFloat = 48
+        }
     }
+    
+    private lazy var loadingView: UIActivityIndicatorView = {
+        if #available(iOS 13.0, *) {
+            return UIActivityIndicatorView(style: .large)
+        }
+        return UIActivityIndicatorView(style: .medium)
+    }()
+    
+    private lazy var buttonNext: UIButton = {
+        let button = UIButton()
+        button.setTitle(Layout.ButtonNext.title, for: .normal)
+        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        return button
+    }()
     
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
@@ -46,9 +66,14 @@ final class HomeViewController: UIViewController {
         setupConstraints()
         configureViews()
     }
-    
+}
+
+private extension HomeViewController {
     func buildViewHierarchy() {
+        view.addSubview(loadingView)
         view.addSubview(stackView)
+        
+        stackView.addArrangedSubview(buttonNext)
     }
     
     func setupConstraints() {
@@ -56,6 +81,17 @@ final class HomeViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        loadingView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        buttonNext.snp.makeConstraints {
+            $0.height.equalTo(Layout.ButtonNext.height)
+            $0.centerX.centerY.equalToSuperview()
         }
     }
     
@@ -65,6 +101,22 @@ final class HomeViewController: UIViewController {
     }
 }
 
+@objc
+private extension HomeViewController {
+    func didTapNextButton() {
+        interactor.didSelect(product: 0)
+    }
+}
+
 extension HomeViewController: HomeDisplaying {
+    func startLoading() {
+        view.bringSubviewToFront(loadingView)
+        loadingView.isHidden = false
+        loadingView.startAnimating()
+    }
     
+    func stopLoading() {
+        loadingView.isHidden = true
+        loadingView.stopAnimating()
+    }
 }

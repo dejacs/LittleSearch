@@ -8,7 +8,7 @@
 import Foundation
 
 protocol HomeInteracting: AnyObject {
-    
+    func didSelect(product: Int)
 }
 
 final class HomeInteractor {
@@ -20,5 +20,7 @@ final class HomeInteractor {
 }
 
 extension HomeInteractor: HomeInteracting {
-    
+    func didSelect(product: Int) {
+        presenter.didSelect(product: product)
+    }
 }
