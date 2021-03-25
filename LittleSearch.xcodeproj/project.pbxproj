@@ -3,18 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		1D2F9AAF260CB0F200F62E0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AAE260CB0F200F62E0F /* AppDelegate.swift */; };
 		1D2F9AB1260CB0F200F62E0F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AB0260CB0F200F62E0F /* SceneDelegate.swift */; };
-		1D2F9AB3260CB0F200F62E0F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AB2260CB0F200F62E0F /* ViewController.swift */; };
 		1D2F9AB9260CB0F200F62E0F /* LittleSearch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AB7260CB0F200F62E0F /* LittleSearch.xcdatamodeld */; };
 		1D2F9ABB260CB0F300F62E0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D2F9ABA260CB0F300F62E0F /* Assets.xcassets */; };
 		1D2F9ABE260CB0F300F62E0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D2F9ABC260CB0F300F62E0F /* LaunchScreen.storyboard */; };
 		1D2F9AC9260CB0F300F62E0F /* LittleSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AC8260CB0F300F62E0F /* LittleSearchTests.swift */; };
 		1D2F9AD4260CB0F300F62E0F /* LittleSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AD3260CB0F300F62E0F /* LittleSearchUITests.swift */; };
+		1D94A8B4260CE404000117A1 /* HomeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8AE260CE404000117A1 /* HomeFactory.swift */; };
+		1D94A8B5260CE404000117A1 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8AF260CE404000117A1 /* HomePresenter.swift */; };
+		1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8B0260CE404000117A1 /* HomeViewController.swift */; };
+		1D94A8B7260CE404000117A1 /* HomeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8B1260CE404000117A1 /* HomeInteractor.swift */; };
 		41782603240A2EC2CA5560CC /* Pods_LittleSearch_LittleSearchUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D48D3D2C50BA585976A9F084 /* Pods_LittleSearch_LittleSearchUITests.framework */; };
 		526550BA1127DB00706F82E6 /* Pods_LittleSearchTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6E1E002E8A3477430752DB3 /* Pods_LittleSearchTests.framework */; };
 		D2C2990B136626F7280A93A0 /* Pods_LittleSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 004032ECBDCD9D793914E04F /* Pods_LittleSearch.framework */; };
@@ -42,7 +45,6 @@
 		1D2F9AAB260CB0F200F62E0F /* LittleSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LittleSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D2F9AAE260CB0F200F62E0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D2F9AB0260CB0F200F62E0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1D2F9AB2260CB0F200F62E0F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1D2F9AB8260CB0F200F62E0F /* LittleSearch.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LittleSearch.xcdatamodel; sourceTree = "<group>"; };
 		1D2F9ABA260CB0F300F62E0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1D2F9ABD260CB0F300F62E0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +55,10 @@
 		1D2F9ACF260CB0F300F62E0F /* LittleSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LittleSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D2F9AD3260CB0F300F62E0F /* LittleSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleSearchUITests.swift; sourceTree = "<group>"; };
 		1D2F9AD5260CB0F300F62E0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D94A8AE260CE404000117A1 /* HomeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFactory.swift; sourceTree = "<group>"; };
+		1D94A8AF260CE404000117A1 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		1D94A8B0260CE404000117A1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		1D94A8B1260CE404000117A1 /* HomeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInteractor.swift; sourceTree = "<group>"; };
 		35A488F11404F1021FA730E0 /* Pods-LittleSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LittleSearch.release.xcconfig"; path = "Target Support Files/Pods-LittleSearch/Pods-LittleSearch.release.xcconfig"; sourceTree = "<group>"; };
 		4A767F791CBF9D9291B28B41 /* Pods-LittleSearchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LittleSearchTests.debug.xcconfig"; path = "Target Support Files/Pods-LittleSearchTests/Pods-LittleSearchTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6C22D6AE522E44FD738AFA9E /* Pods-LittleSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LittleSearch.debug.xcconfig"; path = "Target Support Files/Pods-LittleSearch/Pods-LittleSearch.debug.xcconfig"; sourceTree = "<group>"; };
@@ -129,12 +135,10 @@
 		1D2F9AAD260CB0F200F62E0F /* LittleSearch */ = {
 			isa = PBXGroup;
 			children = (
-				1D2F9AAE260CB0F200F62E0F /* AppDelegate.swift */,
-				1D2F9AB0260CB0F200F62E0F /* SceneDelegate.swift */,
-				1D2F9AB2260CB0F200F62E0F /* ViewController.swift */,
-				1D2F9ABA260CB0F300F62E0F /* Assets.xcassets */,
-				1D2F9ABC260CB0F300F62E0F /* LaunchScreen.storyboard */,
+				1D94A8AC260CE3C7000117A1 /* AppConfiguration */,
+				1D94A8AB260CE3B7000117A1 /* Scenes */,
 				1D2F9ABF260CB0F300F62E0F /* Info.plist */,
+				1D2F9ABA260CB0F300F62E0F /* Assets.xcassets */,
 				1D2F9AB7260CB0F200F62E0F /* LittleSearch.xcdatamodeld */,
 			);
 			path = LittleSearch;
@@ -158,6 +162,35 @@
 			path = LittleSearchUITests;
 			sourceTree = "<group>";
 		};
+		1D94A8AB260CE3B7000117A1 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				1D94A8BF260CE409000117A1 /* Home */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		1D94A8AC260CE3C7000117A1 /* AppConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				1D2F9ABC260CB0F300F62E0F /* LaunchScreen.storyboard */,
+				1D2F9AAE260CB0F200F62E0F /* AppDelegate.swift */,
+				1D2F9AB0260CB0F200F62E0F /* SceneDelegate.swift */,
+			);
+			path = AppConfiguration;
+			sourceTree = "<group>";
+		};
+		1D94A8BF260CE409000117A1 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				1D94A8AE260CE404000117A1 /* HomeFactory.swift */,
+				1D94A8AF260CE404000117A1 /* HomePresenter.swift */,
+				1D94A8B0260CE404000117A1 /* HomeViewController.swift */,
+				1D94A8B1260CE404000117A1 /* HomeInteractor.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
 		5AC3A1B882C6AB77DD69796A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +212,7 @@
 				1D2F9AA7260CB0F200F62E0F /* Sources */,
 				1D2F9AA8260CB0F200F62E0F /* Frameworks */,
 				1D2F9AA9260CB0F200F62E0F /* Resources */,
+				CD69E6AE87F30A00F286A81B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -216,6 +250,7 @@
 				1D2F9ACB260CB0F300F62E0F /* Sources */,
 				1D2F9ACC260CB0F300F62E0F /* Frameworks */,
 				1D2F9ACD260CB0F300F62E0F /* Resources */,
+				FEA79963B6DD8B3DAF8DE55B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -340,6 +375,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CD69E6AE87F30A00F286A81B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LittleSearch/Pods-LittleSearch-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LittleSearch/Pods-LittleSearch-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LittleSearch/Pods-LittleSearch-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		EEDD0BCA4C9BD44EBE1CA4A3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -362,6 +414,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FEA79963B6DD8B3DAF8DE55B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LittleSearch-LittleSearchUITests/Pods-LittleSearch-LittleSearchUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LittleSearch-LittleSearchUITests/Pods-LittleSearch-LittleSearchUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LittleSearch-LittleSearchUITests/Pods-LittleSearch-LittleSearchUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -369,10 +438,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D2F9AB3260CB0F200F62E0F /* ViewController.swift in Sources */,
+				1D94A8B5260CE404000117A1 /* HomePresenter.swift in Sources */,
 				1D2F9AB9260CB0F200F62E0F /* LittleSearch.xcdatamodeld in Sources */,
+				1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */,
 				1D2F9AAF260CB0F200F62E0F /* AppDelegate.swift in Sources */,
+				1D94A8B7260CE404000117A1 /* HomeInteractor.swift in Sources */,
 				1D2F9AB1260CB0F200F62E0F /* SceneDelegate.swift in Sources */,
+				1D94A8B4260CE404000117A1 /* HomeFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
