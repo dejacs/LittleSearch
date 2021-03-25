@@ -24,7 +24,7 @@ final class HomeCoordinator {
 extension HomeCoordinator: HomeCoordinating {
     func perform(action: HomeCoordinatorAction) {
         if case .showProductDetails(let product) = action {
-            print("Próxima tela")
+            viewController?.navigationController?.pushViewController(ProductDetailsFactory.make(with: product), animated: true)
         }
     }
 }

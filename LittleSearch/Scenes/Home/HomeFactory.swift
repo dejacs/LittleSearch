@@ -15,6 +15,7 @@ enum HomeFactory {
         let viewController = HomeViewController(interactor: interactor)
         
         presenter.viewController = viewController
+        coordinator.viewController = viewController
 
         return viewController
     }
