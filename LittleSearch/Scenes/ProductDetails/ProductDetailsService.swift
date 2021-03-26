@@ -8,19 +8,17 @@
 import Alamofire
 import Foundation
 
-enum APIError: Error {
-    case genericError
-    case notFound
-}
-
 protocol ProductDetailsServicing {
     func fetchProductDetails(productId: String, completion: @escaping(Result<ProductDetails, APIError>) -> Void)
 }
 
 final class ProductDetailsService: ProductDetailsServicing {
     func fetchProductDetails(productId: String, completion: @escaping(Result<ProductDetails, APIError>) -> Void) {
+        guard let urlHost = Api.apiUrl else {
+            completion(.failure(.genericError))
+            return
+        }
         let endpoint = ProductDetailsEndpoint.fetchProductDetails(productId: productId)
-        let urlHost = "https://api.mercadolibre.com"
         
         guard let url = URL(string: urlHost + endpoint.path) else {
             return
