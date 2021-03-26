@@ -37,12 +37,23 @@ final class ProductDetailsViewController: UIViewController {
         return stackView
     }()
     
+    private let interactor: ProductDetailsInteracting
+    
+    init(interactor: ProductDetailsInteracting) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) { nil }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         buildViewHierarchy()
         setupConstraints()
         configureViews()
+        
+        interactor.loadProductDetails()
     }
 }
 

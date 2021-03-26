@@ -104,7 +104,7 @@ private extension HomeViewController {
 @objc
 private extension HomeViewController {
     func didTapNextButton() {
-        interactor.didSelect(product: 0)
+        interactor.didSelect(productId: "MLB1812802159")
     }
 }
 
