@@ -11,7 +11,8 @@ enum HomeFactory {
     static func make() -> HomeViewController {
         let coordinator: HomeCoordinating = HomeCoordinator()
         let presenter: HomePresenting = HomePresenter(coordinator: coordinator)
-        let interactor = HomeInteractor(presenter: presenter)
+        let service: HomeServicing = HomeService()
+        let interactor = HomeInteractor(presenter: presenter, service: service)
         let viewController = HomeViewController(interactor: interactor)
         
         presenter.viewController = viewController

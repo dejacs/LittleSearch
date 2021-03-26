@@ -65,6 +65,8 @@ final class HomeViewController: UIViewController {
         buildViewHierarchy()
         setupConstraints()
         configureViews()
+        
+        interactor.search(by: "Motorola G6")
     }
 }
 

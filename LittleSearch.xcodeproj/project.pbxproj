@@ -21,6 +21,9 @@
 		1D2F9ABE260CB0F300F62E0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D2F9ABC260CB0F300F62E0F /* LaunchScreen.storyboard */; };
 		1D2F9AC9260CB0F300F62E0F /* LittleSearchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AC8260CB0F300F62E0F /* LittleSearchTests.swift */; };
 		1D2F9AD4260CB0F300F62E0F /* LittleSearchUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AD3260CB0F300F62E0F /* LittleSearchUITests.swift */; };
+		1D63B967260E289000414B29 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63B966260E289000414B29 /* SearchResponse.swift */; };
+		1D63B96F260E2A9500414B29 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63B96E260E2A9500414B29 /* HomeService.swift */; };
+		1D63B974260E2B6000414B29 /* HomeEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63B973260E2B6000414B29 /* HomeEndpoint.swift */; };
 		1D94A8B4260CE404000117A1 /* HomeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8AE260CE404000117A1 /* HomeFactory.swift */; };
 		1D94A8B5260CE404000117A1 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8AF260CE404000117A1 /* HomePresenter.swift */; };
 		1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8B0260CE404000117A1 /* HomeViewController.swift */; };
@@ -79,6 +82,9 @@
 		1D2F9ACF260CB0F300F62E0F /* LittleSearchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LittleSearchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D2F9AD3260CB0F300F62E0F /* LittleSearchUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LittleSearchUITests.swift; sourceTree = "<group>"; };
 		1D2F9AD5260CB0F300F62E0F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1D63B966260E289000414B29 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
+		1D63B96E260E2A9500414B29 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
+		1D63B973260E2B6000414B29 /* HomeEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEndpoint.swift; sourceTree = "<group>"; };
 		1D94A8AE260CE404000117A1 /* HomeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFactory.swift; sourceTree = "<group>"; };
 		1D94A8AF260CE404000117A1 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		1D94A8B0260CE404000117A1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +224,14 @@
 			path = LittleSearchUITests;
 			sourceTree = "<group>";
 		};
+		1D63B965260E287F00414B29 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1D63B966260E289000414B29 /* SearchResponse.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		1D94A8AB260CE3B7000117A1 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,11 +254,14 @@
 		1D94A8BF260CE409000117A1 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				1D63B965260E287F00414B29 /* Models */,
 				1D94A8AE260CE404000117A1 /* HomeFactory.swift */,
 				1D94A8AF260CE404000117A1 /* HomePresenter.swift */,
 				1D94A8B0260CE404000117A1 /* HomeViewController.swift */,
 				1D94A8B1260CE404000117A1 /* HomeInteractor.swift */,
 				1D94A90A260CFD32000117A1 /* HomeCoordinator.swift */,
+				1D63B96E260E2A9500414B29 /* HomeService.swift */,
+				1D63B973260E2B6000414B29 /* HomeEndpoint.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -545,6 +562,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D63B96F260E2A9500414B29 /* HomeService.swift in Sources */,
 				1D94A8B5260CE404000117A1 /* HomePresenter.swift in Sources */,
 				1D2F9AB9260CB0F200F62E0F /* LittleSearch.xcdatamodeld in Sources */,
 				1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */,
@@ -561,7 +579,9 @@
 				1D2DC64D260DE22900F1EDA8 /* ProductPicture.swift in Sources */,
 				1D94A8B4260CE404000117A1 /* HomeFactory.swift in Sources */,
 				1D2DC640260DCF9000F1EDA8 /* Api.swift in Sources */,
+				1D63B967260E289000414B29 /* SearchResponse.swift in Sources */,
 				1D94A919260D00B7000117A1 /* ProductDetailsFactory.swift in Sources */,
+				1D63B974260E2B6000414B29 /* HomeEndpoint.swift in Sources */,
 				1DA87CE4260E092600B8335A /* ProductDetailsResponse.swift in Sources */,
 				1D2DC652260DE24100F1EDA8 /* ProductAttribute.swift in Sources */,
 			);
