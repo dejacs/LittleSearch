@@ -26,6 +26,13 @@ final class ProductDetailsInteractor {
 
 extension ProductDetailsInteractor: ProductDetailsInteracting {
     func loadProductDetails() {
-        service.fetchProductDetails(productId: productId)
+        service.fetchProductDetails(productId: productId) { completion in
+            switch completion {
+            case .success(let productDetails):
+                break
+            case .failure:
+                break
+            }
+        }
     }
 }

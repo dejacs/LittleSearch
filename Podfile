@@ -3,6 +3,7 @@ platform :ios, '10.0'
 target 'LittleSearch' do
   use_frameworks!
   pod 'SnapKit', '~> 5.0.0'
+  pod 'Alamofire', '~> 5.2'
 
   target 'LittleSearchTests' do
     inherit! :search_paths
