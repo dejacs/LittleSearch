@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D2DC5F9260DCC5000F1EDA8 /* ProductDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC5F8260DCC5000F1EDA8 /* ProductDetailsInteractor.swift */; };
+		1D2DC5FE260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC5FD260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift */; };
+		1D2DC603260DCE4800F1EDA8 /* ProductDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC602260DCE4800F1EDA8 /* ProductDetailsService.swift */; };
+		1D2DC640260DCF9000F1EDA8 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC63F260DCF9000F1EDA8 /* Api.swift */; };
 		1D2F9AAF260CB0F200F62E0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AAE260CB0F200F62E0F /* AppDelegate.swift */; };
 		1D2F9AB1260CB0F200F62E0F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AB0260CB0F200F62E0F /* SceneDelegate.swift */; };
 		1D2F9AB9260CB0F200F62E0F /* LittleSearch.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1D2F9AB7260CB0F200F62E0F /* LittleSearch.xcdatamodeld */; };
@@ -50,6 +54,10 @@
 
 /* Begin PBXFileReference section */
 		004032ECBDCD9D793914E04F /* Pods_LittleSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LittleSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D2DC5F8260DCC5000F1EDA8 /* ProductDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsInteractor.swift; sourceTree = "<group>"; };
+		1D2DC5FD260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsPresenter.swift; sourceTree = "<group>"; };
+		1D2DC602260DCE4800F1EDA8 /* ProductDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsService.swift; sourceTree = "<group>"; };
+		1D2DC63F260DCF9000F1EDA8 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		1D2F9AAB260CB0F200F62E0F /* LittleSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LittleSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D2F9AAE260CB0F200F62E0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1D2F9AB0260CB0F200F62E0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,6 +134,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		1D2DC63E260DCF8300F1EDA8 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				1D2DC63F260DCF9000F1EDA8 /* Api.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		1D2F9AA2260CB0F200F62E0F = {
 			isa = PBXGroup;
 			children = (
@@ -151,6 +167,7 @@
 		1D2F9AAD260CB0F200F62E0F /* LittleSearch */ = {
 			isa = PBXGroup;
 			children = (
+				1D2DC63E260DCF8300F1EDA8 /* Common */,
 				1D94A8AC260CE3C7000117A1 /* AppConfiguration */,
 				1D94A8AB260CE3B7000117A1 /* Scenes */,
 				1D2F9ABF260CB0F300F62E0F /* Info.plist */,
@@ -216,6 +233,9 @@
 			children = (
 				1D94A910260D00A8000117A1 /* ProductDetailsViewController.swift */,
 				1D94A918260D00B7000117A1 /* ProductDetailsFactory.swift */,
+				1D2DC5F8260DCC5000F1EDA8 /* ProductDetailsInteractor.swift */,
+				1D2DC5FD260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift */,
+				1D2DC602260DCE4800F1EDA8 /* ProductDetailsService.swift */,
 			);
 			path = ProductDetails;
 			sourceTree = "<group>";
@@ -506,11 +526,15 @@
 				1D2F9AB9260CB0F200F62E0F /* LittleSearch.xcdatamodeld in Sources */,
 				1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */,
 				1D2F9AAF260CB0F200F62E0F /* AppDelegate.swift in Sources */,
+				1D2DC603260DCE4800F1EDA8 /* ProductDetailsService.swift in Sources */,
 				1D94A8B7260CE404000117A1 /* HomeInteractor.swift in Sources */,
 				1D94A90B260CFD32000117A1 /* HomeCoordinator.swift in Sources */,
 				1D94A911260D00A8000117A1 /* ProductDetailsViewController.swift in Sources */,
+				1D2DC5FE260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift in Sources */,
 				1D2F9AB1260CB0F200F62E0F /* SceneDelegate.swift in Sources */,
+				1D2DC5F9260DCC5000F1EDA8 /* ProductDetailsInteractor.swift in Sources */,
 				1D94A8B4260CE404000117A1 /* HomeFactory.swift in Sources */,
+				1D2DC640260DCF9000F1EDA8 /* Api.swift in Sources */,
 				1D94A919260D00B7000117A1 /* ProductDetailsFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

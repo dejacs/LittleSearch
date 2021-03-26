@@ -9,6 +9,13 @@ import Foundation
 
 enum ProductDetailsFactory {
     static func make(with product: Int) -> ProductDetailsViewController {
-        return ProductDetailsViewController()
+        let presenter: ProductDetailsPresenting = ProductDetailsPresenter()
+        let service: ProductDetailsServicing = ProductDetailsService()
+        let interactor = ProductDetailsInteractor(presenter: presenter, service: service, productId: "MLB1812802159")
+        let viewController = ProductDetailsViewController(interactor: interactor)
+        
+        presenter.viewController = viewController
+
+        return viewController
     }
 }
