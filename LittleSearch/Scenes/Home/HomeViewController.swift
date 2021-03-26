@@ -36,7 +36,9 @@ final class HomeViewController: UIViewController {
     private lazy var buttonNext: UIButton = {
         let button = UIButton()
         button.setTitle(Layout.ButtonNext.title, for: .normal)
+        button.accessibilityIdentifier = "nextStepButton"
         button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     

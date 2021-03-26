@@ -10,7 +10,7 @@ target 'LittleSearch' do
   end
 
   target 'LittleSearchUITests' do
-    # Pods for testing
+    pod 'KIF'
   end
 
 end

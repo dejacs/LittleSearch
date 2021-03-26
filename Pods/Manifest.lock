@@ -1,16 +1,22 @@
 PODS:
+  - KIF (3.7.15):
+    - KIF/Core (= 3.7.15)
+  - KIF/Core (3.7.15)
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
+  - KIF
   - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
   trunk:
+    - KIF
     - SnapKit
 
 SPEC CHECKSUMS:
+  KIF: c060ca8bf50986a9b236d0337affab573eacc152
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: ac5115649907f9661ad661f211bf70ca6f56979f
+PODFILE CHECKSUM: ca975cbf0763eddd1f3ad32eac651e0c7aa5cc0f
 
 COCOAPODS: 1.10.1
