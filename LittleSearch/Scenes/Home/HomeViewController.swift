@@ -48,6 +48,8 @@ final class HomeViewController: UIViewController {
         return stackView
     }()
     
+    private lazy var searchController = UISearchController(searchResultsController: nil)
+    
     private lazy var searchResultTable: UITableView = {
         let tableView = UITableView()
         tableView.register(SearchResultViewCell.self, forCellReuseIdentifier: SearchResultViewCell.identifier)
@@ -59,6 +61,10 @@ final class HomeViewController: UIViewController {
         tableView.dataSource = self
         return tableView
     }()
+    
+    private var isSearchBarEmpty: Bool {
+      return searchController.searchBar.text?.isEmpty ?? true
+    }
     
     private var dataSource: [SearchItem] = []
     
@@ -74,8 +80,6 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         buildLayout()
-        title = "Motorola G6"
-        interactor.search(by: "Motorola G6")
     }
 }
 
@@ -83,7 +87,6 @@ extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
         view.addSubview(stackView)
-        
         stackView.addArrangedSubview(searchResultTable)
     }
     
@@ -93,21 +96,42 @@ extension HomeViewController: ViewConfiguration {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-        
         loadingView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-        
         searchResultTable.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
     
     func configureViews() {
+        navigationController?.navigationBar.backgroundColor = UIColor(named: "clr_branding")
         view.backgroundColor = .white
         stackView.backgroundColor = .clear
+        setupSearchBar()
+    }
+}
+
+private extension HomeViewController {
+    func setupSearchBar() {
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Buscar no Mercado Livre"
+        searchController.searchBar.backgroundColor = UIColor(named: "clr_branding")
+        searchController.searchBar.delegate = self
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+}
+
+extension HomeViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else {
+            return
+        }
+        title = searchText
+        interactor.search(by: searchText)
     }
 }
 
