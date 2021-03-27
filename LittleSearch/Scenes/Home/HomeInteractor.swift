@@ -24,12 +24,18 @@ final class HomeInteractor {
 
 extension HomeInteractor: HomeInteracting {
     func search(by text: String) {
+        presenter.presentLoading(shouldPresent: true)
+        
         service.fetchSearchItems(by: text) { [weak self] completion in
+            self?.presenter.presentLoading(shouldPresent: false)
+            
             switch completion {
-            case .success(let searchItems):
-                self?.presenter.present(searchItems: searchItems)
+            case .success(let searchResponse) where searchResponse.results.isEmpty:
+                self?.presenter.presentEmpty()
+            case .success(let searchResponse):
+                self?.presenter.present(searchResponse: searchResponse)
             case .failure:
-                break
+                self?.presenter.presentError()
             }
         }
     }

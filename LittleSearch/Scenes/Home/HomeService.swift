@@ -9,11 +9,11 @@ import Alamofire
 import Foundation
 
 protocol HomeServicing {
-    func fetchSearchItems(by text: String, completion: @escaping(Result<[SearchItem], APIError>) -> Void)
+    func fetchSearchItems(by text: String, completion: @escaping(Result<SearchResponse, APIError>) -> Void)
 }
 
 final class HomeService: HomeServicing {
-    func fetchSearchItems(by text: String, completion: @escaping(Result<[SearchItem], APIError>) -> Void) {
+    func fetchSearchItems(by text: String, completion: @escaping(Result<SearchResponse, APIError>) -> Void) {
         guard
             let urlHost = Api.apiUrl,
             let urlSite = Api.siteId,
@@ -40,7 +40,7 @@ final class HomeService: HomeServicing {
                 
                 do {
                     let response = try decoder.decode(SearchResponse.self, from: data)
-                    completion(.success(response.results))
+                    completion(.success(response))
                     
                 } catch { completion(.failure(.genericError)) }
             }

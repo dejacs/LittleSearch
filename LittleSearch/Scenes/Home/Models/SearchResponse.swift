@@ -8,6 +8,7 @@
 import Foundation
 
 struct SearchResponse: Decodable {
+    let paging: Paging
     let results: [SearchItem]
 }
 
@@ -16,4 +17,9 @@ struct SearchItem: Decodable {
     let title: String
     let price: Double
     let thumbnail: String
+    let installments: Installments
+}
+
+struct Paging: Decodable {
+    let total: Int
 }

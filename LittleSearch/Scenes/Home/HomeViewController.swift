@@ -11,7 +11,8 @@ import UIKit
 protocol HomeDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
-    func displaySearchResults(_ results: [SearchItem])
+    func display(searchResults: [SearchItem])
+    func display(totalResults: Int)
 }
 
 final class HomeViewController: UIViewController {
@@ -50,11 +51,17 @@ final class HomeViewController: UIViewController {
     
     private lazy var searchController = UISearchController(searchResultsController: nil)
     
+    private lazy var totalResultsLabel: UILabel = {
+        let label = UILabel()
+        label.font = label.font.withSize(14)
+        label.numberOfLines = 1
+        return label
+    }()
+    
     private lazy var searchResultTable: UITableView = {
         let tableView = UITableView()
         tableView.register(SearchResultViewCell.self, forCellReuseIdentifier: SearchResultViewCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = Layout.Table.height
         tableView.isScrollEnabled = true
         tableView.separatorStyle = .singleLine
         tableView.delegate = self
@@ -63,7 +70,7 @@ final class HomeViewController: UIViewController {
     }()
     
     private var isSearchBarEmpty: Bool {
-      return searchController.searchBar.text?.isEmpty ?? true
+        return searchController.searchBar.text?.isEmpty ?? true
     }
     
     private var dataSource: [SearchItem] = []
@@ -87,6 +94,7 @@ extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
         view.addSubview(stackView)
+        stackView.addArrangedSubview(totalResultsLabel)
         stackView.addArrangedSubview(searchResultTable)
     }
     
@@ -101,13 +109,20 @@ extension HomeViewController: ViewConfiguration {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
+        totalResultsLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(16)
+        }
         searchResultTable.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(totalResultsLabel.snp.bottom).offset(16)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
     
     func configureViews() {
+        title = "Resultados"
         navigationController?.navigationBar.backgroundColor = UIColor(named: "clr_branding")
+        navigationController?.navigationBar.barTintColor = UIColor(named: "clr_branding")
         view.backgroundColor = .white
         stackView.backgroundColor = .clear
         setupSearchBar()
@@ -130,7 +145,6 @@ extension HomeViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text else {
             return
         }
-        title = searchText
         interactor.search(by: searchText)
     }
 }
@@ -157,6 +171,7 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: HomeDisplaying {
     func startLoading() {
         view.bringSubviewToFront(loadingView)
+        searchResultTable.isHidden = true
         loadingView.isHidden = false
         loadingView.startAnimating()
     }
@@ -166,8 +181,13 @@ extension HomeViewController: HomeDisplaying {
         loadingView.stopAnimating()
     }
     
-    func displaySearchResults(_ results: [SearchItem]) {
-        dataSource = results
+    func display(searchResults: [SearchItem]) {
+        searchResultTable.isHidden = false
+        dataSource = searchResults
         searchResultTable.reloadData()
+    }
+    
+    func display(totalResults: Int) {
+        totalResultsLabel.text = totalResults.description + " resultados"
     }
 }

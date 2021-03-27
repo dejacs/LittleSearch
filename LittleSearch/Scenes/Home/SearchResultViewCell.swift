@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SDWebImage
 import SnapKit
 import UIKit
 
@@ -13,19 +14,27 @@ class SearchResultViewCell: UITableViewCell {
     static let identifier = "SearchResultViewCell"
     
     private lazy var thumbnailImageView: UIImageView = {
-        let view = UIImageView(image: UIImage(named: "img_placeholder"))
+        let view = UIImageView()
         view.layer.masksToBounds = true
         return view
     }()
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 1
+        label.font = label.font.withSize(14)
+        label.numberOfLines = 0
         return label
     }()
 
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private lazy var installmentsLabel: UILabel = {
+        let label = UILabel()
+        label.font = label.font.withSize(12)
         label.numberOfLines = 1
         return label
     }()
@@ -39,8 +48,13 @@ class SearchResultViewCell: UITableViewCell {
     }
     
     func setup(_ searchItem: SearchItem) {
+        thumbnailImageView.sd_setImage(
+            with: URL(string: searchItem.thumbnail),
+            placeholderImage: UIImage(named: "img_placeholder")
+        )
         titleLabel.text = searchItem.title
-        priceLabel.text = searchItem.price.description // TODO: converter e formatar
+        priceLabel.text = format(currency: searchItem.price)
+        installmentsLabel.text = format(installments: searchItem.installments)
     }
 }
 
@@ -49,6 +63,7 @@ extension SearchResultViewCell: ViewConfiguration {
         addSubview(thumbnailImageView)
         addSubview(titleLabel)
         addSubview(priceLabel)
+        addSubview(installmentsLabel)
     }
     
     func setupConstraints() {
@@ -63,14 +78,40 @@ extension SearchResultViewCell: ViewConfiguration {
             $0.trailing.equalToSuperview().offset(-16)
         }
         priceLabel.snp.makeConstraints {
-            $0.top.greaterThanOrEqualTo(titleLabel.snp.bottom).offset(16)
-            $0.bottom.equalToSuperview().offset(-16)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
             $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(16)
             $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+        }
+        installmentsLabel.snp.makeConstraints {
+            $0.top.equalTo(priceLabel.snp.bottom).offset(16)
+            $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(16)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.bottom.equalToSuperview().offset(-16)
         }
     }
     
     func configureViews() {
         backgroundColor = .clear
+    }
+}
+
+private extension SearchResultViewCell {
+    func format(currency: Double) -> String? {
+        let number = NSNumber(value: currency)
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "pt_BR")
+        formatter.numberStyle = .currency
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: number)
+    }
+    
+    func format(installments: Installments) -> String {
+        guard let amount = format(currency: installments.amount) else {
+            return ""
+        }
+        let quantity = installments.quantity.description + "x "
+        let rate = installments.rate == 0 ? " sem juros" : ""
+        return "em " + quantity + amount + rate
     }
 }
