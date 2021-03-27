@@ -25,24 +25,26 @@ final class ProductDetailsService: ProductDetailsServicing {
         }
         
         AF.request(url, method: endpoint.method, parameters: endpoint.params).responseJSON { (result) in
-            guard let data = result.data else {
-                completion(.failure(.genericError))
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            
-            do {
-                let response = try decoder.decode([ProductDetailsResponse].self, from: data)
-                
-                guard let body = response.first?.body else {
+            DispatchQueue.main.async {
+                guard let data = result.data else {
                     completion(.failure(.genericError))
                     return
                 }
-                completion(.success(body))
                 
-            } catch { completion(.failure(.genericError)) }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let response = try decoder.decode([ProductDetailsResponse].self, from: data)
+                    
+                    guard let body = response.first?.body else {
+                        completion(.failure(.genericError))
+                        return
+                    }
+                    completion(.success(body))
+                    
+                } catch { completion(.failure(.genericError)) }
+            }
         }
     }
 }

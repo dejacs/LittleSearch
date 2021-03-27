@@ -9,7 +9,13 @@ import Foundation
 import UIKit
 
 protocol ProductDetailsDisplaying: AnyObject {
-    
+    func startLoading()
+    func stopLoading()
+    func setTitle(with title: String)
+    func setAvailableQuantity(with quantity: Int)
+    func setSoldQuantity(with quantity: Int)
+    func setPictures(with pictures: [ProductPicture])
+    func setAttributes(with attributes: [ProductAttribute])
 }
 
 final class ProductDetailsViewController: UIViewController {
@@ -37,6 +43,24 @@ final class ProductDetailsViewController: UIViewController {
         return stackView
     }()
     
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var availableQuantityLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private lazy var soldQuantityLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        return label
+    }()
+    
     private let interactor: ProductDetailsInteracting
     
     init(interactor: ProductDetailsInteracting) {
@@ -61,6 +85,10 @@ private extension ProductDetailsViewController {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
         view.addSubview(stackView)
+        
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(availableQuantityLabel)
+        stackView.addArrangedSubview(soldQuantityLabel)
     }
     
     func setupConstraints() {
@@ -79,10 +107,39 @@ private extension ProductDetailsViewController {
     
     func configureViews() {
         view.backgroundColor = .white
-        stackView.backgroundColor = .blue
+        stackView.backgroundColor = .clear
     }
 }
 
 extension ProductDetailsViewController: ProductDetailsDisplaying {
-
+    func startLoading() {
+        view.bringSubviewToFront(loadingView)
+        loadingView.isHidden = false
+        loadingView.startAnimating()
+    }
+    
+    func stopLoading() {
+        loadingView.isHidden = true
+        loadingView.stopAnimating()
+    }
+    
+    func setTitle(with title: String) {
+        titleLabel.text = title
+    }
+    
+    func setAvailableQuantity(with quantity: Int) {
+        availableQuantityLabel.text = quantity.description
+    }
+    
+    func setSoldQuantity(with quantity: Int) {
+        soldQuantityLabel.text = quantity.description
+    }
+    
+    func setPictures(with pictures: [ProductPicture]) {
+        // TODO: implementar carousel
+    }
+    
+    func setAttributes(with attributes: [ProductAttribute]) {
+        // TODO: implementar collection
+    }
 }

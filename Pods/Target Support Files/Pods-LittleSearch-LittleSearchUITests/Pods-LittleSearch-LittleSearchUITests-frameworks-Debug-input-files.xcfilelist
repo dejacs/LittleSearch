@@ -1,3 +1,4 @@
 ${PODS_ROOT}/Target Support Files/Pods-LittleSearch-LittleSearchUITests/Pods-LittleSearch-LittleSearchUITests-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
 ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework

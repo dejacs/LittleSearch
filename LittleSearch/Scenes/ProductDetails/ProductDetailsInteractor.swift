@@ -26,12 +26,14 @@ final class ProductDetailsInteractor {
 
 extension ProductDetailsInteractor: ProductDetailsInteracting {
     func loadProductDetails() {
-        service.fetchProductDetails(productId: productId) { completion in
+        presenter.presentLoading(shouldPresent: true)
+        service.fetchProductDetails(productId: productId) { [weak self] completion in
+            self?.presenter.presentLoading(shouldPresent: false)
             switch completion {
             case .success(let productDetails):
-                break
+                self?.presenter.present(productDetails: productDetails)
             case .failure:
-                break
+                self?.presenter.presentError()
             }
         }
     }
