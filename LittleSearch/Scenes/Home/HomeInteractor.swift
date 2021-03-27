@@ -24,10 +24,10 @@ final class HomeInteractor {
 
 extension HomeInteractor: HomeInteracting {
     func search(by text: String) {
-        service.fetchSearchItems(by: text) { completion in
+        service.fetchSearchItems(by: text) { [weak self] completion in
             switch completion {
             case .success(let searchItems):
-                break
+                self?.presenter.present(searchItems: searchItems)
             case .failure:
                 break
             }

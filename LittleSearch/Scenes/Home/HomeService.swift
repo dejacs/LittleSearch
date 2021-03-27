@@ -29,19 +29,21 @@ final class HomeService: HomeServicing {
         }
         
         AF.request(url, method: endpoint.method, parameters: endpoint.params).responseJSON { (result) in
-            guard let data = result.data else {
-                completion(.failure(.genericError))
-                return
-            }
-            
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            
-            do {
-                let response = try decoder.decode(SearchResponse.self, from: data)
-                completion(.success(response.results))
+            DispatchQueue.main.async {
+                guard let data = result.data else {
+                    completion(.failure(.genericError))
+                    return
+                }
                 
-            } catch { completion(.failure(.genericError)) }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                
+                do {
+                    let response = try decoder.decode(SearchResponse.self, from: data)
+                    completion(.success(response.results))
+                    
+                } catch { completion(.failure(.genericError)) }
+            }
         }
     }
 }

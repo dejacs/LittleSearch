@@ -11,6 +11,7 @@ import UIKit
 protocol HomeDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
+    func displaySearchResults(_ results: [SearchItem])
 }
 
 final class HomeViewController: UIViewController {
@@ -24,6 +25,10 @@ final class HomeViewController: UIViewController {
             static let title = "Próxima Tela"
             static let height: CGFloat = 48
         }
+        
+        enum Table {
+            static let height: CGFloat = 70
+        }
     }
     
     private lazy var loadingView: UIActivityIndicatorView = {
@@ -31,13 +36,6 @@ final class HomeViewController: UIViewController {
             return UIActivityIndicatorView(style: .large)
         }
         return UIActivityIndicatorView(style: .medium)
-    }()
-    
-    private lazy var buttonNext: UIButton = {
-        let button = UIButton()
-        button.setTitle(Layout.ButtonNext.title, for: .normal)
-        button.addTarget(self, action: #selector(didTapNextButton), for: .touchUpInside)
-        return button
     }()
     
     private lazy var stackView: UIStackView = {
@@ -50,6 +48,20 @@ final class HomeViewController: UIViewController {
         return stackView
     }()
     
+    private lazy var searchResultTable: UITableView = {
+        let tableView = UITableView()
+        tableView.register(SearchResultViewCell.self, forCellReuseIdentifier: SearchResultViewCell.identifier)
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = Layout.Table.height
+        tableView.isScrollEnabled = true
+        tableView.separatorStyle = .singleLine
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
+    }()
+    
+    private var dataSource: [SearchItem] = []
+    
     private let interactor: HomeInteracting
     
     init(interactor: HomeInteracting) {
@@ -61,21 +73,18 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        buildViewHierarchy()
-        setupConstraints()
-        configureViews()
-        
+        buildLayout()
+        title = "Motorola G6"
         interactor.search(by: "Motorola G6")
     }
 }
 
-private extension HomeViewController {
+extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
         view.addSubview(stackView)
         
-        stackView.addArrangedSubview(buttonNext)
+        stackView.addArrangedSubview(searchResultTable)
     }
     
     func setupConstraints() {
@@ -91,22 +100,33 @@ private extension HomeViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
-        buttonNext.snp.makeConstraints {
-            $0.height.equalTo(Layout.ButtonNext.height)
-            $0.centerX.centerY.equalToSuperview()
+        searchResultTable.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
     func configureViews() {
         view.backgroundColor = .white
-        stackView.backgroundColor = .red
+        stackView.backgroundColor = .clear
     }
 }
 
-@objc
-private extension HomeViewController {
-    func didTapNextButton() {
-        interactor.didSelect(productId: "MLB1812802159")
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        interactor.didSelect(productId: dataSource[indexPath.row].id)
+    }
+}
+
+extension HomeViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        dataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard !dataSource.isEmpty else { return UITableViewCell() }
+        let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as! SearchResultViewCell
+        cell.setup(dataSource[indexPath.row])
+        return cell
     }
 }
 
@@ -120,5 +140,10 @@ extension HomeViewController: HomeDisplaying {
     func stopLoading() {
         loadingView.isHidden = true
         loadingView.stopAnimating()
+    }
+    
+    func displaySearchResults(_ results: [SearchItem]) {
+        dataSource = results
+        searchResultTable.reloadData()
     }
 }

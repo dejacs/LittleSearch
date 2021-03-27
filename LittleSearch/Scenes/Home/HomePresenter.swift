@@ -9,6 +9,7 @@ import Foundation
 
 protocol HomePresenting: AnyObject {
     var viewController: HomeDisplaying? { get set }
+    func present(searchItems: [SearchItem])
     func didSelect(productId: String)
     func presentLoading(shouldPresent: Bool)
 }
@@ -23,6 +24,10 @@ final class HomePresenter {
 }
 
 extension HomePresenter: HomePresenting {
+    func present(searchItems: [SearchItem]) {
+        viewController?.displaySearchResults(searchItems)
+    }
+    
     func didSelect(productId: String) {
         coordinator.perform(action: .showProductDetails(productId))
     }
