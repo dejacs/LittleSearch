@@ -166,6 +166,14 @@ extension HomeViewController: UITableViewDataSource {
         cell.setup(dataSource[indexPath.row])
         return cell
     }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }
 
 extension HomeViewController: HomeDisplaying {

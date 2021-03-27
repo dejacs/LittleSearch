@@ -69,20 +69,25 @@ extension SearchResultViewCell: ViewConfiguration {
     func setupConstraints() {
         thumbnailImageView.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: 80, height: 60))
-            $0.top.leading.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().offset(-16)
+            $0.leading.equalToSuperview().inset(16)
+            $0.centerY.equalToSuperview()
+            $0.top.greaterThanOrEqualToSuperview().offset(16)
+            $0.bottom.lessThanOrEqualToSuperview().offset(-16)
         }
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(16)
             $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(16)
             $0.trailing.equalToSuperview().offset(-16)
+            
         }
         priceLabel.snp.makeConstraints {
+            $0.height.equalTo(17)
             $0.top.equalTo(titleLabel.snp.bottom).offset(16)
             $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(16)
             $0.trailing.lessThanOrEqualToSuperview().offset(-16)
         }
         installmentsLabel.snp.makeConstraints {
+            $0.height.equalTo(13)
             $0.top.equalTo(priceLabel.snp.bottom).offset(16)
             $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(16)
             $0.trailing.lessThanOrEqualToSuperview().offset(-16)
