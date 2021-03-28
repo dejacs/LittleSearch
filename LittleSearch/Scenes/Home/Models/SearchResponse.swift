@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchResponse: Decodable {
+struct SearchResponse: Decodable, Equatable {
     let totalResults: Int
     let results: [SearchItemResponse]
     

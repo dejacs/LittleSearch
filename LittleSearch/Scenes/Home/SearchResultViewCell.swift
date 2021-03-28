@@ -16,6 +16,8 @@ final class SearchResultViewCell: UITableViewCell {
     private lazy var thumbnailImageView: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.contentCompressionResistancePriority(for: .vertical)
         return view
     }()
 
@@ -23,12 +25,14 @@ final class SearchResultViewCell: UITableViewCell {
         let label = UILabel()
         label.font = label.font.withSize(14)
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -36,6 +40,7 @@ final class SearchResultViewCell: UITableViewCell {
         let label = UILabel()
         label.font = label.font.withSize(12)
         label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -47,14 +52,26 @@ final class SearchResultViewCell: UITableViewCell {
         buildLayout()
     }
     
+    override func prepareForReuse() {
+        thumbnailImageView.image = nil
+        titleLabel.text = nil
+        priceLabel.text = nil
+        installmentsLabel.text = nil
+    }
+    
     func setup(_ searchItem: SearchItemResponse) {
         thumbnailImageView.sd_setImage(
             with: URL(string: searchItem.thumbnail),
-            placeholderImage: UIImage(named: "img_placeholder")
-        )
+            placeholderImage: UIImage(named: "img_placeholder")) { (image, error, _, _) in
+            guard error == nil, let imageSize = image?.size else { return }
+            self.thumbnailImageView.snp.makeConstraints {
+                $0.size.equalTo(imageSize)
+            }
+        }
         titleLabel.text = searchItem.title
         priceLabel.text = format(currency: searchItem.price)
         installmentsLabel.text = format(installments: searchItem.installments)
+        self.layoutIfNeeded()
     }
 }
 
@@ -68,7 +85,7 @@ extension SearchResultViewCell: ViewConfiguration {
     
     func setupConstraints() {
         thumbnailImageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 80, height: 60))
+            $0.height.equalTo(90)
             $0.leading.equalToSuperview().inset(16)
             $0.centerY.equalToSuperview()
             $0.top.greaterThanOrEqualToSuperview().offset(16)
@@ -111,8 +128,8 @@ private extension SearchResultViewCell {
         return formatter.string(from: number)
     }
     
-    func format(installments: Installments) -> String {
-        guard let amount = format(currency: installments.amount) else {
+    func format(installments: Installments?) -> String {
+        guard let installments = installments, let amount = format(currency: installments.amount) else {
             return ""
         }
         let quantity = installments.quantity.description + "x "

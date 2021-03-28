@@ -49,6 +49,7 @@ final class ProductDetailsViewController: UIViewController {
         let label = UILabel()
         label.font = label.font.withSize(10)
         label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -56,12 +57,14 @@ final class ProductDetailsViewController: UIViewController {
         let label = UILabel()
         label.font = label.font.withSize(14)
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -69,12 +72,14 @@ final class ProductDetailsViewController: UIViewController {
         let label = UILabel()
         label.font = label.font.withSize(12)
         label.numberOfLines = 1
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var availableQuantityLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     

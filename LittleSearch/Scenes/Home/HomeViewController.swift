@@ -20,15 +20,6 @@ final class HomeViewController: UIViewController {
             static let layoutSpacing: CGFloat = 16
             static let layoutMargins = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
         }
-        
-        enum ButtonNext {
-            static let title = "Próxima Tela"
-            static let height: CGFloat = 48
-        }
-        
-        enum Table {
-            static let height: CGFloat = 70
-        }
     }
     
     private lazy var loadingView: UIActivityIndicatorView = {
@@ -38,16 +29,6 @@ final class HomeViewController: UIViewController {
         return UIActivityIndicatorView(style: .medium)
     }()
     
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = Layout.StackView.layoutSpacing
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = Layout.StackView.layoutMargins
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
     private lazy var searchController = UISearchController(searchResultsController: nil)
     
     private lazy var searchResultTable: UITableView = {
@@ -55,10 +36,12 @@ final class HomeViewController: UIViewController {
         tableView.register(SearchResultViewCell.self, forCellReuseIdentifier: SearchResultViewCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.sectionHeaderHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 70
         tableView.isScrollEnabled = true
         tableView.separatorStyle = .singleLine
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
@@ -86,12 +69,11 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(searchResultTable)
+        view.addSubview(searchResultTable)
     }
     
     func setupConstraints() {
-        stackView.snp.makeConstraints {
+        searchResultTable.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
@@ -101,17 +83,12 @@ extension HomeViewController: ViewConfiguration {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-        searchResultTable.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
     }
     
     func configureViews() {
-        title = "Resultados"
         navigationController?.navigationBar.backgroundColor = UIColor(named: "clr_branding")
         navigationController?.navigationBar.barTintColor = UIColor(named: "clr_branding")
         view.backgroundColor = .white
-        stackView.backgroundColor = .clear
         setupSearchBar()
     }
 }

@@ -12,5 +12,5 @@ struct SearchItemResponse: Decodable, Equatable {
     let title: String
     let price: Double
     let thumbnail: String
-    let installments: Installments
+    let installments: Installments?
 }
