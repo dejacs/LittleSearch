@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import ImageSlideshow
 
 protocol ProductDetailsDisplaying: AnyObject {
     func startLoading()
@@ -94,16 +95,12 @@ final class ProductDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        buildViewHierarchy()
-        setupConstraints()
-        configureViews()
-        
+        buildLayout()
         interactor.loadProductDetails()
     }
 }
 
-private extension ProductDetailsViewController {
+extension ProductDetailsViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
         view.addSubview(stackView)

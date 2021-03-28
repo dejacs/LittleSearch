@@ -8,26 +8,22 @@
 import Alamofire
 import Foundation
 
-enum HomeEndpoint {
-    case fetchSearchItems(site: String, text: String)
+enum HomeEndpoint: EndpointProtocol {
+    case fetchSearchItems(text: String)
     
     var path: String {
         switch self {
-        case .fetchSearchItems(let site, _):
-            return "/sites/\(site)/search"
+        case .fetchSearchItems:
+            guard let api = Api.apiUrl, let site = Api.siteId else { return "" }
+            return "\(api)/sites/\(site)/search"
         }
     }
     
-    var method: HTTPMethod {
-        switch self {
-        default:
-            return .get
-        }
-    }
+    var method: HTTPMethod { .get }
     
     var params: Parameters {
         switch self {
-        case .fetchSearchItems(_, let text):
+        case .fetchSearchItems(let text):
             return [ "q" : text ]
         }
     }

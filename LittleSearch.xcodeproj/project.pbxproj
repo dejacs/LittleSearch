@@ -10,9 +10,11 @@
 		1D0456042610054E000956DE /* SearchResultViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0456032610054E000956DE /* SearchResultViewHeader.swift */; };
 		1D045646261015F7000956DE /* SearchItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D045645261015F7000956DE /* SearchItemResponse.swift */; };
 		1D0456542610206B000956DE /* ItemDetailsErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0456532610206B000956DE /* ItemDetailsErrorResponse.swift */; };
+		1D04568026109FD3000956DE /* ApiSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04567F26109FD3000956DE /* ApiSearch.swift */; };
+		1D04568526109FF0000956DE /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04568426109FF0000956DE /* DataHandler.swift */; };
+		1D04568D2610A0F2000956DE /* EndpointProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D04568C2610A0F2000956DE /* EndpointProtocol.swift */; };
 		1D2DC5F9260DCC5000F1EDA8 /* ProductDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC5F8260DCC5000F1EDA8 /* ProductDetailsInteractor.swift */; };
 		1D2DC5FE260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC5FD260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift */; };
-		1D2DC603260DCE4800F1EDA8 /* ProductDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC602260DCE4800F1EDA8 /* ProductDetailsService.swift */; };
 		1D2DC640260DCF9000F1EDA8 /* Api.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC63F260DCF9000F1EDA8 /* Api.swift */; };
 		1D2DC648260DD91900F1EDA8 /* ItemDetailsSuccessResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC647260DD91900F1EDA8 /* ItemDetailsSuccessResponse.swift */; };
 		1D2DC64D260DE22900F1EDA8 /* ItemDetailsPictureResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC64C260DE22900F1EDA8 /* ItemDetailsPictureResponse.swift */; };
@@ -28,7 +30,6 @@
 		1D5415F8260F519900C6BBBA /* ViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D5415F7260F519900C6BBBA /* ViewConfiguration.swift */; };
 		1D541606260F8C8300C6BBBA /* Installments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D541605260F8C8300C6BBBA /* Installments.swift */; };
 		1D63B967260E289000414B29 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63B966260E289000414B29 /* SearchResponse.swift */; };
-		1D63B96F260E2A9500414B29 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63B96E260E2A9500414B29 /* HomeService.swift */; };
 		1D63B974260E2B6000414B29 /* HomeEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63B973260E2B6000414B29 /* HomeEndpoint.swift */; };
 		1D94A8B4260CE404000117A1 /* HomeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8AE260CE404000117A1 /* HomeFactory.swift */; };
 		1D94A8B5260CE404000117A1 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8AF260CE404000117A1 /* HomePresenter.swift */; };
@@ -71,9 +72,11 @@
 		1D0456032610054E000956DE /* SearchResultViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewHeader.swift; sourceTree = "<group>"; };
 		1D045645261015F7000956DE /* SearchItemResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchItemResponse.swift; sourceTree = "<group>"; };
 		1D0456532610206B000956DE /* ItemDetailsErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsErrorResponse.swift; sourceTree = "<group>"; };
+		1D04567F26109FD3000956DE /* ApiSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiSearch.swift; sourceTree = "<group>"; };
+		1D04568426109FF0000956DE /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		1D04568C2610A0F2000956DE /* EndpointProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointProtocol.swift; sourceTree = "<group>"; };
 		1D2DC5F8260DCC5000F1EDA8 /* ProductDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsInteractor.swift; sourceTree = "<group>"; };
 		1D2DC5FD260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsPresenter.swift; sourceTree = "<group>"; };
-		1D2DC602260DCE4800F1EDA8 /* ProductDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsService.swift; sourceTree = "<group>"; };
 		1D2DC63F260DCF9000F1EDA8 /* Api.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Api.swift; sourceTree = "<group>"; };
 		1D2DC647260DD91900F1EDA8 /* ItemDetailsSuccessResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsSuccessResponse.swift; sourceTree = "<group>"; };
 		1D2DC64C260DE22900F1EDA8 /* ItemDetailsPictureResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailsPictureResponse.swift; sourceTree = "<group>"; };
@@ -95,7 +98,6 @@
 		1D5415F7260F519900C6BBBA /* ViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewConfiguration.swift; sourceTree = "<group>"; };
 		1D541605260F8C8300C6BBBA /* Installments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Installments.swift; sourceTree = "<group>"; };
 		1D63B966260E289000414B29 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
-		1D63B96E260E2A9500414B29 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		1D63B973260E2B6000414B29 /* HomeEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEndpoint.swift; sourceTree = "<group>"; };
 		1D94A8AE260CE404000117A1 /* HomeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFactory.swift; sourceTree = "<group>"; };
 		1D94A8AF260CE404000117A1 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
@@ -168,6 +170,9 @@
 				1D2DC63F260DCF9000F1EDA8 /* Api.swift */,
 				1D5415F7260F519900C6BBBA /* ViewConfiguration.swift */,
 				1D541605260F8C8300C6BBBA /* Installments.swift */,
+				1D04567F26109FD3000956DE /* ApiSearch.swift */,
+				1D04568426109FF0000956DE /* DataHandler.swift */,
+				1D04568C2610A0F2000956DE /* EndpointProtocol.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -276,7 +281,6 @@
 				1D94A8B0260CE404000117A1 /* HomeViewController.swift */,
 				1D94A8B1260CE404000117A1 /* HomeInteractor.swift */,
 				1D94A90A260CFD32000117A1 /* HomeCoordinator.swift */,
-				1D63B96E260E2A9500414B29 /* HomeService.swift */,
 				1D63B973260E2B6000414B29 /* HomeEndpoint.swift */,
 				1D5415F2260EB7DD00C6BBBA /* SearchResultViewCell.swift */,
 				1D0456032610054E000956DE /* SearchResultViewHeader.swift */,
@@ -292,7 +296,6 @@
 				1D94A918260D00B7000117A1 /* ProductDetailsFactory.swift */,
 				1D2DC5F8260DCC5000F1EDA8 /* ProductDetailsInteractor.swift */,
 				1D2DC5FD260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift */,
-				1D2DC602260DCE4800F1EDA8 /* ProductDetailsService.swift */,
 				1DA87CDE260E08EE00B8335A /* ProductDetailsEndpoint.swift */,
 			);
 			path = ProductDetails;
@@ -580,17 +583,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D63B96F260E2A9500414B29 /* HomeService.swift in Sources */,
+				1D04568026109FD3000956DE /* ApiSearch.swift in Sources */,
 				1D94A8B5260CE404000117A1 /* HomePresenter.swift in Sources */,
 				1D0456042610054E000956DE /* SearchResultViewHeader.swift in Sources */,
+				1D04568526109FF0000956DE /* DataHandler.swift in Sources */,
 				1D0456542610206B000956DE /* ItemDetailsErrorResponse.swift in Sources */,
 				1D2F9AB9260CB0F200F62E0F /* LittleSearch.xcdatamodeld in Sources */,
 				1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */,
 				1D2F9AAF260CB0F200F62E0F /* AppDelegate.swift in Sources */,
-				1D2DC603260DCE4800F1EDA8 /* ProductDetailsService.swift in Sources */,
 				1D94A8B7260CE404000117A1 /* HomeInteractor.swift in Sources */,
 				1D94A90B260CFD32000117A1 /* HomeCoordinator.swift in Sources */,
 				1D2DC648260DD91900F1EDA8 /* ItemDetailsSuccessResponse.swift in Sources */,
+				1D04568D2610A0F2000956DE /* EndpointProtocol.swift in Sources */,
 				1D94A911260D00A8000117A1 /* ProductDetailsViewController.swift in Sources */,
 				1DA87CDF260E08EE00B8335A /* ProductDetailsEndpoint.swift in Sources */,
 				1D045646261015F7000956DE /* SearchItemResponse.swift in Sources */,
@@ -779,6 +783,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6C22D6AE522E44FD738AFA9E /* Pods-LittleSearch.debug.xcconfig */;
 			buildSettings = {
+				API_HOST = "https://api.mercadolibre.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -799,6 +804,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 35A488F11404F1021FA730E0 /* Pods-LittleSearch.release.xcconfig */;
 			buildSettings = {
+				API_HOST = "https://api.mercadolibre.com";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;

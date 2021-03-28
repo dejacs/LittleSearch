@@ -8,22 +8,15 @@
 import Alamofire
 import Foundation
 
-enum ProductDetailsEndpoint {
+enum ProductDetailsEndpoint: EndpointProtocol {
     case fetchProductDetails(productId: String)
     
     var path: String {
-        switch self {
-        case .fetchProductDetails:
-            return "/items"
-        }
+        guard let api = Api.apiUrl else { return "" }
+        return "\(api)/items"
     }
     
-    var method: HTTPMethod {
-        switch self {
-        default:
-            return .get
-        }
-    }
+    var method: HTTPMethod { .get }
     
     var params: Parameters {
         switch self {

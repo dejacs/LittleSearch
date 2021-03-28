@@ -14,22 +14,24 @@ protocol HomeInteracting: AnyObject {
 
 final class HomeInteractor {
     private let presenter: HomePresenting
-    private let service: HomeServicing
 
-    init(presenter: HomePresenting, service: HomeServicing) {
+    init(presenter: HomePresenting) {
         self.presenter = presenter
-        self.service = service
     }
 }
 
 extension HomeInteractor: HomeInteracting {
     func search(by text: String) {
+        guard let text = text.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed) else {
+            return
+        }
         presenter.presentLoading(shouldPresent: true)
+        let endpoint = HomeEndpoint.fetchSearchItems(text: text)
         
-        service.fetchSearchItems(by: text) { [weak self] completion in
+        ApiSearch.fetch(endpoint: endpoint) { [weak self] (result: Result<SearchResponse, APIError>) in
             self?.presenter.presentLoading(shouldPresent: false)
             
-            switch completion {
+            switch result {
             case .success(let searchResponse) where searchResponse.results.isEmpty:
                 self?.presenter.presentEmpty()
             case .success(let searchResponse):
