@@ -138,19 +138,19 @@ extension HomeViewController: UISearchBarDelegate {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let searchResponse = searchResponse, searchResponse.paging.total != 0 else { return }
+        guard let searchResponse = searchResponse, searchResponse.totalResults != 0 else { return }
         interactor.didSelect(productId: searchResponse.results[indexPath.row].id)
     }
 }
 
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let searchResponse = searchResponse, searchResponse.paging.total != 0 else { return 0 }
+        guard let searchResponse = searchResponse, searchResponse.totalResults != 0 else { return 0 }
         return searchResponse.results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let searchResponse = searchResponse, searchResponse.paging.total != 0 else { return UITableViewCell() }
+        guard let searchResponse = searchResponse, searchResponse.totalResults != 0 else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as! SearchResultViewCell
         cell.setup(searchResponse.results[indexPath.row])
         return cell
@@ -159,7 +159,7 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let searchResponse = searchResponse else { return nil }
         let view = SearchResultViewHeader()
-        view.display(totalResults: searchResponse.paging.total)
+        view.display(totalResults: searchResponse.totalResults)
         return view
     }
 }

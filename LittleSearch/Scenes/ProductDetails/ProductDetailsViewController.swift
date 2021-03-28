@@ -14,8 +14,8 @@ protocol ProductDetailsDisplaying: AnyObject {
     func setTitle(with title: String)
     func setAvailableQuantity(with quantity: Int)
     func setSoldQuantity(with quantity: Int)
-    func setPictures(with pictures: [ProductPicture])
-    func setAttributes(with attributes: [ProductAttribute])
+    func setPictures(with pictures: [ItemDetailsPictureResponse])
+    func setAttributes(with attributes: [ItemDetailsAttributeResponse])
     func setPrice(_ price: Double)
     func setInstallments(_ installments: Installments)
 }
@@ -162,11 +162,11 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
         installmentsLabel.text = format(installments: installments)
     }
     
-    func setPictures(with pictures: [ProductPicture]) {
+    func setPictures(with pictures: [ItemDetailsPictureResponse]) {
         // TODO: implementar carousel
     }
     
-    func setAttributes(with attributes: [ProductAttribute]) {
+    func setAttributes(with attributes: [ItemDetailsAttributeResponse]) {
         // TODO: implementar collection
     }
 }

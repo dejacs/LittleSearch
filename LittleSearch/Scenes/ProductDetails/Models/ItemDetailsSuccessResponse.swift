@@ -1,5 +1,5 @@
 //
-//  ProductDetails.swift
+//  ItemDetailsSuccessResponse.swift
 //  LittleSearch
 //
 //  Created by Jade Silveira on 26/03/21.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct ProductDetails: Codable, Equatable {
+struct ItemDetailsSuccessResponse: Decodable, Equatable, ItemDetailsBodyResponse {
     let id: String
     let title: String
     let availableQuantity: Int
     let soldQuantity: Int
     let secureThumbnail: String
-    let pictures: [ProductPicture]
-    let attributes: [ProductAttribute]
+    let pictures: [ItemDetailsPictureResponse]
+    let attributes: [ItemDetailsAttributeResponse]
 }

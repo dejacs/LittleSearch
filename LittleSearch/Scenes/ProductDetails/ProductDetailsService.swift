@@ -9,11 +9,11 @@ import Alamofire
 import Foundation
 
 protocol ProductDetailsServicing {
-    func fetchProductDetails(productId: String, completion: @escaping(Result<ProductDetails, APIError>) -> Void)
+    func fetchProductDetails(productId: String, completion: @escaping(Result<ItemDetailsSuccessResponse, APIError>) -> Void)
 }
 
 final class ProductDetailsService: ProductDetailsServicing {
-    func fetchProductDetails(productId: String, completion: @escaping(Result<ProductDetails, APIError>) -> Void) {
+    func fetchProductDetails(productId: String, completion: @escaping(Result<ItemDetailsSuccessResponse, APIError>) -> Void) {
         guard let urlHost = Api.apiUrl else {
             completion(.failure(.genericError))
             return
@@ -35,13 +35,17 @@ final class ProductDetailsService: ProductDetailsServicing {
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
-                    let response = try decoder.decode([ProductDetailsResponse].self, from: data)
+                    let response = try decoder.decode([ItemDetailsResponse].self, from: data)
                     
-                    guard let body = response.first?.body else {
+                    guard
+                        let firstResponse = response.first,
+                        firstResponse.code == 200,
+                        let successResponse = firstResponse.body as? ItemDetailsSuccessResponse
+                    else {
                         completion(.failure(.genericError))
                         return
                     }
-                    completion(.success(body))
+                    completion(.success(successResponse))
                     
                 } catch { completion(.failure(.genericError)) }
             }

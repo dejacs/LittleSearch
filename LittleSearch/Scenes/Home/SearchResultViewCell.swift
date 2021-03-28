@@ -47,7 +47,7 @@ final class SearchResultViewCell: UITableViewCell {
         buildLayout()
     }
     
-    func setup(_ searchItem: SearchItem) {
+    func setup(_ searchItem: SearchItemResponse) {
         thumbnailImageView.sd_setImage(
             with: URL(string: searchItem.thumbnail),
             placeholderImage: UIImage(named: "img_placeholder")
