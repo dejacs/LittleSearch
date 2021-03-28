@@ -10,7 +10,7 @@ import SDWebImage
 import SnapKit
 import UIKit
 
-class SearchResultViewCell: UITableViewCell {
+final class SearchResultViewCell: UITableViewCell {
     static let identifier = "SearchResultViewCell"
     
     private lazy var thumbnailImageView: UIImageView = {

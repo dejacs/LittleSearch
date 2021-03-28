@@ -16,6 +16,8 @@ protocol ProductDetailsDisplaying: AnyObject {
     func setSoldQuantity(with quantity: Int)
     func setPictures(with pictures: [ProductPicture])
     func setAttributes(with attributes: [ProductAttribute])
+    func setPrice(_ price: Double)
+    func setInstallments(_ installments: Installments)
 }
 
 final class ProductDetailsViewController: UIViewController {
@@ -43,19 +45,34 @@ final class ProductDetailsViewController: UIViewController {
         return stackView
     }()
     
+    private lazy var soldQuantityLabel: UILabel = {
+        let label = UILabel()
+        label.font = label.font.withSize(10)
+        label.numberOfLines = 1
+        return label
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
+        label.font = label.font.withSize(14)
         label.numberOfLines = 0
+        return label
+    }()
+
+    private lazy var priceLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    private lazy var installmentsLabel: UILabel = {
+        let label = UILabel()
+        label.font = label.font.withSize(12)
+        label.numberOfLines = 1
         return label
     }()
     
     private lazy var availableQuantityLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private lazy var soldQuantityLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         return label
@@ -86,9 +103,11 @@ private extension ProductDetailsViewController {
         view.addSubview(loadingView)
         view.addSubview(stackView)
         
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(availableQuantityLabel)
         stackView.addArrangedSubview(soldQuantityLabel)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(priceLabel)
+        stackView.addArrangedSubview(installmentsLabel)
+        stackView.addArrangedSubview(availableQuantityLabel)
     }
     
     func setupConstraints() {
@@ -135,11 +154,40 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
         soldQuantityLabel.text = quantity.description
     }
     
+    func setPrice(_ price: Double) {
+        priceLabel.text = format(currency: price)
+    }
+    
+    func setInstallments(_ installments: Installments) {
+        installmentsLabel.text = format(installments: installments)
+    }
+    
     func setPictures(with pictures: [ProductPicture]) {
         // TODO: implementar carousel
     }
     
     func setAttributes(with attributes: [ProductAttribute]) {
         // TODO: implementar collection
+    }
+}
+
+private extension ProductDetailsViewController {
+    func format(currency: Double) -> String? {
+        let number = NSNumber(value: currency)
+        let formatter = NumberFormatter()
+        formatter.locale = Locale(identifier: "pt_BR")
+        formatter.numberStyle = .currency
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: number)
+    }
+    
+    func format(installments: Installments) -> String {
+        guard let amount = format(currency: installments.amount) else {
+            return ""
+        }
+        let quantity = installments.quantity.description + "x "
+        let rate = installments.rate == 0 ? " sem juros" : ""
+        return "em " + quantity + amount + rate
     }
 }

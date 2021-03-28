@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D0456042610054E000956DE /* SearchResultViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D0456032610054E000956DE /* SearchResultViewHeader.swift */; };
 		1D2DC5F9260DCC5000F1EDA8 /* ProductDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC5F8260DCC5000F1EDA8 /* ProductDetailsInteractor.swift */; };
 		1D2DC5FE260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC5FD260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift */; };
 		1D2DC603260DCE4800F1EDA8 /* ProductDetailsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D2DC602260DCE4800F1EDA8 /* ProductDetailsService.swift */; };
@@ -65,6 +66,7 @@
 
 /* Begin PBXFileReference section */
 		004032ECBDCD9D793914E04F /* Pods_LittleSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LittleSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D0456032610054E000956DE /* SearchResultViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewHeader.swift; sourceTree = "<group>"; };
 		1D2DC5F8260DCC5000F1EDA8 /* ProductDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsInteractor.swift; sourceTree = "<group>"; };
 		1D2DC5FD260DCC7E00F1EDA8 /* ProductDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsPresenter.swift; sourceTree = "<group>"; };
 		1D2DC602260DCE4800F1EDA8 /* ProductDetailsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailsService.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				1D63B96E260E2A9500414B29 /* HomeService.swift */,
 				1D63B973260E2B6000414B29 /* HomeEndpoint.swift */,
 				1D5415F2260EB7DD00C6BBBA /* SearchResultViewCell.swift */,
+				1D0456032610054E000956DE /* SearchResultViewHeader.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -573,6 +576,7 @@
 			files = (
 				1D63B96F260E2A9500414B29 /* HomeService.swift in Sources */,
 				1D94A8B5260CE404000117A1 /* HomePresenter.swift in Sources */,
+				1D0456042610054E000956DE /* SearchResultViewHeader.swift in Sources */,
 				1D2F9AB9260CB0F200F62E0F /* LittleSearch.xcdatamodeld in Sources */,
 				1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */,
 				1D2F9AAF260CB0F200F62E0F /* AppDelegate.swift in Sources */,

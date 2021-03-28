@@ -27,8 +27,7 @@ final class HomePresenter {
 
 extension HomePresenter: HomePresenting {
     func present(searchResponse: SearchResponse) {
-        viewController?.display(totalResults: searchResponse.paging.total)
-        viewController?.display(searchResults: searchResponse.results)
+        viewController?.display(searchResponse: searchResponse)
     }
     
     func didSelect(productId: String) {

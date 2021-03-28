@@ -11,8 +11,7 @@ import UIKit
 protocol HomeDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
-    func display(searchResults: [SearchItem])
-    func display(totalResults: Int)
+    func display(searchResponse: SearchResponse)
 }
 
 final class HomeViewController: UIViewController {
@@ -51,17 +50,11 @@ final class HomeViewController: UIViewController {
     
     private lazy var searchController = UISearchController(searchResultsController: nil)
     
-    private lazy var totalResultsLabel: UILabel = {
-        let label = UILabel()
-        label.font = label.font.withSize(14)
-        label.numberOfLines = 1
-        return label
-    }()
-    
     private lazy var searchResultTable: UITableView = {
         let tableView = UITableView()
         tableView.register(SearchResultViewCell.self, forCellReuseIdentifier: SearchResultViewCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
+        tableView.sectionHeaderHeight = UITableView.automaticDimension
         tableView.isScrollEnabled = true
         tableView.separatorStyle = .singleLine
         tableView.delegate = self
@@ -73,7 +66,7 @@ final class HomeViewController: UIViewController {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    private var dataSource: [SearchItem] = []
+    private var searchResponse: SearchResponse?
     
     private let interactor: HomeInteracting
     
@@ -94,7 +87,6 @@ extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
         view.addSubview(stackView)
-        stackView.addArrangedSubview(totalResultsLabel)
         stackView.addArrangedSubview(searchResultTable)
     }
     
@@ -109,13 +101,8 @@ extension HomeViewController: ViewConfiguration {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-        totalResultsLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(16)
-        }
         searchResultTable.snp.makeConstraints {
-            $0.top.equalTo(totalResultsLabel.snp.bottom).offset(16)
-            $0.leading.trailing.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -151,28 +138,29 @@ extension HomeViewController: UISearchBarDelegate {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        interactor.didSelect(productId: dataSource[indexPath.row].id)
+        guard let searchResponse = searchResponse, searchResponse.paging.total != 0 else { return }
+        interactor.didSelect(productId: searchResponse.results[indexPath.row].id)
     }
 }
 
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        dataSource.count
+        guard let searchResponse = searchResponse, searchResponse.paging.total != 0 else { return 0 }
+        return searchResponse.results.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard !dataSource.isEmpty else { return UITableViewCell() }
+        guard let searchResponse = searchResponse, searchResponse.paging.total != 0 else { return UITableViewCell() }
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as! SearchResultViewCell
-        cell.setup(dataSource[indexPath.row])
+        cell.setup(searchResponse.results[indexPath.row])
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let searchResponse = searchResponse else { return nil }
+        let view = SearchResultViewHeader()
+        view.display(totalResults: searchResponse.paging.total)
+        return view
     }
 }
 
@@ -189,13 +177,9 @@ extension HomeViewController: HomeDisplaying {
         loadingView.stopAnimating()
     }
     
-    func display(searchResults: [SearchItem]) {
+    func display(searchResponse: SearchResponse) {
         searchResultTable.isHidden = false
-        dataSource = searchResults
+        self.searchResponse = searchResponse
         searchResultTable.reloadData()
-    }
-    
-    func display(totalResults: Int) {
-        totalResultsLabel.text = totalResults.description + " resultados"
     }
 }
