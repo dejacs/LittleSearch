@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import ImageSlideshow
 
 protocol ProductDetailsDisplaying: AnyObject {
     func startLoading()
@@ -44,6 +43,19 @@ final class ProductDetailsViewController: UIViewController {
         stackView.layoutMargins = Layout.StackView.layoutMargins
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
+    }()
+    
+    private lazy var photoCollection: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.backgroundColor = .white
+        collection.dataSource = self
+        collection.delegate = self
+        collection.register(PictureCollectionCell.self, forCellWithReuseIdentifier: PictureCollectionCell.identifier)
+        return collection
     }()
     
     private lazy var soldQuantityLabel: UILabel = {
@@ -85,6 +97,8 @@ final class ProductDetailsViewController: UIViewController {
     }()
     
     private let interactor: ProductDetailsInteracting
+    private var pictures: [ItemDetailsPictureResponse]?
+    private var attributes: [ItemDetailsAttributeResponse]?
     
     init(interactor: ProductDetailsInteracting) {
         self.interactor = interactor
@@ -107,6 +121,7 @@ extension ProductDetailsViewController: ViewConfiguration {
         
         stackView.addArrangedSubview(soldQuantityLabel)
         stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(photoCollection)
         stackView.addArrangedSubview(priceLabel)
         stackView.addArrangedSubview(installmentsLabel)
         stackView.addArrangedSubview(availableQuantityLabel)
@@ -124,11 +139,66 @@ extension ProductDetailsViewController: ViewConfiguration {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
+        
+        soldQuantityLabel.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+        }
+        
+        photoCollection.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
+        priceLabel.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+        }
+        
+        installmentsLabel.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+        }
+        
+        availableQuantityLabel.snp.makeConstraints {
+            $0.top.bottom.leading.equalToSuperview()
+        }
     }
     
     func configureViews() {
         view.backgroundColor = .white
         stackView.backgroundColor = .clear
+    }
+}
+
+extension ProductDetailsViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: UIScreen.main.bounds.width, height: 200)
+    }
+}
+
+extension ProductDetailsViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        interactor.didSelect(picture: pictures?[indexPath.row])
+    }
+}
+
+extension ProductDetailsViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        pictures?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let picture = pictures?[indexPath.row] else {
+            return UICollectionViewCell()
+        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PictureCollectionCell.identifier, for: indexPath) as! PictureCollectionCell
+        cell.setup(with: picture)
+        return cell
     }
 }
 
@@ -165,11 +235,12 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
     }
     
     func setPictures(with pictures: [ItemDetailsPictureResponse]) {
-        // TODO: implementar carousel
+        self.pictures = pictures
+        photoCollection.reloadData()
     }
     
     func setAttributes(with attributes: [ItemDetailsAttributeResponse]) {
-        // TODO: implementar collection
+        self.attributes = attributes
     }
 }
 

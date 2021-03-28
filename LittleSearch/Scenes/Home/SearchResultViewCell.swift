@@ -71,7 +71,7 @@ final class SearchResultViewCell: UITableViewCell {
         titleLabel.text = searchItem.title
         priceLabel.text = format(currency: searchItem.price)
         installmentsLabel.text = format(installments: searchItem.installments)
-        self.layoutIfNeeded()
+        layoutIfNeeded()
     }
 }
 

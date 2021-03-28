@@ -24,10 +24,10 @@ extension ProductDetailsPresenter: ProductDetailsPresenting {
     }
     
     func present(productDetails: ItemDetailsSuccessResponse) {
-        viewController?.setTitle(with: productDetails.title)
-        viewController?.setAvailableQuantity(with: productDetails.availableQuantity)
         viewController?.setSoldQuantity(with: productDetails.soldQuantity)
+        viewController?.setTitle(with: productDetails.title)
         viewController?.setPictures(with: productDetails.pictures)
+        viewController?.setAvailableQuantity(with: productDetails.availableQuantity)
         viewController?.setAttributes(with: productDetails.attributes)
     }
     
