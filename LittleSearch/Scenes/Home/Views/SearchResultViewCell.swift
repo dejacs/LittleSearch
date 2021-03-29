@@ -11,7 +11,13 @@ import SnapKit
 import UIKit
 
 final class SearchResultViewCell: UITableViewCell {
-    static let identifier = "SearchResultViewCell"
+    private enum Layout {
+        enum Cell {
+            static let identifier = "SearchResultViewCell"
+        }
+    }
+    
+    static let identifier = Layout.Cell.identifier
     
     private lazy var thumbnailImageView: UIImageView = {
         let view = UIImageView()
@@ -23,7 +29,7 @@ final class SearchResultViewCell: UITableViewCell {
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(14)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base01)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -31,6 +37,7 @@ final class SearchResultViewCell: UITableViewCell {
 
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base03)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -38,8 +45,8 @@ final class SearchResultViewCell: UITableViewCell {
     
     private lazy var installmentsLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(12)
-        label.textColor = UIColor(named: "clr_highlight")
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
+        label.textColor = UIColor(named: Strings.Color.highlight)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -63,7 +70,7 @@ final class SearchResultViewCell: UITableViewCell {
     func setup(_ searchItem: SearchItemResponse) {
         thumbnailImageView.sd_setImage(
             with: URL(string: searchItem.thumbnail),
-            placeholderImage: UIImage(named: "img_placeholder")) { (image, error, _, _) in
+            placeholderImage: UIImage(named: Strings.Placeholder.image)) { (image, error, _, _) in
             guard error == nil, let imageSize = image?.size else { return }
             self.thumbnailImageView.snp.makeConstraints {
                 $0.size.equalTo(imageSize)
@@ -87,34 +94,34 @@ extension SearchResultViewCell: ViewConfiguration {
     func setupConstraints() {
         thumbnailImageView.snp.makeConstraints {
             $0.height.equalTo(90)
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(LayoutDefaults.View.margin01)
             $0.centerY.equalToSuperview()
-            $0.top.greaterThanOrEqualToSuperview().offset(16)
-            $0.bottom.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.greaterThanOrEqualToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.bottom.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(16)
-            $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
+            $0.top.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(LayoutDefaults.View.margin01)
+            $0.trailing.equalToSuperview().offset(-LayoutDefaults.View.margin01)
             
         }
         priceLabel.snp.makeConstraints {
             $0.height.equalTo(17)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
-            $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         installmentsLabel.snp.makeConstraints {
             $0.height.equalTo(13)
-            $0.top.equalTo(priceLabel.snp.bottom).offset(16)
-            $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
-            $0.bottom.equalToSuperview().offset(-16)
+            $0.top.equalTo(priceLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalTo(thumbnailImageView.snp.trailing).offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
+            $0.bottom.equalToSuperview().offset(-LayoutDefaults.View.margin01)
         }
     }
     
     func configureViews() {
-        backgroundColor = UIColor(named: "clr_transparent_background")
+        backgroundColor = UIColor(named: Strings.Color.transparentBackground)
     }
 }
 
@@ -122,7 +129,7 @@ private extension SearchResultViewCell {
     func format(currency: Double) -> String? {
         let number = NSNumber(value: currency)
         let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "pt_BR")
+        formatter.locale = Locale(identifier: Strings.Locale.brazil)
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2

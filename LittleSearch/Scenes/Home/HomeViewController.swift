@@ -86,8 +86,8 @@ extension HomeViewController: ViewConfiguration {
     }
     
     func configureViews() {
-        navigationController?.navigationBar.backgroundColor = UIColor(named: "clr_branding")
-        navigationController?.navigationBar.barTintColor = UIColor(named: "clr_branding")
+        navigationController?.navigationBar.backgroundColor = UIColor(named: Strings.Color.branding)
+        navigationController?.navigationBar.barTintColor = UIColor(named: Strings.Color.branding)
         view.backgroundColor = .white
         setupSearchBar()
     }
@@ -96,8 +96,8 @@ extension HomeViewController: ViewConfiguration {
 private extension HomeViewController {
     func setupSearchBar() {
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Buscar no Mercado Livre"
-        searchController.searchBar.backgroundColor = UIColor(named: "clr_branding")
+        searchController.searchBar.placeholder = Strings.Placeholder.search
+        searchController.searchBar.backgroundColor = UIColor(named: Strings.Color.branding)
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
         definesPresentationContext = true

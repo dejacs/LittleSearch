@@ -12,8 +12,8 @@ import UIKit
 final class SearchResultViewHeader: UIView {
     private lazy var totalResultsLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(14)
-        label.textColor = UIColor(named: "clr_secondary_text")
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base01)
+        label.textColor = UIColor(named: Strings.Color.secondaryText)
         label.numberOfLines = 1
         return label
     }()
@@ -38,12 +38,12 @@ extension SearchResultViewHeader: ViewConfiguration {
     
     func setupConstraints() {
         totalResultsLabel.snp.makeConstraints {
-            $0.top.leading.bottom.equalToSuperview().inset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.leading.bottom.equalToSuperview().inset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
     }
     
     func configureViews() {
-        backgroundColor = UIColor(named: "clr_primary_background")
+        backgroundColor = UIColor(named: Strings.Color.primaryBackground)
     }
 }

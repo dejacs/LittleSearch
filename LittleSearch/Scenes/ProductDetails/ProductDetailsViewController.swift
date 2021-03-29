@@ -37,8 +37,8 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var soldQuantityLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(12)
-        label.textColor = UIColor(named: "clr_tertiary_text")
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
+        label.textColor = UIColor(named: Strings.Color.tertiaryText)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -46,7 +46,7 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(14)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base02)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -60,7 +60,7 @@ final class ProductDetailsViewController: UIViewController {
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = UIColor(named: "clr_primary_background")
+        collection.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
         collection.dataSource = self
         collection.delegate = self
         collection.register(PictureCollectionCell.self, forCellWithReuseIdentifier: PictureCollectionCell.identifier)
@@ -69,7 +69,7 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(30)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base0X)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -77,7 +77,7 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var installmentsLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(12)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -85,7 +85,7 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var availableQuantityLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(12)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -129,46 +129,46 @@ extension ProductDetailsViewController: ViewConfiguration {
         }
         
         soldQuantityLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(soldQuantityLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(soldQuantityLabel.snp.bottom).offset(LayoutDefaults.View.margin00)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         photoCollection.snp.makeConstraints {
             $0.height.equalTo(200)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.equalToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(photoCollection.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(photoCollection.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         installmentsLabel.snp.makeConstraints {
-            $0.top.equalTo(priceLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(priceLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         availableQuantityLabel.snp.makeConstraints {
-            $0.top.equalTo(installmentsLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
-            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            $0.top.equalTo(installmentsLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
+            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide.snp.bottom).offset(-LayoutDefaults.View.margin01)
         }
     }
     
     func configureViews() {
-        view.backgroundColor = UIColor(named: "clr_primary_background")
+        view.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
     }
 }
 
@@ -250,7 +250,7 @@ private extension ProductDetailsViewController {
     func format(currency: Double) -> String? {
         let number = NSNumber(value: currency)
         let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "pt_BR")
+        formatter.locale = Locale(identifier: Strings.Locale.brazil)
         formatter.numberStyle = .currency
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
