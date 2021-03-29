@@ -178,13 +178,6 @@ extension ProductDetailsViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension ProductDetailsViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        interactor.didSelect(picture: pictures?[indexPath.row])
-        // TODO: slide show
-    }
-}
-
 extension ProductDetailsViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         pictures?.count ?? 0
