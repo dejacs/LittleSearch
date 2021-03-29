@@ -36,8 +36,23 @@ final class PictureCollectionCell: UICollectionViewCell {
             with: URL(string: picture.secureUrl),
             placeholderImage: UIImage(named: Strings.Placeholder.image)) { (image, error, _, _) in
             guard error == nil, let image = image else { return }
-            let newImage = self.resizeImage(image: image, targetSize: self.frame.size)
+            let newSize = self.resize(image: image)
+            let newImage = self.resizeImage(image: image, targetSize: newSize)
             self.pictureImageView.image = newImage
+            self.pictureImageView.snp.makeConstraints {
+                $0.size.equalTo(newSize)
+            }
+        }
+    }
+    
+    func resize(image: UIImage) -> CGSize {
+        let ratio = image.size.width / image.size.height
+        if frame.width > frame.height {
+            let newHeight = frame.width / ratio
+            return CGSize(width: frame.width, height: newHeight)
+        } else {
+            let newWidth = frame.height * ratio
+            return CGSize(width: newWidth, height: frame.height)
         }
     }
     
@@ -68,11 +83,7 @@ extension PictureCollectionCell: ViewConfiguration {
         addSubview(pictureImageView)
     }
     
-    func setupConstraints() {
-        pictureImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
+    func setupConstraints() { }
     
     func configureViews() {
         backgroundColor = UIColor(named: Strings.Color.primaryBackground)
