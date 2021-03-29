@@ -35,6 +35,13 @@ final class ProductDetailsViewController: UIViewController {
         return UIActivityIndicatorView(style: .medium)
     }()
     
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .clear
+        return scrollView
+    }()
+    
     private lazy var soldQuantityLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
@@ -112,12 +119,14 @@ final class ProductDetailsViewController: UIViewController {
 extension ProductDetailsViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
-        view.addSubview(soldQuantityLabel)
-        view.addSubview(titleLabel)
-        view.addSubview(photoCollection)
-        view.addSubview(priceLabel)
-        view.addSubview(installmentsLabel)
-        view.addSubview(availableQuantityLabel)
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(soldQuantityLabel)
+        scrollView.addSubview(titleLabel)
+        scrollView.addSubview(photoCollection)
+        scrollView.addSubview(priceLabel)
+        scrollView.addSubview(installmentsLabel)
+        scrollView.addSubview(availableQuantityLabel)
     }
     
     func setupConstraints() {
@@ -127,8 +136,12 @@ extension ProductDetailsViewController: ViewConfiguration {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
+        scrollView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+        
         soldQuantityLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(LayoutDefaults.View.margin01)
+            $0.top.equalToSuperview().offset(LayoutDefaults.View.margin01)
             $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
             $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
@@ -163,7 +176,7 @@ extension ProductDetailsViewController: ViewConfiguration {
             $0.top.equalTo(installmentsLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
             $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
             $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
-            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide.snp.bottom).offset(-LayoutDefaults.View.margin01)
+            $0.bottom.equalToSuperview().offset(-LayoutDefaults.View.margin01)
         }
     }
     
