@@ -27,6 +27,8 @@ extension ProductDetailsPresenter: ProductDetailsPresenting {
         viewController?.setSoldQuantity(with: productDetails.soldQuantity)
         viewController?.setTitle(with: productDetails.title)
         viewController?.setPictures(with: productDetails.pictures)
+        viewController?.setPrice(productDetails.price)
+        viewController?.setInstallments(productDetails.installments)
         viewController?.setAvailableQuantity(with: productDetails.availableQuantity)
         viewController?.setAttributes(with: productDetails.attributes)
     }

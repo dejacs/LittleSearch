@@ -11,6 +11,8 @@ import UIKit
 final class PictureCollectionCell: UICollectionViewCell {
     static let identifier = "PictureCollectionCell"
     
+    private var isHeightCalculated: Bool = false
+    
     private lazy var pictureImageView: UIImageView = {
         let view = UIImageView()
         view.layer.masksToBounds = true
@@ -33,6 +35,21 @@ final class PictureCollectionCell: UICollectionViewCell {
             }
         }
         buildLayout()
+    }
+    
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        guard !isHeightCalculated else { return layoutAttributes }
+        
+        setNeedsLayout()
+        layoutIfNeeded()
+        
+        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+        var newFrame = layoutAttributes.frame
+        newFrame.size.width = CGFloat(ceilf(Float(size.width)))
+        layoutAttributes.frame = newFrame
+        isHeightCalculated = true
+        
+        return layoutAttributes
     }
 }
 

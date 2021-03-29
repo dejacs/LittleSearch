@@ -17,7 +17,7 @@ protocol ProductDetailsDisplaying: AnyObject {
     func setPictures(with pictures: [ItemDetailsPictureResponse])
     func setAttributes(with attributes: [ItemDetailsAttributeResponse])
     func setPrice(_ price: Double)
-    func setInstallments(_ installments: Installments)
+    func setInstallments(_ installments: Installments?)
 }
 
 final class ProductDetailsViewController: UIViewController {
@@ -35,32 +35,9 @@ final class ProductDetailsViewController: UIViewController {
         return UIActivityIndicatorView(style: .medium)
     }()
     
-    private lazy var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = Layout.StackView.layoutSpacing
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.layoutMargins = Layout.StackView.layoutMargins
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    private lazy var photoCollection: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = .white
-        collection.dataSource = self
-        collection.delegate = self
-        collection.register(PictureCollectionCell.self, forCellWithReuseIdentifier: PictureCollectionCell.identifier)
-        return collection
-    }()
-    
     private lazy var soldQuantityLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(10)
+        label.font = label.font.withSize(12)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -73,9 +50,25 @@ final class ProductDetailsViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
+    private lazy var photoCollection: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.backgroundColor = .white
+        collection.dataSource = self
+        collection.delegate = self
+        collection.register(PictureCollectionCell.self, forCellWithReuseIdentifier: PictureCollectionCell.identifier)
+        return collection
+    }()
+    
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
+        label.font = label.font.withSize(30)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -84,13 +77,14 @@ final class ProductDetailsViewController: UIViewController {
     private lazy var installmentsLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(12)
-        label.numberOfLines = 1
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var availableQuantityLabel: UILabel = {
         let label = UILabel()
+        label.font = label.font.withSize(12)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -117,23 +111,16 @@ final class ProductDetailsViewController: UIViewController {
 extension ProductDetailsViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
-        view.addSubview(stackView)
         
-        stackView.addArrangedSubview(soldQuantityLabel)
-        stackView.addArrangedSubview(titleLabel)
-        stackView.addArrangedSubview(photoCollection)
-        stackView.addArrangedSubview(priceLabel)
-        stackView.addArrangedSubview(installmentsLabel)
-        stackView.addArrangedSubview(availableQuantityLabel)
+        view.addSubview(soldQuantityLabel)
+        view.addSubview(titleLabel)
+        view.addSubview(photoCollection)
+        view.addSubview(priceLabel)
+        view.addSubview(installmentsLabel)
+        view.addSubview(availableQuantityLabel)
     }
     
     func setupConstraints() {
-        stackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-        }
-        
         loadingView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -141,33 +128,46 @@ extension ProductDetailsViewController: ViewConfiguration {
         }
         
         soldQuantityLabel.snp.makeConstraints {
-            $0.top.bottom.leading.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.bottom.leading.equalToSuperview()
+            $0.top.equalTo(soldQuantityLabel.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
         }
         
         photoCollection.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.height.equalTo(200)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().offset(-16)
         }
         
         priceLabel.snp.makeConstraints {
-            $0.top.bottom.leading.equalToSuperview()
+            $0.top.equalTo(photoCollection.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
         }
         
         installmentsLabel.snp.makeConstraints {
-            $0.top.bottom.leading.equalToSuperview()
+            $0.top.equalTo(priceLabel.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
         }
         
         availableQuantityLabel.snp.makeConstraints {
-            $0.top.bottom.leading.equalToSuperview()
+            $0.top.equalTo(installmentsLabel.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
     }
     
     func configureViews() {
         view.backgroundColor = .white
-        stackView.backgroundColor = .clear
     }
 }
 
@@ -180,6 +180,7 @@ extension ProductDetailsViewController: UICollectionViewDelegateFlowLayout {
 extension ProductDetailsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        interactor.didSelect(picture: pictures?[indexPath.row])
+        // TODO: slide show
     }
 }
 
@@ -219,18 +220,18 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
     }
     
     func setAvailableQuantity(with quantity: Int) {
-        availableQuantityLabel.text = quantity.description
+        availableQuantityLabel.text = quantity.description + " disponíveis"
     }
     
     func setSoldQuantity(with quantity: Int) {
-        soldQuantityLabel.text = quantity.description
+        soldQuantityLabel.text = quantity.description + " vendidos"
     }
     
     func setPrice(_ price: Double) {
         priceLabel.text = format(currency: price)
     }
     
-    func setInstallments(_ installments: Installments) {
+    func setInstallments(_ installments: Installments?) {
         installmentsLabel.text = format(installments: installments)
     }
     
@@ -255,8 +256,8 @@ private extension ProductDetailsViewController {
         return formatter.string(from: number)
     }
     
-    func format(installments: Installments) -> String {
-        guard let amount = format(currency: installments.amount) else {
+    func format(installments: Installments?) -> String {
+        guard let installments = installments, let amount = format(currency: installments.amount) else {
             return ""
         }
         let quantity = installments.quantity.description + "x "
