@@ -10,8 +10,7 @@ import Foundation
 enum ProductDetailsFactory {
     static func make(with productId: String) -> ProductDetailsViewController {
         let presenter: ProductDetailsPresenting = ProductDetailsPresenter()
-        let service: ProductDetailsServicing = ProductDetailsService()
-        let interactor = ProductDetailsInteractor(presenter: presenter, service: service, productId: productId)
+        let interactor = ProductDetailsInteractor(presenter: presenter, productId: productId)
         let viewController = ProductDetailsViewController(interactor: interactor)
         
         presenter.viewController = viewController

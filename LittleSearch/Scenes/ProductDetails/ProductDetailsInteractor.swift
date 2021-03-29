@@ -13,13 +13,11 @@ protocol ProductDetailsInteracting: AnyObject {
 
 final class ProductDetailsInteractor {
     private let presenter: ProductDetailsPresenting
-    private let service: ProductDetailsServicing
     
     private let productId: String
 
-    init(presenter: ProductDetailsPresenting, service: ProductDetailsServicing, productId: String) {
+    init(presenter: ProductDetailsPresenting, productId: String) {
         self.presenter = presenter
-        self.service = service
         self.productId = productId
     }
 }
@@ -27,10 +25,21 @@ final class ProductDetailsInteractor {
 extension ProductDetailsInteractor: ProductDetailsInteracting {
     func loadProductDetails() {
         presenter.presentLoading(shouldPresent: true)
-        service.fetchProductDetails(productId: productId) { [weak self] completion in
+        let endpoint = ProductDetailsEndpoint.fetchProductDetails(productId: productId)
+        
+        ApiSearch.fetchArray(endpoint: endpoint) { [weak self] (result: Result<[ItemDetailsResponse], APIError>) in
             self?.presenter.presentLoading(shouldPresent: false)
-            switch completion {
-            case .success(let productDetails):
+            
+            switch result {
+            case .success(let itemDetailsResponse):
+                guard
+                    let firstResponse = itemDetailsResponse.first,
+                    firstResponse.code == 200,
+                    let productDetails = firstResponse.body as? ItemDetailsSuccessResponse
+                else {
+                    self?.presenter.presentError()
+                    return
+                }
                 self?.presenter.present(productDetails: productDetails)
             case .failure:
                 self?.presenter.presentError()

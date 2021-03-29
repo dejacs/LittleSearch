@@ -12,7 +12,7 @@
 		<key>SITE_ID</key>
 		<string>MLB</string>
 		<key>API_HOST</key>
-		<string>https://api.mercadolibre.com</string>
+		<string>$(API_HOST)</string>
 	</dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>

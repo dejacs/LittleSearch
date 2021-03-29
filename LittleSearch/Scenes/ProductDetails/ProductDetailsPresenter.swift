@@ -10,7 +10,7 @@ import Foundation
 protocol ProductDetailsPresenting: AnyObject {
     var viewController: ProductDetailsDisplaying? { get set }
     func presentLoading(shouldPresent: Bool)
-    func present(productDetails: ProductDetails)
+    func present(productDetails: ItemDetailsSuccessResponse)
     func presentError()
 }
 
@@ -23,11 +23,13 @@ extension ProductDetailsPresenter: ProductDetailsPresenting {
         shouldPresent ? viewController?.startLoading() : viewController?.stopLoading()
     }
     
-    func present(productDetails: ProductDetails) {
-        viewController?.setTitle(with: productDetails.title)
-        viewController?.setAvailableQuantity(with: productDetails.availableQuantity)
+    func present(productDetails: ItemDetailsSuccessResponse) {
         viewController?.setSoldQuantity(with: productDetails.soldQuantity)
+        viewController?.setTitle(with: productDetails.title)
         viewController?.setPictures(with: productDetails.pictures)
+        viewController?.setPrice(productDetails.price)
+        viewController?.setInstallments(productDetails.installments)
+        viewController?.setAvailableQuantity(with: productDetails.availableQuantity)
         viewController?.setAttributes(with: productDetails.attributes)
     }
     
