@@ -17,7 +17,7 @@ protocol ProductDetailsDisplaying: AnyObject {
     func setPictures(with pictures: [ItemDetailsPictureResponse])
     func setAttributes(with attributes: [ItemDetailsAttributeResponse])
     func setPrice(_ price: Double)
-    func setInstallments(_ installments: Installments?)
+    func setInstallments(_ installments: InstallmentsResponse?)
 }
 
 final class ProductDetailsViewController: UIViewController {
@@ -231,7 +231,7 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
         priceLabel.text = format(currency: price)
     }
     
-    func setInstallments(_ installments: Installments?) {
+    func setInstallments(_ installments: InstallmentsResponse?) {
         installmentsLabel.text = format(installments: installments)
     }
     
@@ -256,7 +256,7 @@ private extension ProductDetailsViewController {
         return formatter.string(from: number)
     }
     
-    func format(installments: Installments?) -> String {
+    func format(installments: InstallmentsResponse?) -> String {
         guard let installments = installments, let amount = format(currency: installments.amount) else {
             return ""
         }

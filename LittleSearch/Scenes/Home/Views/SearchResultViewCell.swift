@@ -128,7 +128,7 @@ private extension SearchResultViewCell {
         return formatter.string(from: number)
     }
     
-    func format(installments: Installments?) -> String {
+    func format(installments: InstallmentsResponse?) -> String {
         guard let installments = installments, let amount = format(currency: installments.amount) else {
             return ""
         }
