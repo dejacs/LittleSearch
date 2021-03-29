@@ -9,7 +9,7 @@ import Foundation
 
 protocol HomeInteracting: AnyObject {
     func search(by text: String)
-    func didSelect(productId: String)
+    func didSelect(searchItem: SearchItemResponse)
 }
 
 final class HomeInteractor {
@@ -42,7 +42,7 @@ extension HomeInteractor: HomeInteracting {
         }
     }
     
-    func didSelect(productId: String) {
-        presenter.didSelect(productId: productId)
+    func didSelect(searchItem: SearchItemResponse) {
+        presenter.didSelect(searchItem: searchItem)
     }
 }

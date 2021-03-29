@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 enum HomeCoordinatorAction: Equatable {
-    case showProductDetails(_ productId: String)
+    case showProductDetails(_ searchItem: SearchItemResponse)
 }
 
 protocol HomeCoordinating: AnyObject {
@@ -23,8 +23,8 @@ final class HomeCoordinator {
 
 extension HomeCoordinator: HomeCoordinating {
     func perform(action: HomeCoordinatorAction) {
-        if case .showProductDetails(let productId) = action {
-            viewController?.navigationController?.pushViewController(ProductDetailsFactory.make(with: productId), animated: true)
+        if case .showProductDetails(let searchItem) = action {
+            viewController?.navigationController?.pushViewController(ProductDetailsFactory.make(with: searchItem), animated: true)
         }
     }
 }

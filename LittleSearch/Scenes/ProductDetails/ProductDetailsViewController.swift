@@ -78,6 +78,7 @@ final class ProductDetailsViewController: UIViewController {
     private lazy var installmentsLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
+        label.textColor = UIColor(named: Strings.Color.highlight)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
