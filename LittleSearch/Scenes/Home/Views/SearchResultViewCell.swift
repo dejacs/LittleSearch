@@ -39,6 +39,7 @@ final class SearchResultViewCell: UITableViewCell {
     private lazy var installmentsLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(12)
+        label.textColor = UIColor(named: "clr_highlight")
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -113,7 +114,7 @@ extension SearchResultViewCell: ViewConfiguration {
     }
     
     func configureViews() {
-        backgroundColor = .clear
+        backgroundColor = UIColor(named: "clr_transparent_background")
     }
 }
 

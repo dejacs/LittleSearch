@@ -68,6 +68,6 @@ extension PictureCollectionCell: ViewConfiguration {
     }
     
     func configureViews() {
-        backgroundColor = .white
+        backgroundColor = UIColor(named: "clr_primary_background")
     }
 }

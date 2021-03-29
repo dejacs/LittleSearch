@@ -13,6 +13,7 @@ final class SearchResultViewHeader: UIView {
     private lazy var totalResultsLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(14)
+        label.textColor = UIColor(named: "clr_secondary_text")
         label.numberOfLines = 1
         return label
     }()
@@ -43,6 +44,6 @@ extension SearchResultViewHeader: ViewConfiguration {
     }
     
     func configureViews() {
-        backgroundColor = .white
+        backgroundColor = UIColor(named: "clr_primary_background")
     }
 }

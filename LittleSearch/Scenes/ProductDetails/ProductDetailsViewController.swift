@@ -38,6 +38,7 @@ final class ProductDetailsViewController: UIViewController {
     private lazy var soldQuantityLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(12)
+        label.textColor = UIColor(named: "clr_tertiary_text")
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -59,7 +60,7 @@ final class ProductDetailsViewController: UIViewController {
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = .white
+        collection.backgroundColor = UIColor(named: "clr_primary_background")
         collection.dataSource = self
         collection.delegate = self
         collection.register(PictureCollectionCell.self, forCellWithReuseIdentifier: PictureCollectionCell.identifier)
@@ -167,7 +168,7 @@ extension ProductDetailsViewController: ViewConfiguration {
     }
     
     func configureViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "clr_primary_background")
     }
 }
 
