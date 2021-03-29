@@ -35,11 +35,31 @@ final class PictureCollectionCell: UICollectionViewCell {
         pictureImageView.sd_setImage(
             with: URL(string: picture.secureUrl),
             placeholderImage: UIImage(named: Strings.Placeholder.image)) { (image, error, _, _) in
-            guard error == nil, let imageSize = image?.size else { return }
-            self.pictureImageView.snp.makeConstraints {
-                $0.size.equalTo(imageSize)
-            }
+            guard error == nil, let image = image else { return }
+            let newImage = self.resizeImage(image: image, targetSize: self.frame.size)
+            self.pictureImageView.image = newImage
         }
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage!
     }
 }
 
@@ -50,10 +70,7 @@ extension PictureCollectionCell: ViewConfiguration {
     
     func setupConstraints() {
         pictureImageView.snp.makeConstraints {
-            $0.size.equalTo(CGSize(width: 100, height: 100))
-            $0.centerX.centerY.equalToSuperview()
-            $0.leading.top.greaterThanOrEqualToSuperview().inset(LayoutDefaults.View.margin01)
-            $0.trailing.bottom.lessThanOrEqualToSuperview().inset(-LayoutDefaults.View.margin01)
+            $0.edges.equalToSuperview()
         }
     }
     
