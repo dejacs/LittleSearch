@@ -12,12 +12,12 @@ protocol ProductDetailsDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
     func setTitle(with title: String)
-    func setAvailableQuantity(with quantity: Int)
-    func setSoldQuantity(with quantity: Int)
+    func setAvailableQuantity(with quantity: String)
+    func setSoldQuantity(with quantity: String)
     func setPictures(with pictures: [ItemDetailsPictureResponse])
     func setAttributes(with attributes: [ItemDetailsAttributeResponse])
     func setPrice(_ price: Double)
-    func setInstallments(_ installments: InstallmentsResponse?)
+    func setInstallments(_ installments: String?)
 }
 
 final class ProductDetailsViewController: UIViewController {
@@ -219,22 +219,20 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
         titleLabel.text = title
     }
     
-    func setAvailableQuantity(with quantity: Int) {
-        let quantityText = NSLocalizedString(quantity == 1 ? "availableQuantitySingle" : "availableQuantityMultiple", comment: "")
-        availableQuantityLabel.text = String(format: quantityText, quantity.description)
+    func setAvailableQuantity(with quantity: String) {
+        availableQuantityLabel.text = quantity
     }
     
-    func setSoldQuantity(with quantity: Int) {
-        let quantityText = NSLocalizedString(quantity == 1 ? "soldQuantitySingle" : "soldQuantityMultiple", comment: "")
-        soldQuantityLabel.text = String(format: quantityText, quantity.description)
+    func setSoldQuantity(with quantity: String) {
+        soldQuantityLabel.text = quantity
     }
     
     func setPrice(_ price: Double) {
         priceLabel.text = price.formatCurrency()
     }
     
-    func setInstallments(_ installments: InstallmentsResponse?) {
-        installmentsLabel.text = InstallmentsUtils.format(installments: installments)
+    func setInstallments(_ installments: String?) {
+        installmentsLabel.text = installments
     }
     
     func setPictures(with pictures: [ItemDetailsPictureResponse]) {

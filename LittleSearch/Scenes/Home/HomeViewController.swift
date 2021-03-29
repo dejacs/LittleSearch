@@ -106,9 +106,7 @@ private extension HomeViewController {
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let searchText = searchBar.text else {
-            return
-        }
+        guard let searchText = searchBar.text else { return }
         interactor.search(by: searchText)
     }
 }
