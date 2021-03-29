@@ -24,12 +24,22 @@ extension ProductDetailsPresenter: ProductDetailsPresenting {
     }
     
     func present(productDetails: ItemDetailsSuccessResponse) {
-        viewController?.setSoldQuantity(with: productDetails.soldQuantity)
+        let formattedSoldQuantity = FormatUtils.format(
+            quantity: productDetails.soldQuantity,
+            keyTextSingle: "soldQuantitySingle",
+            keyTextMultiple: "soldQuantityMultiple"
+        )
+        let formattedAvailableQuantity = FormatUtils.format(
+            quantity: productDetails.availableQuantity,
+            keyTextSingle: "availableQuantitySingle",
+            keyTextMultiple: "availableQuantityMultiple"
+        )
+        viewController?.setSoldQuantity(with: formattedSoldQuantity)
         viewController?.setTitle(with: productDetails.title)
         viewController?.setPictures(with: productDetails.pictures)
         viewController?.setPrice(productDetails.price)
-        viewController?.setInstallments(productDetails.installments)
-        viewController?.setAvailableQuantity(with: productDetails.availableQuantity)
+        viewController?.setInstallments(InstallmentsUtils.format(installments: productDetails.installments))
+        viewController?.setAvailableQuantity(with: formattedAvailableQuantity)
         viewController?.setAttributes(with: productDetails.attributes)
     }
     

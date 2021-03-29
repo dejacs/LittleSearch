@@ -12,12 +12,12 @@ protocol ProductDetailsDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
     func setTitle(with title: String)
-    func setAvailableQuantity(with quantity: Int)
-    func setSoldQuantity(with quantity: Int)
+    func setAvailableQuantity(with quantity: String)
+    func setSoldQuantity(with quantity: String)
     func setPictures(with pictures: [ItemDetailsPictureResponse])
     func setAttributes(with attributes: [ItemDetailsAttributeResponse])
     func setPrice(_ price: Double)
-    func setInstallments(_ installments: Installments?)
+    func setInstallments(_ installments: String?)
 }
 
 final class ProductDetailsViewController: UIViewController {
@@ -37,7 +37,8 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var soldQuantityLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(12)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
+        label.textColor = UIColor(named: Strings.Color.tertiaryText)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -45,7 +46,7 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(14)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base02)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -59,7 +60,7 @@ final class ProductDetailsViewController: UIViewController {
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.backgroundColor = .white
+        collection.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
         collection.dataSource = self
         collection.delegate = self
         collection.register(PictureCollectionCell.self, forCellWithReuseIdentifier: PictureCollectionCell.identifier)
@@ -68,7 +69,7 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(30)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base0X)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -76,7 +77,7 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var installmentsLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(12)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -84,7 +85,7 @@ final class ProductDetailsViewController: UIViewController {
     
     private lazy var availableQuantityLabel: UILabel = {
         let label = UILabel()
-        label.font = label.font.withSize(12)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -111,7 +112,6 @@ final class ProductDetailsViewController: UIViewController {
 extension ProductDetailsViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
-        
         view.addSubview(soldQuantityLabel)
         view.addSubview(titleLabel)
         view.addSubview(photoCollection)
@@ -128,46 +128,46 @@ extension ProductDetailsViewController: ViewConfiguration {
         }
         
         soldQuantityLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(soldQuantityLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(soldQuantityLabel.snp.bottom).offset(LayoutDefaults.View.margin00)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         photoCollection.snp.makeConstraints {
             $0.height.equalTo(200)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().offset(-16)
+            $0.top.equalTo(titleLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.equalToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         priceLabel.snp.makeConstraints {
-            $0.top.equalTo(photoCollection.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(photoCollection.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         installmentsLabel.snp.makeConstraints {
-            $0.top.equalTo(priceLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
+            $0.top.equalTo(priceLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
         }
         
         availableQuantityLabel.snp.makeConstraints {
-            $0.top.equalTo(installmentsLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-16)
-            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            $0.top.equalTo(installmentsLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
+            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide.snp.bottom).offset(-LayoutDefaults.View.margin01)
         }
     }
     
     func configureViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
     }
 }
 
@@ -219,20 +219,20 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
         titleLabel.text = title
     }
     
-    func setAvailableQuantity(with quantity: Int) {
-        availableQuantityLabel.text = quantity.description + " disponíveis"
+    func setAvailableQuantity(with quantity: String) {
+        availableQuantityLabel.text = quantity
     }
     
-    func setSoldQuantity(with quantity: Int) {
-        soldQuantityLabel.text = quantity.description + " vendidos"
+    func setSoldQuantity(with quantity: String) {
+        soldQuantityLabel.text = quantity
     }
     
     func setPrice(_ price: Double) {
-        priceLabel.text = format(currency: price)
+        priceLabel.text = price.formatCurrency()
     }
     
-    func setInstallments(_ installments: Installments?) {
-        installmentsLabel.text = format(installments: installments)
+    func setInstallments(_ installments: String?) {
+        installmentsLabel.text = installments
     }
     
     func setPictures(with pictures: [ItemDetailsPictureResponse]) {
@@ -242,26 +242,5 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
     
     func setAttributes(with attributes: [ItemDetailsAttributeResponse]) {
         self.attributes = attributes
-    }
-}
-
-private extension ProductDetailsViewController {
-    func format(currency: Double) -> String? {
-        let number = NSNumber(value: currency)
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: "pt_BR")
-        formatter.numberStyle = .currency
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        return formatter.string(from: number)
-    }
-    
-    func format(installments: Installments?) -> String {
-        guard let installments = installments, let amount = format(currency: installments.amount) else {
-            return ""
-        }
-        let quantity = installments.quantity.description + "x "
-        let rate = installments.rate == 0 ? " sem juros" : ""
-        return "em " + quantity + amount + rate
     }
 }

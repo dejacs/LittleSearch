@@ -1,0 +1,15 @@
+/* 
+  ProductDetailsStrings.strings
+  LittleSearch
+
+  Created by Jade Silveira on 29/03/21.
+  
+*/
+
+"availableQuantitySingle" = "%@ disponível";
+"availableQuantityMultiple" = "%@ disponíveis";
+"soldQuantitySingle" = "%@ vendido";
+"soldQuantityMultiple" = "%@ vendidos";
+
+"totalResultsSingle" = "%@ resultado";
+"totalResultsMultiple" = "%@ resultados";

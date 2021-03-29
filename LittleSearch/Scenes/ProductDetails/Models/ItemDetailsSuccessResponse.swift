@@ -14,7 +14,7 @@ struct ItemDetailsSuccessResponse: Decodable, Equatable, ItemDetailsBodyResponse
     let availableQuantity: Int
     let soldQuantity: Int
     let secureThumbnail: String
-    let installments: Installments?
+    let installments: InstallmentsResponse?
     let pictures: [ItemDetailsPictureResponse]
     let attributes: [ItemDetailsAttributeResponse]
 }
