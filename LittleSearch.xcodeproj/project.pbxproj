@@ -34,6 +34,8 @@
 		1D63B967260E289000414B29 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63B966260E289000414B29 /* SearchResponse.swift */; };
 		1D63B974260E2B6000414B29 /* HomeEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D63B973260E2B6000414B29 /* HomeEndpoint.swift */; };
 		1D7931182611C3150070DD68 /* LayoutDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7931172611C3140070DD68 /* LayoutDefaults.swift */; };
+		1D79311E2611C9870070DD68 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D79311D2611C9870070DD68 /* Double+Extension.swift */; };
+		1D7931272611CA510070DD68 /* InstallmentsUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7931262611CA510070DD68 /* InstallmentsUtils.swift */; };
 		1D94A8B4260CE404000117A1 /* HomeFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8AE260CE404000117A1 /* HomeFactory.swift */; };
 		1D94A8B5260CE404000117A1 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8AF260CE404000117A1 /* HomePresenter.swift */; };
 		1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D94A8B0260CE404000117A1 /* HomeViewController.swift */; };
@@ -105,6 +107,8 @@
 		1D63B966260E289000414B29 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 		1D63B973260E2B6000414B29 /* HomeEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEndpoint.swift; sourceTree = "<group>"; };
 		1D7931172611C3140070DD68 /* LayoutDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutDefaults.swift; sourceTree = "<group>"; };
+		1D79311D2611C9870070DD68 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
+		1D7931262611CA510070DD68 /* InstallmentsUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallmentsUtils.swift; sourceTree = "<group>"; };
 		1D94A8AE260CE404000117A1 /* HomeFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFactory.swift; sourceTree = "<group>"; };
 		1D94A8AF260CE404000117A1 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		1D94A8B0260CE404000117A1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +222,8 @@
 		1D2DC63E260DCF8300F1EDA8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				1D7931252611CA340070DD68 /* Helpers */,
+				1D79311C2611C94F0070DD68 /* Extensions */,
 				1D03FB312611AE2300D839FA /* Models */,
 				1D03FB302611AE0F00D839FA /* Api */,
 				1D03FB2E2611ADA100D839FA /* Endpoints */,
@@ -302,6 +308,22 @@
 				1D045645261015F7000956DE /* SearchItemResponse.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		1D79311C2611C94F0070DD68 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1D79311D2611C9870070DD68 /* Double+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1D7931252611CA340070DD68 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				1D7931262611CA510070DD68 /* InstallmentsUtils.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		1D94A8AB260CE3B7000117A1 /* Scenes */ = {
@@ -637,6 +659,7 @@
 				1D0456042610054E000956DE /* SearchResultViewHeader.swift in Sources */,
 				1D04568526109FF0000956DE /* DataHandler.swift in Sources */,
 				1D0456542610206B000956DE /* ItemDetailsErrorResponse.swift in Sources */,
+				1D79311E2611C9870070DD68 /* Double+Extension.swift in Sources */,
 				1D7931182611C3150070DD68 /* LayoutDefaults.swift in Sources */,
 				1D2F9AB9260CB0F200F62E0F /* LittleSearch.xcdatamodeld in Sources */,
 				1D94A8B6260CE404000117A1 /* HomeViewController.swift in Sources */,
@@ -644,6 +667,7 @@
 				1D94A8B7260CE404000117A1 /* HomeInteractor.swift in Sources */,
 				1D94A90B260CFD32000117A1 /* HomeCoordinator.swift in Sources */,
 				1D2DC648260DD91900F1EDA8 /* ItemDetailsSuccessResponse.swift in Sources */,
+				1D7931272611CA510070DD68 /* InstallmentsUtils.swift in Sources */,
 				1D03FB442611B97000D839FA /* Strings.swift in Sources */,
 				1D04568D2610A0F2000956DE /* EndpointProtocol.swift in Sources */,
 				1D94A911260D00A8000117A1 /* ProductDetailsViewController.swift in Sources */,

@@ -77,8 +77,8 @@ final class SearchResultViewCell: UITableViewCell {
             }
         }
         titleLabel.text = searchItem.title
-        priceLabel.text = format(currency: searchItem.price)
-        installmentsLabel.text = format(installments: searchItem.installments)
+        priceLabel.text = searchItem.price.formatCurrency()
+        installmentsLabel.text = InstallmentsUtils.format(installments: searchItem.installments)
         layoutIfNeeded()
     }
 }
@@ -122,26 +122,5 @@ extension SearchResultViewCell: ViewConfiguration {
     
     func configureViews() {
         backgroundColor = UIColor(named: Strings.Color.transparentBackground)
-    }
-}
-
-private extension SearchResultViewCell {
-    func format(currency: Double) -> String? {
-        let number = NSNumber(value: currency)
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: Strings.Locale.brazil)
-        formatter.numberStyle = .currency
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        return formatter.string(from: number)
-    }
-    
-    func format(installments: InstallmentsResponse?) -> String {
-        guard let installments = installments, let amount = format(currency: installments.amount) else {
-            return ""
-        }
-        let quantity = installments.quantity.description + "x "
-        let rate = installments.rate == 0 ? " sem juros" : ""
-        return "em " + quantity + amount + rate
     }
 }

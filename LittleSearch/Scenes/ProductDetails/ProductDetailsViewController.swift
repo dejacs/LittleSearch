@@ -112,7 +112,6 @@ final class ProductDetailsViewController: UIViewController {
 extension ProductDetailsViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
-        
         view.addSubview(soldQuantityLabel)
         view.addSubview(titleLabel)
         view.addSubview(photoCollection)
@@ -229,11 +228,11 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
     }
     
     func setPrice(_ price: Double) {
-        priceLabel.text = format(currency: price)
+        priceLabel.text = price.formatCurrency()
     }
     
     func setInstallments(_ installments: InstallmentsResponse?) {
-        installmentsLabel.text = format(installments: installments)
+        installmentsLabel.text = InstallmentsUtils.format(installments: installments)
     }
     
     func setPictures(with pictures: [ItemDetailsPictureResponse]) {
@@ -243,26 +242,5 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
     
     func setAttributes(with attributes: [ItemDetailsAttributeResponse]) {
         self.attributes = attributes
-    }
-}
-
-private extension ProductDetailsViewController {
-    func format(currency: Double) -> String? {
-        let number = NSNumber(value: currency)
-        let formatter = NumberFormatter()
-        formatter.locale = Locale(identifier: Strings.Locale.brazil)
-        formatter.numberStyle = .currency
-        formatter.minimumFractionDigits = 2
-        formatter.maximumFractionDigits = 2
-        return formatter.string(from: number)
-    }
-    
-    func format(installments: InstallmentsResponse?) -> String {
-        guard let installments = installments, let amount = format(currency: installments.amount) else {
-            return ""
-        }
-        let quantity = installments.quantity.description + "x "
-        let rate = installments.rate == 0 ? " sem juros" : ""
-        return "em " + quantity + amount + rate
     }
 }
