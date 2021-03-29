@@ -41,13 +41,14 @@ final class PictureCollectionCell: UICollectionViewCell {
             self.pictureImageView.image = newImage
             self.pictureImageView.snp.makeConstraints {
                 $0.size.equalTo(newSize)
+                $0.centerY.centerX.equalToSuperview()
             }
         }
     }
     
     func resize(image: UIImage) -> CGSize {
         let ratio = image.size.width / image.size.height
-        if frame.width > frame.height {
+        if frame.width < frame.height {
             let newHeight = frame.width / ratio
             return CGSize(width: frame.width, height: newHeight)
         } else {
