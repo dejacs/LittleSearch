@@ -31,6 +31,7 @@ final class PictureCollectionCell: UICollectionViewCell {
     }
     
     func setup(with picture: ItemDetailsPictureResponse) {
+        buildLayout()
         pictureImageView.sd_setImage(
             with: URL(string: picture.secureUrl),
             placeholderImage: UIImage(named: Strings.Placeholder.image)) { (image, error, _, _) in
@@ -39,22 +40,6 @@ final class PictureCollectionCell: UICollectionViewCell {
                 $0.size.equalTo(imageSize)
             }
         }
-        buildLayout()
-    }
-    
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        guard !isHeightCalculated else { return layoutAttributes }
-        
-        setNeedsLayout()
-        layoutIfNeeded()
-        
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        newFrame.size.width = CGFloat(ceilf(Float(size.width)))
-        layoutAttributes.frame = newFrame
-        isHeightCalculated = true
-        
-        return layoutAttributes
     }
 }
 
@@ -65,10 +50,10 @@ extension PictureCollectionCell: ViewConfiguration {
     
     func setupConstraints() {
         pictureImageView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(LayoutDefaults.View.margin01)
-            $0.centerX.equalToSuperview()
-            $0.leading.greaterThanOrEqualToSuperview().offset(LayoutDefaults.View.margin01)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
+            $0.size.equalTo(CGSize(width: 100, height: 100))
+            $0.centerX.centerY.equalToSuperview()
+            $0.leading.top.greaterThanOrEqualToSuperview().inset(LayoutDefaults.View.margin01)
+            $0.trailing.bottom.lessThanOrEqualToSuperview().inset(-LayoutDefaults.View.margin01)
         }
     }
     
