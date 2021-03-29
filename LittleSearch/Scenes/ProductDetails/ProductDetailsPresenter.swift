@@ -10,7 +10,7 @@ import Foundation
 protocol ProductDetailsPresenting: AnyObject {
     var viewController: ProductDetailsDisplaying? { get set }
     func presentLoading(shouldPresent: Bool)
-    func present(productDetails: ItemDetailsSuccessResponse)
+    func present(productDetails: ItemDetailsSuccessResponse, installments: InstallmentsResponse?)
     func presentError()
 }
 
@@ -23,7 +23,7 @@ extension ProductDetailsPresenter: ProductDetailsPresenting {
         shouldPresent ? viewController?.startLoading() : viewController?.stopLoading()
     }
     
-    func present(productDetails: ItemDetailsSuccessResponse) {
+    func present(productDetails: ItemDetailsSuccessResponse, installments: InstallmentsResponse?) {
         let formattedSoldQuantity = FormatUtils.format(
             quantity: productDetails.soldQuantity,
             keyTextSingle: "soldQuantitySingle",
@@ -38,7 +38,7 @@ extension ProductDetailsPresenter: ProductDetailsPresenting {
         viewController?.setTitle(with: productDetails.title)
         viewController?.setPictures(with: productDetails.pictures)
         viewController?.setPrice(productDetails.price)
-        viewController?.setInstallments(InstallmentsUtils.format(installments: productDetails.installments))
+        viewController?.setInstallments(InstallmentsUtils.format(installments: installments))
         viewController?.setAvailableQuantity(with: formattedAvailableQuantity)
         viewController?.setAttributes(with: productDetails.attributes)
     }

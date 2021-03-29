@@ -114,7 +114,7 @@ extension HomeViewController: UISearchBarDelegate {
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let searchResponse = searchResponse, searchResponse.totalResults != 0 else { return }
-        interactor.didSelect(productId: searchResponse.results[indexPath.row].id)
+        interactor.didSelect(searchItem: searchResponse.results[indexPath.row])
     }
 }
 
