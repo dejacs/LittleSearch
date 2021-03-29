@@ -220,11 +220,13 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
     }
     
     func setAvailableQuantity(with quantity: Int) {
-        availableQuantityLabel.text = quantity.description + " disponíveis"
+        let quantityText = NSLocalizedString(quantity == 1 ? "availableQuantitySingle" : "availableQuantityMultiple", comment: "")
+        availableQuantityLabel.text = String(format: quantityText, quantity.description)
     }
     
     func setSoldQuantity(with quantity: Int) {
-        soldQuantityLabel.text = quantity.description + " vendidos"
+        let quantityText = NSLocalizedString(quantity == 1 ? "soldQuantitySingle" : "soldQuantityMultiple", comment: "")
+        soldQuantityLabel.text = String(format: quantityText, quantity.description)
     }
     
     func setPrice(_ price: Double) {

@@ -27,7 +27,8 @@ final class SearchResultViewHeader: UIView {
     required init?(coder: NSCoder) { nil }
     
     func display(totalResults: Int) {
-        totalResultsLabel.text = totalResults.description + " resultados"
+        let totalResultsText = NSLocalizedString(totalResults == 1 ? "totalResultsSingle" : "totalResultsMultiple", comment: "")
+        totalResultsLabel.text = String(format: totalResultsText, totalResults.description)
     }
 }
 
