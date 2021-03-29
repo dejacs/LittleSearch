@@ -56,7 +56,6 @@ final class ProductDetailsViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.translatesAutoresizingMaskIntoConstraints = false
@@ -141,7 +140,8 @@ extension ProductDetailsViewController: ViewConfiguration {
         }
         
         photoCollection.snp.makeConstraints {
-            $0.height.equalTo(200)
+            $0.height.equalTo(300)
+            $0.width.equalTo(UIScreen.main.bounds.width - 32)
             $0.top.equalTo(titleLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
             $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
             $0.trailing.equalToSuperview().offset(-LayoutDefaults.View.margin01)
@@ -174,14 +174,7 @@ extension ProductDetailsViewController: ViewConfiguration {
 
 extension ProductDetailsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width, height: 200)
-    }
-}
-
-extension ProductDetailsViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        interactor.didSelect(picture: pictures?[indexPath.row])
-        // TODO: slide show
+        return CGSize(width: UIScreen.main.bounds.width - 32, height: 300)
     }
 }
 

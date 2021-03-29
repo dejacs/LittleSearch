@@ -31,30 +31,51 @@ final class PictureCollectionCell: UICollectionViewCell {
     }
     
     func setup(with picture: ItemDetailsPictureResponse) {
+        buildLayout()
         pictureImageView.sd_setImage(
             with: URL(string: picture.secureUrl),
             placeholderImage: UIImage(named: Strings.Placeholder.image)) { (image, error, _, _) in
-            guard error == nil, let imageSize = image?.size else { return }
+            guard error == nil, let image = image else { return }
+            let newSize = self.resize(image: image)
+            let newImage = self.resizeImage(image: image, targetSize: newSize)
+            self.pictureImageView.image = newImage
             self.pictureImageView.snp.makeConstraints {
-                $0.size.equalTo(imageSize)
+                $0.size.equalTo(newSize)
+                $0.centerY.centerX.equalToSuperview()
             }
         }
-        buildLayout()
     }
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        guard !isHeightCalculated else { return layoutAttributes }
-        
-        setNeedsLayout()
-        layoutIfNeeded()
-        
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var newFrame = layoutAttributes.frame
-        newFrame.size.width = CGFloat(ceilf(Float(size.width)))
-        layoutAttributes.frame = newFrame
-        isHeightCalculated = true
-        
-        return layoutAttributes
+    func resize(image: UIImage) -> CGSize {
+        let ratio = image.size.width / image.size.height
+        if frame.width < frame.height {
+            let newHeight = frame.width / ratio
+            return CGSize(width: frame.width, height: newHeight)
+        } else {
+            let newWidth = frame.height * ratio
+            return CGSize(width: newWidth, height: frame.height)
+        }
+    }
+    
+    func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let size = image.size
+
+        let widthRatio  = targetSize.width  / size.width
+        let heightRatio = targetSize.height / size.height
+
+        var newSize: CGSize
+        if(widthRatio > heightRatio) {
+            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
+        } else {
+            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
+        }
+        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
+        image.draw(in: rect)
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage!
     }
 }
 
@@ -63,14 +84,7 @@ extension PictureCollectionCell: ViewConfiguration {
         addSubview(pictureImageView)
     }
     
-    func setupConstraints() {
-        pictureImageView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(LayoutDefaults.View.margin01)
-            $0.centerX.equalToSuperview()
-            $0.leading.greaterThanOrEqualToSuperview().offset(LayoutDefaults.View.margin01)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
-        }
-    }
+    func setupConstraints() { }
     
     func configureViews() {
         backgroundColor = UIColor(named: Strings.Color.primaryBackground)
