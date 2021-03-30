@@ -24,7 +24,7 @@ final class ErrorView: UIView {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = label.font.withSize(LayoutDefaults.FontSize.base01)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base03)
         label.textColor = UIColor(named: Strings.Color.secondaryText)
         label.text = Strings.CommonMessage.errorSearchTitle
         label.textAlignment = .center
@@ -35,7 +35,7 @@ final class ErrorView: UIView {
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = label.font.withSize(LayoutDefaults.FontSize.base01)
+        label.font = label.font.withSize(LayoutDefaults.FontSize.base02)
         label.textColor = UIColor(named: Strings.Color.tertiaryText)
         label.text = Strings.CommonMessage.errorSearchMessage
         label.textAlignment = .center
@@ -74,10 +74,10 @@ extension ErrorView: ViewConfiguration {
         imageView.snp.makeConstraints {
             $0.size.equalTo(CGSize(width: 100, height: 100))
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(LayoutDefaults.View.margin01)
+            $0.bottom.equalTo(titleLabel.snp.top).offset(-LayoutDefaults.View.margin01 * 2)
         }
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom).offset(LayoutDefaults.View.margin01)
+            $0.top.equalTo(snp.centerY)
             $0.centerX.equalToSuperview()
             $0.leading.greaterThanOrEqualToSuperview().offset(LayoutDefaults.View.margin01)
             $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
@@ -85,8 +85,8 @@ extension ErrorView: ViewConfiguration {
         messageLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
             $0.centerX.equalToSuperview()
-            $0.leading.greaterThanOrEqualToSuperview().offset(LayoutDefaults.View.margin01)
-            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01)
+            $0.leading.greaterThanOrEqualToSuperview().offset(LayoutDefaults.View.margin01 * 2)
+            $0.trailing.lessThanOrEqualToSuperview().offset(-LayoutDefaults.View.margin01 * 2)
         }
         tryAgainButton.snp.makeConstraints {
             $0.top.equalTo(messageLabel.snp.bottom).offset(LayoutDefaults.View.margin01)

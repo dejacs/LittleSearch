@@ -274,6 +274,6 @@ extension HomeViewController: HomeDisplaying {
 
 extension HomeViewController: ErrorViewDelegate {
     func didTapButton() {
-        interactor.loadNextPage()
+        interactor.search(by: nil)
     }
 }
