@@ -9,7 +9,7 @@ import Alamofire
 import Foundation
 
 enum HomeEndpoint: EndpointProtocol {
-    case fetchSearchItems(text: String)
+    case fetchSearchItems(text: String, itemsPerPage: Int, page: Int)
     
     var path: String {
         switch self {
@@ -23,8 +23,8 @@ enum HomeEndpoint: EndpointProtocol {
     
     var params: Parameters {
         switch self {
-        case .fetchSearchItems(let text):
-            return [ "q" : text ]
+        case let .fetchSearchItems(text, itemsPerPage, page):
+            return [ "q" : text , "limit" : itemsPerPage, "offset" : page ]
         }
     }
 }

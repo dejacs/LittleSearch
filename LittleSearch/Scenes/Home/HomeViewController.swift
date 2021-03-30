@@ -11,7 +11,8 @@ import UIKit
 protocol HomeDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
-    func display(searchResponse: SearchResponse)
+    func display(totalResults: Int)
+    func display(searchDataSource: [SearchItemResponse])
 }
 
 final class HomeViewController: UIViewController {
@@ -49,7 +50,8 @@ final class HomeViewController: UIViewController {
         return searchController.searchBar.text?.isEmpty ?? true
     }
     
-    private var searchResponse: SearchResponse?
+    private var searchDataSource: [SearchItemResponse] = []
+    private var totalResults: Int = 0
     
     private let interactor: HomeInteracting
     
@@ -102,6 +104,10 @@ private extension HomeViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
     }
+    
+    func shouldLoadPage() -> Bool {
+        return totalResults > searchDataSource.count
+    }
 }
 
 extension HomeViewController: UISearchBarDelegate {
@@ -113,28 +119,27 @@ extension HomeViewController: UISearchBarDelegate {
 
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let searchResponse = searchResponse, searchResponse.totalResults != 0 else { return }
-        interactor.didSelect(searchItem: searchResponse.results[indexPath.row])
+        interactor.didSelect(searchItem: searchDataSource[indexPath.row])
     }
 }
 
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let searchResponse = searchResponse, searchResponse.totalResults != 0 else { return 0 }
-        return searchResponse.results.count
+        return searchDataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let searchResponse = searchResponse, searchResponse.totalResults != 0 else { return UITableViewCell() }
+        if searchDataSource.endIndex - 1 == indexPath.row, shouldLoadPage() {
+            interactor.search(by: nil)
+        }
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as! SearchResultViewCell
-        cell.setup(searchResponse.results[indexPath.row])
+        cell.setup(searchDataSource[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let searchResponse = searchResponse else { return nil }
         let view = SearchResultViewHeader()
-        view.display(totalResults: searchResponse.totalResults)
+        view.display(totalResults: totalResults)
         return view
     }
 }
@@ -152,9 +157,13 @@ extension HomeViewController: HomeDisplaying {
         loadingView.stopAnimating()
     }
     
-    func display(searchResponse: SearchResponse) {
+    func display(totalResults: Int) {
+        self.totalResults = totalResults
+    }
+    
+    func display(searchDataSource: [SearchItemResponse]) {
         searchResultTable.isHidden = false
-        self.searchResponse = searchResponse
+        self.searchDataSource = searchDataSource
         searchResultTable.reloadData()
     }
 }

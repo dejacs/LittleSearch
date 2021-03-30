@@ -9,7 +9,8 @@ import Foundation
 
 protocol HomePresenting: AnyObject {
     var viewController: HomeDisplaying? { get set }
-    func present(searchResponse: SearchResponse)
+    func present(searchDataSource: [SearchItemResponse])
+    func present(totalResults: Int)
     func didSelect(searchItem: SearchItemResponse)
     func presentLoading(shouldPresent: Bool)
     func presentEmpty()
@@ -26,8 +27,12 @@ final class HomePresenter {
 }
 
 extension HomePresenter: HomePresenting {
-    func present(searchResponse: SearchResponse) {
-        viewController?.display(searchResponse: searchResponse)
+    func present(searchDataSource: [SearchItemResponse]) {
+        viewController?.display(searchDataSource: searchDataSource)
+    }
+    
+    func present(totalResults: Int) {
+        viewController?.display(totalResults: totalResults)
     }
     
     func didSelect(searchItem: SearchItemResponse) {
