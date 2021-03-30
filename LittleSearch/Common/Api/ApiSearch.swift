@@ -13,6 +13,8 @@ class ApiSearch {
         guard let url = URL(string: endpoint.path) else {
             return
         }
+        AF.session.configuration.timeoutIntervalForRequest = 60
+        
         AF.request(url, method: endpoint.method, parameters: endpoint.params).responseJSON { (result) in
             DispatchQueue.main.async {
                 guard let data = result.data else {
@@ -28,6 +30,8 @@ class ApiSearch {
         guard let url = URL(string: endpoint.path) else {
             return
         }
+        AF.session.configuration.timeoutIntervalForRequest = 60
+        
         AF.request(url, method: endpoint.method, parameters: endpoint.params).responseJSON { (result) in
             DispatchQueue.main.async {
                 guard let data = result.data else {
