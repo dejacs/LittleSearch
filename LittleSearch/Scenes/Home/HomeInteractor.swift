@@ -28,7 +28,8 @@ extension HomeInteractor: HomeInteracting {
         presenter.presentLoading(shouldPresent: true)
         
         page = text != nil ? 0 : page
-        let endpoint = HomeEndpoint.fetchSearchItems(text: text ?? searchText, itemsPerPage: itemsPerPage, page: page)
+        searchText = text ?? searchText
+        let endpoint = HomeEndpoint.fetchSearchItems(text: searchText, itemsPerPage: itemsPerPage, page: page)
         
         ApiSearch.fetch(endpoint: endpoint) { [weak self] (result: Result<SearchResponse, APIError>) in
             self?.presenter.presentLoading(shouldPresent: false)
