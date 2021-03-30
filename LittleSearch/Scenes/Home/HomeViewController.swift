@@ -12,12 +12,16 @@ protocol HomeDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
     func display(searchResponse: SearchResponse)
+    func displayEmpty()
+    func displayError()
+    func displayErrorCell()
+    func startLoadingCell()
+    func stopLoadingCell()
 }
 
 final class HomeViewController: UIViewController {
     private enum Layout {
         enum StackView {
-            static let layoutSpacing: CGFloat = 16
             static let layoutMargins = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
         }
     }
@@ -29,6 +33,13 @@ final class HomeViewController: UIViewController {
         return UIActivityIndicatorView(style: .medium)
     }()
     
+    private lazy var emptyView: UIView = EmptyView()
+    private lazy var errorView: UIView = {
+        let view = ErrorView()
+        view.delegate = self
+        return view
+    }()
+        
     private lazy var searchController = UISearchController(searchResultsController: nil)
     
     private lazy var searchResultTable: UITableView = {
@@ -71,6 +82,8 @@ extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
         view.addSubview(searchResultTable)
+        view.addSubview(emptyView)
+        view.addSubview(errorView)
     }
     
     func setupConstraints() {
@@ -80,6 +93,16 @@ extension HomeViewController: ViewConfiguration {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         loadingView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        emptyView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        errorView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
@@ -143,7 +166,7 @@ extension HomeViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard shouldLoadNextPage(row: indexPath.row) else { return }
-        interactor.search(by: nil)
+        interactor.loadNextPage()
     }
 }
 
@@ -161,9 +184,52 @@ extension HomeViewController: HomeDisplaying {
     }
     
     func display(searchResponse: SearchResponse) {
+        emptyView.isHidden = true
+        errorView.isHidden = true
         totalResults = searchResponse.totalResults
         searchResultTable.isHidden = false
         searchDataSource.append(contentsOf: searchResponse.results)
         searchResultTable.reloadData()
+    }
+    
+    func displayEmpty() {
+        emptyView.isHidden = false
+        searchResultTable.isHidden = true
+    }
+    
+    func displayError() {
+        errorView.isHidden = false
+        searchResultTable.isHidden = true
+    }
+    
+    func displayErrorCell() {
+        let toastLabel = ViewHelpers.toastLabel(
+            message: Strings.CommonMessage.loadError,
+            font: .systemFont(ofSize: LayoutDefaults.FontSize.base00)
+        )
+        toastLabel.frame = CGRect(
+            x: view.frame.size.width/2 - 75,
+            y: view.frame.size.height-100,
+            width: view.frame.size.width / 2,
+            height: 50
+        )
+        toastLabel.layer.cornerRadius = toastLabel.frame.height / 2
+        view.addSubview(toastLabel)
+        
+        ViewHelpers.addFadeAnimation(to: toastLabel)
+    }
+    
+    func startLoadingCell() {
+        // TODO
+    }
+    
+    func stopLoadingCell() {
+        // TODO
+    }
+}
+
+extension HomeViewController: ErrorViewDelegate {
+    func didTapButton() {
+        interactor.loadNextPage()
     }
 }

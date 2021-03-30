@@ -14,6 +14,8 @@ protocol HomePresenting: AnyObject {
     func presentLoading(shouldPresent: Bool)
     func presentEmpty()
     func presentError()
+    func presentErrorCell()
+    func presentLoadingCell(shouldPresent: Bool)
 }
 
 final class HomePresenter {
@@ -39,10 +41,18 @@ extension HomePresenter: HomePresenting {
     }
     
     func presentEmpty() {
-        
+        viewController?.displayEmpty()
     }
     
     func presentError() {
-        
+        viewController?.displayError()
+    }
+    
+    func presentErrorCell() {
+        viewController?.displayErrorCell()
+    }
+    
+    func presentLoadingCell(shouldPresent: Bool) {
+        shouldPresent ? viewController?.startLoadingCell() : viewController?.stopLoadingCell()
     }
 }

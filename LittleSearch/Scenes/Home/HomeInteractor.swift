@@ -9,6 +9,7 @@ import Foundation
 
 protocol HomeInteracting: AnyObject {
     func search(by text: String?)
+    func loadNextPage()
     func didSelect(searchItem: SearchItemResponse)
 }
 
@@ -42,6 +43,24 @@ extension HomeInteractor: HomeInteracting {
                 self?.presenter.present(searchResponse: searchResponse)
             case .failure:
                 self?.presenter.presentError()
+            }
+        }
+    }
+    
+    func loadNextPage() {
+        presenter.presentLoadingCell(shouldPresent: true)
+        
+        let endpoint = HomeEndpoint.fetchSearchItems(text: searchText, itemsPerPage: itemsPerPage, page: page)
+        
+        ApiSearch.fetch(endpoint: endpoint) { [weak self] (result: Result<SearchResponse, APIError>) in
+            self?.presenter.presentLoadingCell(shouldPresent: false)
+            
+            switch result {
+            case .success(let searchResponse):
+                self?.page += 1
+                self?.presenter.present(searchResponse: searchResponse)
+            case .failure:
+                self?.presenter.presentErrorCell()
             }
         }
     }
