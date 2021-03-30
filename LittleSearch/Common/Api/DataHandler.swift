@@ -13,7 +13,7 @@ protocol DataHandlerProtocol {
     static func handleArrayResponse(data: Data, completion: @escaping(Result<[Item], APIError>) -> Void)
 }
 
-class GenericDataHandler<T: Decodable>: DataHandlerProtocol {
+final class GenericDataHandler<T: Decodable>: DataHandlerProtocol {
     typealias Item = T
     
     static func handleSingleResponse(data: Data, completion: @escaping(Result<Item, APIError>) -> Void) {
