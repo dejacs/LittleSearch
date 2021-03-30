@@ -11,8 +11,7 @@ import UIKit
 protocol HomeDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
-    func display(totalResults: Int)
-    func display(searchDataSource: [SearchItemResponse])
+    func display(searchResponse: SearchResponse)
 }
 
 final class HomeViewController: UIViewController {
@@ -105,14 +104,16 @@ private extension HomeViewController {
         definesPresentationContext = true
     }
     
-    func shouldLoadPage() -> Bool {
-        return totalResults > searchDataSource.count
+    func shouldLoadNextPage(row: Int) -> Bool {
+        row == searchDataSource.endIndex - 1 &&
+        totalResults > searchDataSource.count
     }
 }
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
+        searchDataSource = []
         interactor.search(by: searchText)
     }
 }
@@ -129,9 +130,6 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if searchDataSource.endIndex - 1 == indexPath.row, shouldLoadPage() {
-            interactor.search(by: nil)
-        }
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as! SearchResultViewCell
         cell.setup(searchDataSource[indexPath.row])
         return cell
@@ -141,6 +139,11 @@ extension HomeViewController: UITableViewDataSource {
         let view = SearchResultViewHeader()
         view.display(totalResults: totalResults)
         return view
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard shouldLoadNextPage(row: indexPath.row) else { return }
+        interactor.search(by: nil)
     }
 }
 
@@ -157,13 +160,10 @@ extension HomeViewController: HomeDisplaying {
         loadingView.stopAnimating()
     }
     
-    func display(totalResults: Int) {
-        self.totalResults = totalResults
-    }
-    
-    func display(searchDataSource: [SearchItemResponse]) {
+    func display(searchResponse: SearchResponse) {
+        totalResults = searchResponse.totalResults
         searchResultTable.isHidden = false
-        self.searchDataSource = searchDataSource
+        searchDataSource.append(contentsOf: searchResponse.results)
         searchResultTable.reloadData()
     }
 }
