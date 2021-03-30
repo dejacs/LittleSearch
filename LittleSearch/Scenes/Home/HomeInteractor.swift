@@ -10,6 +10,7 @@ import Foundation
 protocol HomeInteracting: AnyObject {
     func search(by text: String?)
     func loadNextPage()
+    func welcome()
     func didSelect(searchItem: SearchItemResponse)
 }
 
@@ -63,6 +64,10 @@ extension HomeInteractor: HomeInteracting {
                 self?.presenter.presentErrorCell()
             }
         }
+    }
+    
+    func welcome() {
+        presenter.presentWelcome()
     }
     
     func didSelect(searchItem: SearchItemResponse) {

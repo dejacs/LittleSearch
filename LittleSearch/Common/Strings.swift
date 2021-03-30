@@ -35,5 +35,7 @@ enum Strings {
         static let errorSearchTitle = "Parece que ocorreu algum erro!"
         static let errorSearchMessage = "Tente novamente mais tarde."
         static let errorSearchButton = "Tentar novamente"
+        static let welcomeTitle = "Boas vindas!"
+        static let welcomeMessage = "Inicie uma busca para encontrar o produto que procura."
     }
 }

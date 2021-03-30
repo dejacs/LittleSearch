@@ -12,8 +12,12 @@ protocol HomeDisplaying: AnyObject {
     func startLoading()
     func stopLoading()
     func display(searchResponse: SearchResponse)
+    func displaySearchResponse(shouldDisplay: Bool)
     func displayEmpty()
     func displayError()
+    func hideEmpty()
+    func hideError()
+    func displayWelcome(shouldDisplay: Bool)
     func displayErrorCell()
     func startLoadingCell()
     func stopLoadingCell()
@@ -33,6 +37,7 @@ final class HomeViewController: UIViewController {
         return UIActivityIndicatorView(style: .medium)
     }()
     
+    private lazy var welcomeView = WelcomeView()
     private lazy var emptyView: UIView = EmptyView()
     private lazy var errorView: UIView = {
         let view = ErrorView()
@@ -75,6 +80,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         buildLayout()
+        interactor.welcome()
     }
 }
 
@@ -82,8 +88,7 @@ extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
         view.addSubview(searchResultTable)
-        view.addSubview(emptyView)
-        view.addSubview(errorView)
+        view.addSubview(welcomeView)
     }
     
     func setupConstraints() {
@@ -92,17 +97,7 @@ extension HomeViewController: ViewConfiguration {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
-        loadingView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-        }
-        emptyView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-        }
-        errorView.snp.makeConstraints {
+        welcomeView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
@@ -112,7 +107,7 @@ extension HomeViewController: ViewConfiguration {
     func configureViews() {
         navigationController?.navigationBar.backgroundColor = UIColor(named: Strings.Color.branding)
         navigationController?.navigationBar.barTintColor = UIColor(named: Strings.Color.branding)
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: Strings.Color.branding)
         setupSearchBar()
     }
 }
@@ -123,7 +118,15 @@ private extension HomeViewController {
         searchController.searchBar.placeholder = Strings.Placeholder.search
         searchController.searchBar.backgroundColor = UIColor(named: Strings.Color.branding)
         searchController.searchBar.delegate = self
+        
+        for textField in searchController.searchBar.subviews.first!.subviews[1].subviews where textField is UITextField {
+            textField.backgroundColor = .white
+            textField.layer.cornerRadius = 10.5
+            textField.layer.masksToBounds = true
+        }
+        
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
         definesPresentationContext = true
     }
     
@@ -138,6 +141,10 @@ extension HomeViewController: UISearchBarDelegate {
         guard let searchText = searchBar.text else { return }
         searchDataSource = []
         interactor.search(by: searchText)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        interactor.welcome()
     }
 }
 
@@ -172,34 +179,71 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: HomeDisplaying {
     func startLoading() {
+        view.addSubview(loadingView)
         view.bringSubviewToFront(loadingView)
-        searchResultTable.isHidden = true
         loadingView.isHidden = false
+        
+        loadingView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
         loadingView.startAnimating()
     }
     
     func stopLoading() {
         loadingView.isHidden = true
         loadingView.stopAnimating()
+        loadingView.removeFromSuperview()
     }
     
     func display(searchResponse: SearchResponse) {
-        emptyView.isHidden = true
-        errorView.isHidden = true
         totalResults = searchResponse.totalResults
-        searchResultTable.isHidden = false
         searchDataSource.append(contentsOf: searchResponse.results)
         searchResultTable.reloadData()
     }
     
+    func displaySearchResponse(shouldDisplay: Bool) {
+        searchResultTable.isHidden = !shouldDisplay
+    }
+    
     func displayEmpty() {
+        view.addSubview(emptyView)
+        view.bringSubviewToFront(emptyView)
         emptyView.isHidden = false
-        searchResultTable.isHidden = true
+        
+        emptyView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
     }
     
     func displayError() {
+        view.addSubview(errorView)
+        view.bringSubviewToFront(errorView)
         errorView.isHidden = false
-        searchResultTable.isHidden = true
+        
+        errorView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+    }
+    
+    func hideEmpty() {
+        emptyView.isHidden = true
+        emptyView.removeFromSuperview()
+    }
+    
+    func hideError() {
+        errorView.isHidden = true
+        errorView.removeFromSuperview()
+    }
+    
+    func displayWelcome(shouldDisplay: Bool) {
+        welcomeView.isHidden = !shouldDisplay
+        shouldDisplay ? welcomeView.startTimer() : welcomeView.stopTimer()
     }
     
     func displayErrorCell() {
