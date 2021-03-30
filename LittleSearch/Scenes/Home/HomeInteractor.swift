@@ -8,12 +8,15 @@
 import Foundation
 
 protocol HomeInteracting: AnyObject {
-    func search(by text: String)
+    func search(by text: String?)
     func didSelect(searchItem: SearchItemResponse)
 }
 
 final class HomeInteractor {
     private let presenter: HomePresenting
+    private let itemsPerPage = 10
+    private var page = 0
+    private var searchText = ""
 
     init(presenter: HomePresenting) {
         self.presenter = presenter
@@ -21,12 +24,12 @@ final class HomeInteractor {
 }
 
 extension HomeInteractor: HomeInteracting {
-    func search(by text: String) {
-        guard let text = text.addingPercentEncoding(withAllowedCharacters: .afURLQueryAllowed) else {
-            return
-        }
+    func search(by text: String?) {
         presenter.presentLoading(shouldPresent: true)
-        let endpoint = HomeEndpoint.fetchSearchItems(text: text)
+        
+        page = text != nil ? 0 : page
+        searchText = text ?? searchText
+        let endpoint = HomeEndpoint.fetchSearchItems(text: searchText, itemsPerPage: itemsPerPage, page: page)
         
         ApiSearch.fetch(endpoint: endpoint) { [weak self] (result: Result<SearchResponse, APIError>) in
             self?.presenter.presentLoading(shouldPresent: false)
@@ -35,6 +38,7 @@ extension HomeInteractor: HomeInteracting {
             case .success(let searchResponse) where searchResponse.results.isEmpty:
                 self?.presenter.presentEmpty()
             case .success(let searchResponse):
+                self?.page += 1
                 self?.presenter.present(searchResponse: searchResponse)
             case .failure:
                 self?.presenter.presentError()

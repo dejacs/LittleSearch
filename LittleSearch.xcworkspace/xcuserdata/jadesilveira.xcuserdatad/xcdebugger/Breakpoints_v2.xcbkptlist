@@ -7,16 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7D65A729-C639-408D-96DC-1647C5EA147B"
+            uuid = "69A6697D-9DDA-49C7-8C90-8E4BE945AD21"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LittleSearch/Scenes/ProductDetails/Views/PictureCollectionCell.swift"
+            filePath = "LittleSearch/Scenes/Home/HomeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "setup(with:)"
+            startingLineNumber = "164"
+            endingLineNumber = "164"
+            landmarkName = "display(searchResponse:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
