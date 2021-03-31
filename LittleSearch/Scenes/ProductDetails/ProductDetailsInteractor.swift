@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 
 protocol ProductDetailsInteracting: AnyObject {
     /**
@@ -49,11 +50,21 @@ extension ProductDetailsInteractor: ProductDetailsInteracting {
                     firstResponse.code == StatusCode.success,
                     let productDetails = firstResponse.body as? ItemDetailsSuccessResponse
                 else {
+                    #if DEBUG
+                    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "application")
+                    logger.error("ProductDetailsInteractor - loadProductDetails: error while parsing json")
+                    #endif
+                    
                     self?.presenter.presentError()
                     return
                 }
                 strongSelf.presenter.present(productDetails: productDetails, installments: strongSelf.searchItem.installments)
             case .failure:
+                #if DEBUG
+                let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+                logger.error("ProductDetailsInteractor - loadProductDetails: response error")
+                #endif
+                
                 self?.presenter.presentError()
             }
         }

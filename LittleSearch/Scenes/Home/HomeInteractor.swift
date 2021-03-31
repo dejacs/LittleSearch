@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os
 
 protocol HomeInteracting: AnyObject {
     /**
@@ -82,6 +83,11 @@ extension HomeInteractor: HomeInteracting {
                 self?.page += 1
                 self?.presenter.present(searchResponse: searchResponse)
             case .failure:
+                #if DEBUG
+                let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+                logger.error("HomeInteractor - search: response error")
+                #endif
+                
                 self?.presenter.presentError()
             }
         }
@@ -100,6 +106,11 @@ extension HomeInteractor: HomeInteracting {
                 self?.page += 1
                 self?.presenter.present(searchResponse: searchResponse)
             case .failure:
+                #if DEBUG
+                let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+                logger.error("HomeInteractor - loadNextPage: response error")
+                #endif
+                
                 self?.presenter.presentErrorCell()
             }
         }

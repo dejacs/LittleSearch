@@ -7,6 +7,7 @@
 
 import Alamofire
 import Foundation
+import os
 
 enum StatusCode {
     static let success = 200
@@ -32,6 +33,11 @@ class Api<T: Decodable> {
         AF.request(url, method: endpoint.method, parameters: endpoint.params).responseJSON { (result) in
             DispatchQueue.main.async {
                 guard let data = result.data else {
+                    #if DEBUG
+                    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+                    logger.error("Error - Api - fetch: nil data for url = \(url)")
+                    #endif
+                    
                     completion(.failure(.genericError))
                     return
                 }
@@ -55,6 +61,11 @@ class Api<T: Decodable> {
         AF.request(url, method: endpoint.method, parameters: endpoint.params).responseJSON { (result) in
             DispatchQueue.main.async {
                 guard let data = result.data else {
+                    #if DEBUG
+                    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+                    logger.error("Error - Api - fetchArray: nil data for url = \(url)")
+                    #endif
+                    
                     completion(.failure(.genericError))
                     return
                 }
