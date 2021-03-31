@@ -38,4 +38,11 @@ enum Strings {
         static let welcomeTitle = "Boas vindas!"
         static let welcomeMessage = "Inicie uma busca para encontrar o produto que procura."
     }
+    
+    enum LocalizableKeys {
+        static let soldQuantitySingle = "soldQuantitySingle"
+        static let soldQuantityMultiple = "soldQuantityMultiple"
+        static let availableQuantitySingle = "availableQuantitySingle"
+        static let availableQuantityMultiple = "availableQuantityMultiple"
+    }
 }

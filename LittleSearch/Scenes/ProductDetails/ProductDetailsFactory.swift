@@ -10,7 +10,7 @@ import Foundation
 enum ProductDetailsFactory {
     static func make(with searchItem: SearchItemResponse) -> ProductDetailsViewController {
         let presenter: ProductDetailsPresenting = ProductDetailsPresenter()
-        let interactor = ProductDetailsInteractor(presenter: presenter, searchItem: searchItem, api: ApiSearch())
+        let interactor = ProductDetailsInteractor(presenter: presenter, searchItem: searchItem, api: Api())
         let viewController = ProductDetailsViewController(interactor: interactor)
         
         presenter.viewController = viewController

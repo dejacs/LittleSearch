@@ -22,10 +22,10 @@ protocol ProductDetailsInteracting: AnyObject {
 
 final class ProductDetailsInteractor {
     private let presenter: ProductDetailsPresenting
-    private let api: ApiSearch<ItemDetailsResponse>
+    private let api: Api<ItemDetailsResponse>
     private let searchItem: SearchItemResponse
 
-    init(presenter: ProductDetailsPresenting, searchItem: SearchItemResponse, api: ApiSearch<ItemDetailsResponse>) {
+    init(presenter: ProductDetailsPresenting, searchItem: SearchItemResponse, api: Api<ItemDetailsResponse>) {
         self.presenter = presenter
         self.searchItem = searchItem
         self.api = api
@@ -46,7 +46,7 @@ extension ProductDetailsInteractor: ProductDetailsInteracting {
                 guard
                     let strongSelf = self,
                     let firstResponse = itemDetailsResponse.first,
-                    firstResponse.code == 200,
+                    firstResponse.code == StatusCode.success,
                     let productDetails = firstResponse.body as? ItemDetailsSuccessResponse
                 else {
                     self?.presenter.presentError()

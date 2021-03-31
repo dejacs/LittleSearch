@@ -52,12 +52,12 @@ protocol HomeInteracting: AnyObject {
 
 final class HomeInteractor {
     private let presenter: HomePresenting
-    private let api: ApiSearch<SearchResponse>
+    private let api: Api<SearchResponse>
     private let itemsPerPage = 10
     private var page = 0
     private var searchText = ""
 
-    init(presenter: HomePresenting, api: ApiSearch<SearchResponse>) {
+    init(presenter: HomePresenting, api: Api<SearchResponse>) {
         self.presenter = presenter
         self.api = api
     }

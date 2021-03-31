@@ -18,6 +18,8 @@ protocol ProductDetailsDisplaying: AnyObject {
     func setAttributes(with attributes: [ItemDetailsAttributeResponse])
     func setPrice(_ price: Double)
     func setInstallments(_ installments: String?)
+    func displayError()
+    func hideError()
 }
 
 final class ProductDetailsViewController: UIViewController {
@@ -26,6 +28,9 @@ final class ProductDetailsViewController: UIViewController {
             static let layoutSpacing: CGFloat = 16
             static let layoutMargins = UIEdgeInsets(top: 16, left: 0, bottom: 16, right: 0)
         }
+        enum PhotoCollection {
+            static let height: CGFloat = 300
+        }
     }
     
     private lazy var loadingView: UIActivityIndicatorView = {
@@ -33,6 +38,12 @@ final class ProductDetailsViewController: UIViewController {
             return UIActivityIndicatorView(style: .large)
         }
         return UIActivityIndicatorView(style: .medium)
+    }()
+    
+    private lazy var errorView: UIView = {
+        let view = ErrorView()
+        view.delegate = self
+        return view
     }()
     
     private lazy var scrollView: UIScrollView = {
@@ -131,12 +142,6 @@ extension ProductDetailsViewController: ViewConfiguration {
     }
     
     func setupConstraints() {
-        loadingView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-        }
-        
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
@@ -154,8 +159,8 @@ extension ProductDetailsViewController: ViewConfiguration {
         }
         
         photoCollection.snp.makeConstraints {
-            $0.height.equalTo(300)
-            $0.width.equalTo(UIScreen.main.bounds.width - 32)
+            $0.height.equalTo(Layout.PhotoCollection.height)
+            $0.width.equalTo(UIScreen.main.bounds.width - LayoutDefaults.View.margin02)
             $0.top.equalTo(titleLabel.snp.bottom).offset(LayoutDefaults.View.margin01)
             $0.leading.equalToSuperview().offset(LayoutDefaults.View.margin01)
             $0.trailing.equalToSuperview().offset(-LayoutDefaults.View.margin01)
@@ -189,7 +194,7 @@ extension ProductDetailsViewController: ViewConfiguration {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ProductDetailsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width - 32, height: 300)
+        return CGSize(width: UIScreen.main.bounds.width - LayoutDefaults.View.margin02, height: Layout.PhotoCollection.height)
     }
 }
 
@@ -199,15 +204,15 @@ extension ProductDetailsViewController: UICollectionViewDataSource {
         pictures?.count ?? 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
-    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int { 1 }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let picture = pictures?[indexPath.section] else {
+        guard
+            let picture = pictures?[indexPath.section],
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PictureCollectionCell.identifier, for: indexPath) as? PictureCollectionCell
+        else {
             return UICollectionViewCell()
         }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PictureCollectionCell.identifier, for: indexPath) as! PictureCollectionCell
         cell.setup(with: picture)
         return cell
     }
@@ -216,14 +221,22 @@ extension ProductDetailsViewController: UICollectionViewDataSource {
 // MARK: - ProductDetailsDisplaying
 extension ProductDetailsViewController: ProductDetailsDisplaying {
     func startLoading() {
+        view.addSubview(loadingView)
         view.bringSubviewToFront(loadingView)
         loadingView.isHidden = false
+        
+        loadingView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
         loadingView.startAnimating()
     }
     
     func stopLoading() {
         loadingView.isHidden = true
         loadingView.stopAnimating()
+        loadingView.removeFromSuperview()
     }
     
     func setTitle(with title: String) {
@@ -253,5 +266,30 @@ extension ProductDetailsViewController: ProductDetailsDisplaying {
     
     func setAttributes(with attributes: [ItemDetailsAttributeResponse]) {
         self.attributes = attributes
+    }
+    
+    func displayError() {
+        view.addSubview(errorView)
+        view.bringSubviewToFront(errorView)
+        errorView.isHidden = false
+        
+        errorView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+    }
+    
+    func hideError() {
+        guard errorView.superview != nil else { return }
+        errorView.isHidden = true
+        errorView.removeFromSuperview()
+    }
+}
+
+// MARK: - ErrorViewDelegate
+extension ProductDetailsViewController: ErrorViewDelegate {
+    func didTapButton() {
+        interactor.loadProductDetails()
     }
 }

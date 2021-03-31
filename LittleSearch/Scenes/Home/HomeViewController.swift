@@ -121,9 +121,12 @@ private extension HomeViewController {
         searchController.searchBar.backgroundColor = UIColor(named: Strings.Color.branding)
         searchController.searchBar.delegate = self
         
-        for textField in searchController.searchBar.subviews.first!.subviews[1].subviews where textField is UITextField {
-            textField.backgroundColor = .white
-            textField.layer.cornerRadius = 10.5
+        if
+            let searchBarContainer = searchController.searchBar.subviews.first?.subviews[1],
+            let textField = searchBarContainer.subviews.first(where: { view in view is UITextField })
+        {
+            textField.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
+            textField.layer.cornerRadius = LayoutDefaults.CornerRadius.base00
             textField.layer.masksToBounds = true
         }
         
@@ -165,7 +168,11 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as! SearchResultViewCell
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as? SearchResultViewCell
+        else {
+            return UITableViewCell()
+        }
         cell.setup(searchDataSource[indexPath.row])
         return cell
     }
@@ -258,8 +265,8 @@ extension HomeViewController: HomeDisplaying {
             font: .systemFont(ofSize: LayoutDefaults.FontSize.base00)
         )
         toastLabel.frame = CGRect(
-            x: view.frame.size.width/2 - 75,
-            y: view.frame.size.height-100,
+            x: view.frame.size.width / 2 - 75,
+            y: view.frame.size.height - 100,
             width: view.frame.size.width / 2,
             height: 50
         )

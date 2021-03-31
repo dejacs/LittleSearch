@@ -14,8 +14,8 @@ enum HomeEndpoint: EndpointProtocol {
     var path: String {
         switch self {
         case .fetchSearchItems:
-            guard let api = Api.apiUrl, let site = Api.siteId else { return "" }
-            return "\(api)/sites/\(site)/search"
+            guard let host = ApiUrlConfig.host, let site = ApiUrlConfig.site else { return "" }
+            return "\(host)/sites/\(site)/search"
         }
     }
     

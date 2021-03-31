@@ -10,8 +10,9 @@ import UIKit
 
 enum LayoutDefaults {
     enum View {
-        static let margin00 = 8
-        static let margin01 = 16
+        static let margin00: CGFloat = 8
+        static let margin01: CGFloat = 16
+        static let margin02: CGFloat = 32
     }
     enum FontSize {
         static let base00: CGFloat = 12
@@ -19,5 +20,8 @@ enum LayoutDefaults {
         static let base02: CGFloat = 16
         static let base03: CGFloat = 20
         static let base0X: CGFloat = 34
+    }
+    enum CornerRadius {
+        static let base00: CGFloat = 10.5
     }
 }

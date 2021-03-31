@@ -70,7 +70,7 @@ private final class HomePresenterSpy: HomePresenting {
     }
 }
 
-private final class ApiSearchMock: ApiSearch<SearchResponse> {
+private final class ApiSearchMock: Api<SearchResponse> {
     private(set) var fetchEndpointCompletionCallsCount = 0
     private(set) var fetchEndpointCompletionReceivedInvocations: [(endpoint: EndpointProtocol, completion: (Result<SearchResponse, APIError>) -> Void)] = []
     var fetchEndpointCompletionClosure: ((EndpointProtocol, @escaping(Result<SearchResponse, APIError>) -> Void) -> Void)?
@@ -179,7 +179,9 @@ final class HomeInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.presentErrorCallsCount, 0)
         XCTAssertEqual(presenter.presentErrorCellCallsCount, 1)
     }
-    
+}
+
+private extension HomeInteractorTests {
     func successfulCompletion(endpoint: EndpointProtocol, completion: @escaping(Result<SearchResponse, APIError>) -> Void) {
         let asset = NSDataAsset(name: "json_successful_search", bundle: Bundle.main)
         let decoder = JSONDecoder()

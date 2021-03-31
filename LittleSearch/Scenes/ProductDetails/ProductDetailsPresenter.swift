@@ -21,19 +21,20 @@ final class ProductDetailsPresenter {
 // MARK: - ProductDetailsPresenting
 extension ProductDetailsPresenter: ProductDetailsPresenting {
     func presentLoading(shouldPresent: Bool) {
+        viewController?.hideError()
         shouldPresent ? viewController?.startLoading() : viewController?.stopLoading()
     }
     
     func present(productDetails: ItemDetailsSuccessResponse, installments: InstallmentsResponse?) {
         let formattedSoldQuantity = FormatUtils.format(
             quantity: productDetails.soldQuantity,
-            keyTextSingle: "soldQuantitySingle",
-            keyTextMultiple: "soldQuantityMultiple"
+            keyTextSingle: Strings.LocalizableKeys.soldQuantitySingle,
+            keyTextMultiple: Strings.LocalizableKeys.soldQuantityMultiple
         )
         let formattedAvailableQuantity = FormatUtils.format(
             quantity: productDetails.availableQuantity,
-            keyTextSingle: "availableQuantitySingle",
-            keyTextMultiple: "availableQuantityMultiple"
+            keyTextSingle: Strings.LocalizableKeys.soldQuantitySingle,
+            keyTextMultiple: Strings.LocalizableKeys.soldQuantityMultiple
         )
         viewController?.setSoldQuantity(with: formattedSoldQuantity)
         viewController?.setTitle(with: productDetails.title)
@@ -42,9 +43,10 @@ extension ProductDetailsPresenter: ProductDetailsPresenting {
         viewController?.setInstallments(InstallmentsUtils.format(installments: installments))
         viewController?.setAvailableQuantity(with: formattedAvailableQuantity)
         viewController?.setAttributes(with: productDetails.attributes)
+        viewController?.hideError()
     }
     
     func presentError() {
-        
+        viewController?.displayError()
     }
 }
