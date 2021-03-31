@@ -33,8 +33,8 @@ extension ProductDetailsPresenter: ProductDetailsPresenting {
         )
         let formattedAvailableQuantity = FormatUtils.format(
             quantity: productDetails.availableQuantity,
-            keyTextSingle: Strings.LocalizableKeys.soldQuantitySingle,
-            keyTextMultiple: Strings.LocalizableKeys.soldQuantityMultiple
+            keyTextSingle: Strings.LocalizableKeys.availableQuantitySingle,
+            keyTextMultiple: Strings.LocalizableKeys.availableQuantityMultiple
         )
         viewController?.setSoldQuantity(with: formattedSoldQuantity)
         viewController?.setTitle(with: productDetails.title)

@@ -70,7 +70,7 @@ private final class HomePresenterSpy: HomePresenting {
     }
 }
 
-private final class ApiSearchMock: Api<SearchResponse> {
+private final class ApiMock: Api<SearchResponse> {
     private(set) var fetchEndpointCompletionCallsCount = 0
     private(set) var fetchEndpointCompletionReceivedInvocations: [(endpoint: EndpointProtocol, completion: (Result<SearchResponse, APIError>) -> Void)] = []
     var fetchEndpointCompletionClosure: ((EndpointProtocol, @escaping(Result<SearchResponse, APIError>) -> Void) -> Void)?
@@ -95,7 +95,7 @@ private final class ApiSearchMock: Api<SearchResponse> {
 
 final class HomeInteractorTests: XCTestCase {
     private let presenter = HomePresenterSpy()
-    private let api = ApiSearchMock()
+    private let api = ApiMock()
     
     private lazy var sut: HomeInteracting = HomeInteractor(
         presenter: presenter,
