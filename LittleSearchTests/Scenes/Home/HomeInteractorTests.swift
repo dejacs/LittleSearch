@@ -149,6 +149,37 @@ final class HomeInteractorTests: XCTestCase {
         XCTAssertEqual(presenter.presentErrorCallsCount, 1)
     }
     
+    func testLoadNextPage_ShouldLoadNextPage() {
+        api.fetchEndpointCompletionClosure = successfulCompletion
+        sut.search(by: "Teste")
+        sut.loadNextPage()
+        
+        XCTAssertEqual(api.fetchEndpointCompletionCallsCount, 2)
+        XCTAssertEqual(presenter.presentSearchResponseCallsCount, 2)
+        
+        let hasPreviousTextInSearch = api.fetchEndpointCompletionReceivedInvocations.last?.endpoint.params.contains(where: { (key, value) in
+            String(describing: value) == "Teste"
+        })
+        let isSecondPage = api.fetchEndpointCompletionReceivedInvocations.last?.endpoint.params.contains(where: { (key, value) in
+            key == "offset" && value as? Int == 1
+        })
+        XCTAssertTrue(hasPreviousTextInSearch ?? false)
+        XCTAssertTrue(isSecondPage ?? false)
+    }
+    
+    func testLoadNextPage_WhenRequestFail_ShouldShowToastError() {
+        api.fetchEndpointCompletionClosure = successfulCompletion
+        sut.search(by: "Teste")
+        api.fetchEndpointCompletionClosure = errorCompletion
+        sut.loadNextPage()
+        
+        XCTAssertEqual(api.fetchEndpointCompletionCallsCount, 2)
+        XCTAssertEqual(presenter.presentSearchResponseCallsCount, 1)
+        XCTAssertEqual(presenter.presentEmptyCallsCount, 0)
+        XCTAssertEqual(presenter.presentErrorCallsCount, 0)
+        XCTAssertEqual(presenter.presentErrorCellCallsCount, 1)
+    }
+    
     func successfulCompletion(endpoint: EndpointProtocol, completion: @escaping(Result<SearchResponse, APIError>) -> Void) {
         let asset = NSDataAsset(name: "json_successful_search", bundle: Bundle.main)
         let decoder = JSONDecoder()

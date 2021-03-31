@@ -3,4 +3,54 @@
    uuid = "EF08ED9D-C2F0-4037-B3F9-16E0D158E39D"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3A54C4B0-7DB2-4DD5-8ED1-219F2AE552AA"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LittleSearchTests/Scenes/Home/HomeInteractorTests.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
+            landmarkName = "testLoadNextPage_ShouldLoadNextPage()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3A54C4B0-7DB2-4DD5-8ED1-219F2AE552AA - ac6245ecbdcfa055"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LittleSearchTests.HomeInteractorTests.testLoadNextPage_ShouldLoadNextPage() -&gt; ()"
+                  moduleName = "LittleSearchTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jadesilveira/Projects/Personal/LittleSearch/LittleSearchTests/Scenes/Home/HomeInteractorTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "163"
+                  endingLineNumber = "163"
+                  offsetFromSymbolStart = "2326">
+               </Location>
+               <Location
+                  uuid = "3A54C4B0-7DB2-4DD5-8ED1-219F2AE552AA - d7fdf1ca7f018584"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.String, Any) -&gt; Swift.Bool in LittleSearchTests.HomeInteractorTests.testLoadNextPage_ShouldLoadNextPage() -&gt; ()"
+                  moduleName = "LittleSearchTests"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jadesilveira/Projects/Personal/LittleSearch/LittleSearchTests/Scenes/Home/HomeInteractorTests.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "164"
+                  endingLineNumber = "164"
+                  offsetFromSymbolStart = "39">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
