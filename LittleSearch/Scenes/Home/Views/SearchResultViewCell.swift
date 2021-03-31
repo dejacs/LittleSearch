@@ -83,6 +83,7 @@ final class SearchResultViewCell: UITableViewCell {
     }
 }
 
+// MARK: - ViewConfiguration
 extension SearchResultViewCell: ViewConfiguration {
     func buildViewHierarchy() {
         addSubview(thumbnailImageView)

@@ -28,6 +28,7 @@ final class HomePresenter {
     }
 }
 
+// MARK: - HomePresenting
 extension HomePresenter: HomePresenting {
     func present(searchResponse: SearchResponse) {
         viewController?.displayWelcome(shouldDisplay: false)

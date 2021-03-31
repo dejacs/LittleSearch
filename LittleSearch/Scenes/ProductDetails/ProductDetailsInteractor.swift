@@ -8,26 +8,37 @@
 import Foundation
 
 protocol ProductDetailsInteracting: AnyObject {
+    /**
+     * Load product details
+     *
+     * It will manager what should be done when loading a product:
+     *   - Loading
+     *   - Error
+     *   - Show loaded product
+     *
+     */
     func loadProductDetails()
 }
 
 final class ProductDetailsInteractor {
     private let presenter: ProductDetailsPresenting
-    
+    private let api: ApiSearch<ItemDetailsResponse>
     private let searchItem: SearchItemResponse
 
-    init(presenter: ProductDetailsPresenting, searchItem: SearchItemResponse) {
+    init(presenter: ProductDetailsPresenting, searchItem: SearchItemResponse, api: ApiSearch<ItemDetailsResponse>) {
         self.presenter = presenter
         self.searchItem = searchItem
+        self.api = api
     }
 }
 
+// MARK: - ProductDetailsInteracting
 extension ProductDetailsInteractor: ProductDetailsInteracting {
     func loadProductDetails() {
         presenter.presentLoading(shouldPresent: true)
         let endpoint = ProductDetailsEndpoint.fetchProductDetails(productId: searchItem.id)
         
-        ApiSearch.fetchArray(endpoint: endpoint) { [weak self] (result: Result<[ItemDetailsResponse], APIError>) in
+        api.fetchArray(endpoint: endpoint) { [weak self] (result: Result<[ItemDetailsResponse], APIError>) in
             self?.presenter.presentLoading(shouldPresent: false)
             
             switch result {

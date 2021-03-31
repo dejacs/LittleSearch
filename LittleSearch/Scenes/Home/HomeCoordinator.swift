@@ -21,6 +21,7 @@ final class HomeCoordinator {
     weak var viewController: UIViewController?
 }
 
+// MARK: - HomeCoordinating
 extension HomeCoordinator: HomeCoordinating {
     func perform(action: HomeCoordinatorAction) {
         if case .showProductDetails(let searchItem) = action {

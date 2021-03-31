@@ -8,17 +8,96 @@
 import XCTest
 @testable import LittleSearch
 
-private final class HomeViewControllerSpy: HomeDisplaying {
+private class HomeViewControllerSpy: HomeDisplaying {
+
+    // MARK: - StartLoading
     private(set) var startLoadingCallsCount = 0
-    
+
     func startLoading() {
         startLoadingCallsCount += 1
     }
-    
+
+    // MARK: - StopLoading
     private(set) var stopLoadingCallsCount = 0
-    
+
     func stopLoading() {
         stopLoadingCallsCount += 1
+    }
+
+    // MARK: - Display
+    private(set) var displaySearchResponseCallsCount = 0
+    private(set) var displaySearchResponseReceivedInvocations: [SearchResponse] = []
+
+    func display(searchResponse: SearchResponse) {
+        displaySearchResponseCallsCount += 1
+        displaySearchResponseReceivedInvocations.append(searchResponse)
+    }
+
+    // MARK: - DisplaySearchResponse
+    private(set) var displaySearchResponseShouldDisplayCallsCount = 0
+    private(set) var displaySearchResponseShouldDisplayReceivedInvocations: [Bool] = []
+
+    func displaySearchResponse(shouldDisplay: Bool) {
+        displaySearchResponseShouldDisplayCallsCount += 1
+        displaySearchResponseShouldDisplayReceivedInvocations.append(shouldDisplay)
+    }
+
+    // MARK: - DisplayEmpty
+    private(set) var displayEmptyCallsCount = 0
+
+    func displayEmpty() {
+        displayEmptyCallsCount += 1
+    }
+
+    // MARK: - DisplayError
+    private(set) var displayErrorCallsCount = 0
+
+    func displayError() {
+        displayErrorCallsCount += 1
+    }
+
+    // MARK: - HideEmpty
+    private(set) var hideEmptyCallsCount = 0
+
+    func hideEmpty() {
+        hideEmptyCallsCount += 1
+    }
+
+    // MARK: - HideError
+    private(set) var hideErrorCallsCount = 0
+
+    func hideError() {
+        hideErrorCallsCount += 1
+    }
+
+    // MARK: - DisplayWelcome
+    private(set) var displayWelcomeShouldDisplayCallsCount = 0
+    private(set) var displayWelcomeShouldDisplayReceivedInvocations: [Bool] = []
+
+    func displayWelcome(shouldDisplay: Bool) {
+        displayWelcomeShouldDisplayCallsCount += 1
+        displayWelcomeShouldDisplayReceivedInvocations.append(shouldDisplay)
+    }
+
+    // MARK: - DisplayErrorCell
+    private(set) var displayErrorCellCallsCount = 0
+
+    func displayErrorCell() {
+        displayErrorCellCallsCount += 1
+    }
+
+    // MARK: - StartLoadingCell
+    private(set) var startLoadingCellCallsCount = 0
+
+    func startLoadingCell() {
+        startLoadingCellCallsCount += 1
+    }
+
+    // MARK: - StopLoadingCell
+    private(set) var stopLoadingCellCallsCount = 0
+
+    func stopLoadingCell() {
+        stopLoadingCellCallsCount += 1
     }
 }
 
@@ -45,9 +124,7 @@ final class HomePresenterTests: XCTestCase {
     }()
     
     func testDidSelect_ShouldSelectProduct() {
-        sut.didSelect(product: 0)
         
-        XCTAssertEqual(coordinator.performActionCallsCount, 1)
     }
     
     func testPresentLoading_WhenShouldPresentIsTrue_ShouldPresentLoading() {

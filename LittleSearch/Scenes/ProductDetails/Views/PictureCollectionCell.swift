@@ -79,6 +79,7 @@ final class PictureCollectionCell: UICollectionViewCell {
     }
 }
 
+// MARK: - ViewConfiguration
 extension PictureCollectionCell: ViewConfiguration {
     func buildViewHierarchy() {
         addSubview(pictureImageView)

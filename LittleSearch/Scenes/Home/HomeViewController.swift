@@ -84,6 +84,7 @@ final class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - ViewConfiguration
 extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
@@ -112,6 +113,7 @@ extension HomeViewController: ViewConfiguration {
     }
 }
 
+// MARK: - Private methods
 private extension HomeViewController {
     func setupSearchBar() {
         searchController.obscuresBackgroundDuringPresentation = false
@@ -136,6 +138,7 @@ private extension HomeViewController {
     }
 }
 
+// MARK: - UISearchBarDelegate
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
@@ -148,12 +151,14 @@ extension HomeViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         interactor.didSelect(searchItem: searchDataSource[indexPath.row])
     }
 }
 
+// MARK: - UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchDataSource.count
@@ -177,6 +182,7 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - HomeDisplaying
 extension HomeViewController: HomeDisplaying {
     func startLoading() {
         view.addSubview(loadingView)
@@ -272,6 +278,7 @@ extension HomeViewController: HomeDisplaying {
     }
 }
 
+// MARK: - ErrorViewDelegate
 extension HomeViewController: ErrorViewDelegate {
     func didTapButton() {
         interactor.search(by: nil)

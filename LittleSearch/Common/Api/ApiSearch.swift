@@ -8,8 +8,16 @@
 import Alamofire
 import Foundation
 
-class ApiSearch {
-    static func fetch<T: Decodable>(endpoint: EndpointProtocol, completion: @escaping(Result<T, APIError>) -> Void) {
+class ApiSearch<T: Decodable> {
+    /**
+     * Fetch any provided endpoint returning a json.
+     *
+     * A generic request that returns a json.
+     * 
+     *  - Parameter endpoint: An object that should implement EndpointProtocol
+     *  - Parameter completion: A block called when operation has been completed. This block has no return value and takes the Result as its parameter. In case of error while parsing the data, it will call the failure completion. When success it will call the generic handler so it will convert to the specific object.
+     */
+    func fetch(endpoint: EndpointProtocol, completion: @escaping(Result<T, APIError>) -> Void) {
         guard let url = URL(string: endpoint.path) else {
             return
         }
@@ -24,7 +32,15 @@ class ApiSearch {
         }
     }
     
-    static func fetchArray<T: Decodable>(endpoint: EndpointProtocol, completion: @escaping(Result<[T], APIError>) -> Void) {
+    /**
+     * Fetch any provided endpoint returning an array.
+     *
+     * A generic request that returns an array.
+     *
+     *  - Parameter endpoint: An object that should implement EndpointProtocol
+     *  - Parameter completion: A block called when operation has been completed. This block has no return value and takes the Result as its parameter. In case of error while parsing the data, it will call the failure completion. When success it will call the generic handler so it will convert to the specific array of object.
+     */
+    func fetchArray(endpoint: EndpointProtocol, completion: @escaping(Result<[T], APIError>) -> Void) {
         guard let url = URL(string: endpoint.path) else {
             return
         }

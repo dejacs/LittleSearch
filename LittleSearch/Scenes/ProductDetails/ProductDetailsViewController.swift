@@ -116,6 +116,7 @@ final class ProductDetailsViewController: UIViewController {
     }
 }
 
+// MARK: - ViewConfiguration
 extension ProductDetailsViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
@@ -185,12 +186,14 @@ extension ProductDetailsViewController: ViewConfiguration {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension ProductDetailsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: UIScreen.main.bounds.width - 32, height: 300)
     }
 }
 
+// MARK: - UICollectionViewDataSource
 extension ProductDetailsViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         pictures?.count ?? 0
@@ -210,6 +213,7 @@ extension ProductDetailsViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - ProductDetailsDisplaying
 extension ProductDetailsViewController: ProductDetailsDisplaying {
     func startLoading() {
         view.bringSubviewToFront(loadingView)

@@ -9,10 +9,9 @@ import Foundation
 
 enum APIError: Error {
     case genericError
-    case notFound
 }
 
-class Api {
+final class Api {
     static var apiUrl: String? {
         return get("API_HOST")
     }

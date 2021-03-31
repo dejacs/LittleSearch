@@ -18,6 +18,7 @@ final class ProductDetailsPresenter {
     weak var viewController: ProductDetailsDisplaying?
 }
 
+// MARK: - ProductDetailsPresenting
 extension ProductDetailsPresenter: ProductDetailsPresenting {
     func presentLoading(shouldPresent: Bool) {
         shouldPresent ? viewController?.startLoading() : viewController?.stopLoading()

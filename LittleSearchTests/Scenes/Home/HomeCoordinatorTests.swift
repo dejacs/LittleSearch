@@ -18,9 +18,6 @@ final class HomeCoordinatorTests: XCTestCase {
     }()
     
     func testPerform_WhenActionShowProductDetails_ShouldGoToProductDetailsScreen() {
-        sut.perform(action: .showProductDetails(0))
         
-        XCTAssertEqual(navigationController.pushedCount, 2)
-        XCTAssertTrue(navigationController.currentViewController is ProductDetailsViewController)
     }
 }
