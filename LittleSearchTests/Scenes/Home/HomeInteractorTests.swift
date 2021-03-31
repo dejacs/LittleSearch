@@ -101,4 +101,75 @@ final class HomeInteractorTests: XCTestCase {
         presenter: presenter,
         api: api
     )
+    
+    func testSearch_WhenTextIsFilled_ShouldLoadItemsWithText() {
+        api.fetchEndpointCompletionClosure = successfulCompletion
+        sut.search(by: "Teste")
+        
+        XCTAssertEqual(api.fetchEndpointCompletionCallsCount, 1)
+        XCTAssertEqual(presenter.presentSearchResponseCallsCount, 1)
+        
+        let hasTextInSearch = api.fetchEndpointCompletionReceivedInvocations.last?.endpoint.params.contains(where: { (key, value) in
+            String(describing: value) == "Teste"
+        })
+        XCTAssertTrue(hasTextInSearch ?? false)
+    }
+    
+    func testSearch_WhenTextIsNil_ShouldReloadItemsWithPreviousText() {
+        api.fetchEndpointCompletionClosure = successfulCompletion
+        sut.search(by: "Teste")
+        sut.search(by: nil)
+        
+        XCTAssertEqual(api.fetchEndpointCompletionCallsCount, 2)
+        XCTAssertEqual(presenter.presentSearchResponseCallsCount, 2)
+        
+        let hasPreviousTextInSearch = api.fetchEndpointCompletionReceivedInvocations.last?.endpoint.params.contains(where: { (key, value) in
+            String(describing: value) == "Teste"
+        })
+        XCTAssertTrue(hasPreviousTextInSearch ?? false)
+    }
+    
+    func testSearch_WhenSearchResponseIsEmpty_ShouldShowEmptyScreen() {
+        api.fetchEndpointCompletionClosure = emptyCompletion
+        sut.search(by: "ajhsjdnajsd")
+        
+        XCTAssertEqual(api.fetchEndpointCompletionCallsCount, 1)
+        XCTAssertEqual(presenter.presentSearchResponseCallsCount, 0)
+        XCTAssertEqual(presenter.presentEmptyCallsCount, 1)
+        XCTAssertEqual(presenter.presentErrorCallsCount, 0)
+    }
+    
+    func testSearch_WhenRequestFail_ShouldShowErrorScreen() {
+        api.fetchEndpointCompletionClosure = errorCompletion
+        sut.search(by: "Teste")
+        
+        XCTAssertEqual(api.fetchEndpointCompletionCallsCount, 1)
+        XCTAssertEqual(presenter.presentSearchResponseCallsCount, 0)
+        XCTAssertEqual(presenter.presentEmptyCallsCount, 0)
+        XCTAssertEqual(presenter.presentErrorCallsCount, 1)
+    }
+    
+    func successfulCompletion(endpoint: EndpointProtocol, completion: @escaping(Result<SearchResponse, APIError>) -> Void) {
+        let asset = NSDataAsset(name: "json_successful_search", bundle: Bundle.main)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        do {
+            let response = try decoder.decode(SearchResponse.self, from: asset!.data)
+            completion(.success(response))
+        } catch { completion(.failure(.genericError)) }
+    }
+    
+    func emptyCompletion(endpoint: EndpointProtocol, completion: @escaping(Result<SearchResponse, APIError>) -> Void) {
+        let asset = NSDataAsset(name: "json_empty_search", bundle: Bundle.main)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        do {
+            let response = try decoder.decode(SearchResponse.self, from: asset!.data)
+            completion(.success(response))
+        } catch { completion(.failure(.genericError)) }
+    }
+    
+    func errorCompletion(endpoint: EndpointProtocol, completion: @escaping(Result<SearchResponse, APIError>) -> Void) {
+        completion(.failure(.genericError))
+    }
 }

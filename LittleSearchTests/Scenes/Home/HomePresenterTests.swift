@@ -8,8 +8,7 @@
 import XCTest
 @testable import LittleSearch
 
-private class HomeViewControllerSpy: HomeDisplaying {
-
+private final class HomeViewControllerSpy: HomeDisplaying {
     // MARK: - StartLoading
     private(set) var startLoadingCallsCount = 0
 
