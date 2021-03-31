@@ -55,6 +55,7 @@ final class HomeViewController: UIViewController {
         tableView.estimatedRowHeight = 70
         tableView.isScrollEnabled = true
         tableView.separatorStyle = .singleLine
+        tableView.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -125,6 +126,7 @@ private extension HomeViewController {
             let searchBarContainer = searchController.searchBar.subviews.first?.subviews[1],
             let textField = searchBarContainer.subviews.first(where: { view in view is UITextField })
         {
+            textField.tintColor = UIColor(named: Strings.Color.tertiaryText)
             textField.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
             textField.layer.cornerRadius = LayoutDefaults.CornerRadius.base00
             textField.layer.masksToBounds = true
@@ -276,13 +278,9 @@ extension HomeViewController: HomeDisplaying {
         ViewHelpers.addFadeAnimation(to: toastLabel)
     }
     
-    func startLoadingCell() {
-        // TODO
-    }
+    func startLoadingCell() { }
     
-    func stopLoadingCell() {
-        // TODO
-    }
+    func stopLoadingCell() { }
 }
 
 // MARK: - ErrorViewDelegate

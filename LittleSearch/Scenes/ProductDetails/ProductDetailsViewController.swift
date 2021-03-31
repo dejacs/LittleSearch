@@ -65,6 +65,7 @@ final class ProductDetailsViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(LayoutDefaults.FontSize.base02)
+        label.textColor = UIColor(named: Strings.Color.primaryText)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -87,6 +88,7 @@ final class ProductDetailsViewController: UIViewController {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(LayoutDefaults.FontSize.base0X)
+        label.textColor = UIColor(named: Strings.Color.primaryText)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -104,6 +106,7 @@ final class ProductDetailsViewController: UIViewController {
     private lazy var availableQuantityLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(LayoutDefaults.FontSize.base00)
+        label.textColor = UIColor(named: Strings.Color.primaryText)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
