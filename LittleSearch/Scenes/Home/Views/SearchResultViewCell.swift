@@ -30,6 +30,7 @@ final class SearchResultViewCell: UITableViewCell {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(LayoutDefaults.FontSize.base01)
+        label.textColor = UIColor(named: Strings.Color.primaryText)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -38,6 +39,7 @@ final class SearchResultViewCell: UITableViewCell {
     private lazy var priceLabel: UILabel = {
         let label = UILabel()
         label.font = label.font.withSize(LayoutDefaults.FontSize.base03)
+        label.textColor = UIColor(named: Strings.Color.primaryText)
         label.numberOfLines = 1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -83,6 +85,7 @@ final class SearchResultViewCell: UITableViewCell {
     }
 }
 
+// MARK: - ViewConfiguration
 extension SearchResultViewCell: ViewConfiguration {
     func buildViewHierarchy() {
         addSubview(thumbnailImageView)
@@ -122,5 +125,6 @@ extension SearchResultViewCell: ViewConfiguration {
     
     func configureViews() {
         backgroundColor = UIColor(named: Strings.Color.transparentBackground)
+        selectionStyle = .none
     }
 }

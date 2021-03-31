@@ -55,6 +55,7 @@ final class HomeViewController: UIViewController {
         tableView.estimatedRowHeight = 70
         tableView.isScrollEnabled = true
         tableView.separatorStyle = .singleLine
+        tableView.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,6 +85,7 @@ final class HomeViewController: UIViewController {
     }
 }
 
+// MARK: - ViewConfiguration
 extension HomeViewController: ViewConfiguration {
     func buildViewHierarchy() {
         view.addSubview(loadingView)
@@ -112,6 +114,7 @@ extension HomeViewController: ViewConfiguration {
     }
 }
 
+// MARK: - Private methods
 private extension HomeViewController {
     func setupSearchBar() {
         searchController.obscuresBackgroundDuringPresentation = false
@@ -119,9 +122,13 @@ private extension HomeViewController {
         searchController.searchBar.backgroundColor = UIColor(named: Strings.Color.branding)
         searchController.searchBar.delegate = self
         
-        for textField in searchController.searchBar.subviews.first!.subviews[1].subviews where textField is UITextField {
-            textField.backgroundColor = .white
-            textField.layer.cornerRadius = 10.5
+        if
+            let searchBarContainer = searchController.searchBar.subviews.first?.subviews[1],
+            let textField = searchBarContainer.subviews.first(where: { view in view is UITextField })
+        {
+            textField.tintColor = UIColor(named: Strings.Color.tertiaryText)
+            textField.backgroundColor = UIColor(named: Strings.Color.primaryBackground)
+            textField.layer.cornerRadius = LayoutDefaults.CornerRadius.base00
             textField.layer.masksToBounds = true
         }
         
@@ -136,6 +143,7 @@ private extension HomeViewController {
     }
 }
 
+// MARK: - UISearchBarDelegate
 extension HomeViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
@@ -148,19 +156,25 @@ extension HomeViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         interactor.didSelect(searchItem: searchDataSource[indexPath.row])
     }
 }
 
+// MARK: - UITableViewDataSource
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchDataSource.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as! SearchResultViewCell
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultViewCell.identifier) as? SearchResultViewCell
+        else {
+            return UITableViewCell()
+        }
         cell.setup(searchDataSource[indexPath.row])
         return cell
     }
@@ -177,6 +191,7 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - HomeDisplaying
 extension HomeViewController: HomeDisplaying {
     func startLoading() {
         view.addSubview(loadingView)
@@ -252,8 +267,8 @@ extension HomeViewController: HomeDisplaying {
             font: .systemFont(ofSize: LayoutDefaults.FontSize.base00)
         )
         toastLabel.frame = CGRect(
-            x: view.frame.size.width/2 - 75,
-            y: view.frame.size.height-100,
+            x: view.frame.size.width / 2 - 75,
+            y: view.frame.size.height - 100,
             width: view.frame.size.width / 2,
             height: 50
         )
@@ -263,15 +278,12 @@ extension HomeViewController: HomeDisplaying {
         ViewHelpers.addFadeAnimation(to: toastLabel)
     }
     
-    func startLoadingCell() {
-        // TODO
-    }
+    func startLoadingCell() { }
     
-    func stopLoadingCell() {
-        // TODO
-    }
+    func stopLoadingCell() { }
 }
 
+// MARK: - ErrorViewDelegate
 extension HomeViewController: ErrorViewDelegate {
     func didTapButton() {
         interactor.search(by: nil)

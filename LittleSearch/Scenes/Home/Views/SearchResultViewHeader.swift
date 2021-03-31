@@ -36,6 +36,7 @@ final class SearchResultViewHeader: UIView {
     }
 }
 
+// MARK: - ViewConfiguration
 extension SearchResultViewHeader: ViewConfiguration {
     func buildViewHierarchy() {
         addSubview(totalResultsLabel)

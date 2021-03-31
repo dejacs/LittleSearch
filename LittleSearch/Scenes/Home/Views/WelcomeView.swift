@@ -54,7 +54,7 @@ final class WelcomeView: UIView {
     }
     
     func startTimer() {
-        shakeTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(shakeImage), userInfo: nil, repeats: true)
+        shakeTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(shakeImage), userInfo: nil, repeats: true)
     }
     
     func stopTimer() {
@@ -63,6 +63,7 @@ final class WelcomeView: UIView {
     }
 }
 
+// MARK: - ViewConfiguration
 extension WelcomeView: ViewConfiguration {
     func buildViewHierarchy() {
         addSubview(imageView)

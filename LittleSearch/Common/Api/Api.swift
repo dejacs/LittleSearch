@@ -2,31 +2,75 @@
 //  Api.swift
 //  LittleSearch
 //
-//  Created by Jade Silveira on 26/03/21.
+//  Created by Jade Silveira on 28/03/21.
 //
 
+import Alamofire
 import Foundation
+import os
+
+enum StatusCode {
+    static let success = 200
+}
 
 enum APIError: Error {
     case genericError
-    case notFound
 }
 
-class Api {
-    static var apiUrl: String? {
-        return get("API_HOST")
-    }
-    
-    static var siteId: String? {
-        return get("SITE_ID")
-    }
-    
-    static func get<T>(_ name: String, bundle: Bundle = Bundle.main) -> T? {
-        guard let enviromentSetting = bundle.infoDictionary?["EnviromentSetting"] as? [String: AnyObject],
-            let key = enviromentSetting[name] else {
-            return nil
+class Api<T: Decodable> {
+    /**
+     * Fetch any provided endpoint returning a json.
+     *
+     * A generic request that returns a json.
+     * 
+     *  - Parameter endpoint: An object that should implement EndpointProtocol
+     *  - Parameter completion: A block called when operation has been completed. This block has no return value and takes the Result as its parameter. In case of error while parsing the data, it will call the failure completion. When success it will call the generic handler so it will convert to the specific object.
+     */
+    func fetch(endpoint: EndpointProtocol, completion: @escaping(Result<T, APIError>) -> Void) {
+        guard let url = URL(string: endpoint.path) else {
+            return
         }
-        
-        return key as? T
+        AF.request(url, method: endpoint.method, parameters: endpoint.params).responseJSON { (result) in
+            DispatchQueue.main.async {
+                guard let data = result.data else {
+                    #if DEBUG
+                    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+                    logger.error("Error - Api - fetch: nil data for url = \(url)")
+                    #endif
+                    
+                    completion(.failure(.genericError))
+                    return
+                }
+                GenericDataHandler<T>.handleSingleResponse(data: data, completion: completion)
+            }
+        }
+    }
+    
+    /**
+     * Fetch any provided endpoint returning an array.
+     *
+     * A generic request that returns an array.
+     *
+     *  - Parameter endpoint: An object that should implement EndpointProtocol
+     *  - Parameter completion: A block called when operation has been completed. This block has no return value and takes the Result as its parameter. In case of error while parsing the data, it will call the failure completion. When success it will call the generic handler so it will convert to the specific array of object.
+     */
+    func fetchArray(endpoint: EndpointProtocol, completion: @escaping(Result<[T], APIError>) -> Void) {
+        guard let url = URL(string: endpoint.path) else {
+            return
+        }
+        AF.request(url, method: endpoint.method, parameters: endpoint.params).responseJSON { (result) in
+            DispatchQueue.main.async {
+                guard let data = result.data else {
+                    #if DEBUG
+                    let logger = Logger(subsystem: Bundle.main.bundleIdentifier!, category: "network")
+                    logger.error("Error - Api - fetchArray: nil data for url = \(url)")
+                    #endif
+                    
+                    completion(.failure(.genericError))
+                    return
+                }
+                GenericDataHandler<T>.handleArrayResponse(data: data, completion: completion)
+            }
+        }
     }
 }

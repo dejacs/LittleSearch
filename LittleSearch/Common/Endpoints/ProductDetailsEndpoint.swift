@@ -12,8 +12,8 @@ enum ProductDetailsEndpoint: EndpointProtocol {
     case fetchProductDetails(productId: String)
     
     var path: String {
-        guard let api = Api.apiUrl else { return "" }
-        return "\(api)/items"
+        guard let host = ApiUrlConfig.host else { return "" }
+        return "\(host)/items"
     }
     
     var method: HTTPMethod { .get }
